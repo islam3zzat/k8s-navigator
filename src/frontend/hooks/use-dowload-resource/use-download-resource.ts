@@ -1,5 +1,4 @@
 import { useCallback } from "react";
-// @ts-expect-error untyped
 import * as yaml from "js-yaml";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

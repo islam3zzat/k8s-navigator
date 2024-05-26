@@ -65,14 +65,11 @@
     "@fontsource/source-code-pro": "^5.0.18",
     "@kubernetes/client-node": "^0.21.0",
     "@mui/icons-material": "^5.15.17",
-    "@mui/joy": "5.0.0-beta.36",
     "@mui/material": "^5.15.17",
     "@mui/utils": "^5.15.14",
     "@types/moment": "^2.13.0",
-    "@types/tmp": "^0.2.6",
     "cronstrue": "^2.50.0",
     "electron-squirrel-startup": "^1.0.1",
-    "eslint-plugin-unused-imports": "^3.2.0",
     "framer-motion": "^11.2.6",
     "fuzzysort": "^3.0.1",
     "json2yaml": "^1.1.0",
@@ -82,7 +79,6 @@
     "react-helmet-async": "^2.0.5",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.23.1",
-    "react-spinners": "^0.13.8",
-    "tmp": "^0.2.3"
+    "react-spinners": "^0.13.8"
   }
 }

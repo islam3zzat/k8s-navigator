@@ -37,22 +37,5 @@ export const theme = responsiveFontSizes(
     typography: {
       fontFamily: ['"Source Code Pro"', "monospace"].join(","),
     },
-    components: {
-      MuiButton: {
-        styleOverrides: {
-          root: {
-            textTransform: "none", // Keep button text lowercase
-          },
-          containedPrimary: {
-            backgroundColor: (theme: Theme) => theme.palette.primary.main, // Blue background
-            color: (theme: Theme) =>
-              theme.palette.getContrastText(theme.palette.primary.main), // White text for contrast
-            "&:hover": {
-              backgroundColor: (theme: Theme) => theme.palette.primary.dark, // Darker blue on hover
-            },
-          },
-        },
-      },
-    },
   }),
 );
