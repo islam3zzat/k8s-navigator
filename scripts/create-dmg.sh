@@ -2,7 +2,7 @@
 
 APP_NAME="k8s-navigator"
 
-npm run package
+yarn run package
 
 DMG_NAME="${APP_NAME}.dmg"
 

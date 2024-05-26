@@ -3,7 +3,8 @@ import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import { V1ContainerStatus } from "@kubernetes/client-node";
-import { Stack, Typography } from "@mui/material";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import { Column } from "../data-table";
 
 const stateSortMap = {

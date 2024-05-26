@@ -1,4 +1,5 @@
-import { styled, Theme } from "@mui/material/styles";
+import styled from "@mui/material/styles/styled";
+import type { Theme } from "@mui/material/styles";
 import { Helmet } from "react-helmet-async";
 import { forwardRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";

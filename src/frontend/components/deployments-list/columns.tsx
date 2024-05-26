@@ -1,6 +1,6 @@
 import moment from "moment";
 import { V1Deployment } from "@kubernetes/client-node";
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import { Column } from "../data-table";
 
 export const columns: Column<V1Deployment>[] = [

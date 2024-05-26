@@ -22,12 +22,9 @@ import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import CastConnectedIcon from "@mui/icons-material/CastConnected";
 import AppsIcon from "@mui/icons-material/Apps";
 import type { OverridableComponent } from "@mui/material/OverridableComponent";
-import {
-  Button,
-  SvgIconOwnProps,
-  SvgIconTypeMap,
-  TextField,
-} from "@mui/material";
+import type { SvgIconOwnProps, SvgIconTypeMap } from "@mui/material/SvgIcon";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SendIcon from "@mui/icons-material/Send";
 import ArticleIcon from "@mui/icons-material/Article";

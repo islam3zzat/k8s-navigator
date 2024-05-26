@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box";
 import React from "react";
-import { Button, ButtonOwnProps } from "@mui/material";
+import Button from "@mui/material/Button";
+import type { ButtonOwnProps } from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";

@@ -1,4 +1,5 @@
-import { styled, Theme } from "@mui/material/styles";
+import styled from "@mui/material/styles/styled";
+import type { Theme } from "@mui/material/styles";
 import TableSortLabel, {
   tableSortLabelClasses,
 } from "@mui/material/TableSortLabel";
@@ -10,7 +11,10 @@ import TableCell, { TableCellProps } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import { motion } from "framer-motion";
-import { TableRow, TableRowProps, Typography, useTheme } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import TableRow from "@mui/material/TableRow";
+import useTheme from "@mui/material/styles/useTheme";
+import type { TableRowProps } from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";

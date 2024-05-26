@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@mui/material";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import { solarizedDarkTheme } from "./dark-theme";
 import { ReactNode } from "react";
 import { useAppContext } from "../app-context";

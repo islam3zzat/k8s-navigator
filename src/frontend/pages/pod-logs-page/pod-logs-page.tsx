@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
