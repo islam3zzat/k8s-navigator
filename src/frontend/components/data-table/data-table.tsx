@@ -282,6 +282,11 @@ export const DataTable = <T,>({
                 transition={{ duration: 0.1, delay: index * 0.05 }}
                 sx={{
                   cursor: onRowClick ? "pointer" : "default",
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  "&:focus": {
+                    backgroundColor: theme.palette.action.hover,
+                    opacity: theme.palette.action.hoverOpacity,
+                  },
                 }}
                 tabIndex={0}
                 onClick={() => onRowClick?.(row)}

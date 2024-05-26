@@ -28,7 +28,7 @@ import {
   ServicesListPage,
 } from "./pages";
 import { AppProvider } from "./app-context";
-import { theme } from "./theme";
+import { AppTheme } from "./theme";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -47,9 +47,9 @@ root.render(
   <React.StrictMode>
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <AppProvider>
+        <AppProvider>
+          <AppTheme>
+            <CssBaseline />
             <HashRouter>
               <Routes>
                 <Route path="/" element={<App />}>
@@ -109,8 +109,8 @@ root.render(
                 </Route>
               </Routes>
             </HashRouter>
-          </AppProvider>
-        </ThemeProvider>
+          </AppTheme>
+        </AppProvider>
       </QueryClientProvider>
     </HelmetProvider>
   </React.StrictMode>,

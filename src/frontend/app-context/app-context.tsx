@@ -21,7 +21,9 @@ const initBreadCrumbs: BreadCrumb[] = [
   },
 ];
 
+type Theme = "light" | "dark";
 type State = {
+  theme: Theme;
   activeContext: K8sContext | null;
   breadCrumbs: BreadCrumb[];
   contexts: K8sContext[];
@@ -33,6 +35,7 @@ type State = {
 };
 
 const initialState: State = {
+  theme: "dark",
   activeContext: null,
   isFindInPageOpen: false,
   breadCrumbs: initBreadCrumbs,
@@ -41,6 +44,14 @@ const initialState: State = {
   activeNamespace: "",
   deployment: "",
   pod: "",
+};
+
+type SetThemeAction = {
+  type: "SET_THEME";
+  theme: Theme;
+};
+type ResetThemeAction = {
+  type: "RESET_THEME";
 };
 
 type ShowFindInPageAction = {
@@ -122,10 +133,22 @@ type Action =
   | SliceBreadCrumbsAction
   | ResetBreadCrumbsAction
   | ShowFindInPageAction
-  | HideFindInPageAction;
+  | HideFindInPageAction
+  | SetThemeAction
+  | ResetThemeAction;
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
+    case "SET_THEME":
+      return {
+        ...state,
+        theme: action.theme,
+      };
+    case "RESET_THEME":
+      return {
+        ...state,
+        theme: "light",
+      };
     case "SHOW_FIND_IN_PAGE":
       return {
         ...state,

@@ -22,7 +22,7 @@ const solarizedColors = {
 };
 
 // Create the theme
-export const theme = createTheme({
+export const lightTheme = createTheme({
   palette: {
     primary: {
       main: solarizedColors.blue,
