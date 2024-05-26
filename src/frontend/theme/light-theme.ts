@@ -1,7 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 import { ThemeOptions } from "@mui/material/styles/createTheme";
 
-// Define the Solarized color palette
 const solarizedColors = {
   base03: "#002b36",
   base02: "#073642",

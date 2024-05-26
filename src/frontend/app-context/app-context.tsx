@@ -21,8 +21,8 @@ const initBreadCrumbs: BreadCrumb[] = [
   },
 ];
 
-type Theme = "light" | "dark";
-type State = {
+type Theme = "light" | "dark" | "purple-night";
+export type State = {
   theme: Theme;
   activeContext: K8sContext | null;
   breadCrumbs: BreadCrumb[];
@@ -33,9 +33,10 @@ type State = {
   pod: string;
   isFindInPageOpen?: boolean;
 };
+const storedTheme = localStorage.getItem("theme") as Theme | null;
 
 const initialState: State = {
-  theme: "dark",
+  theme: storedTheme || "dark",
   activeContext: null,
   isFindInPageOpen: false,
   breadCrumbs: initBreadCrumbs,

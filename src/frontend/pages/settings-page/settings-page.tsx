@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Typography,
@@ -8,16 +8,18 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import { useAppContext } from "../../app-context";
+import { useAppContext, State } from "../../app-context";
 
 export const SettingsPage = () => {
   const { state, dispatch } = useAppContext();
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedTheme = event.target.value as State["theme"];
     dispatch({
       type: "SET_THEME",
-      theme: event.target.value as "light" | "dark",
+      theme: selectedTheme,
     });
+    localStorage.setItem("theme", selectedTheme);
   };
   return (
     <>
@@ -29,7 +31,7 @@ export const SettingsPage = () => {
           Settings
         </Typography>
 
-        <FormControl fullWidth variant="outlined" margin="normal">
+        <FormControl variant="outlined" margin="normal">
           <InputLabel htmlFor="theme-select">Theme</InputLabel>
           <Select
             id="theme-select"
@@ -39,6 +41,7 @@ export const SettingsPage = () => {
           >
             <MenuItem value="light">Light</MenuItem>
             <MenuItem value="dark">Dark</MenuItem>
+            <MenuItem value="purple-night">Purple Night</MenuItem>
           </Select>
         </FormControl>
       </Box>

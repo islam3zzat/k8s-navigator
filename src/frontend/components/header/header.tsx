@@ -146,6 +146,7 @@ export const Header: React.FC = () => {
               variants={settingsIconVarinats}
               role="link"
               onClick={navigateToSettings}
+              color="default"
             >
               <SettingsIcon sx={{ fontSize: 24 }} />
             </MotionIconButton>
