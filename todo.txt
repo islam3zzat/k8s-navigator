@@ -1,0 +1,6 @@
+1. handle errors
+2. add logging
+3. add more links
+4. add loadings
+5. add refresh
+6. add icons for services in labels and annotations
