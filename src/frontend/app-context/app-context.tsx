@@ -38,7 +38,7 @@ const storedTheme = localStorage.getItem("theme") as Theme | null;
 const storedWatchIntervalSeconds = localStorage.getItem("watchIntervalSeconds");
 
 const initialState: State = {
-  theme: storedTheme || "dark",
+  theme: storedTheme || "purple-night",
   watchIntervalsSeconds: storedWatchIntervalSeconds
     ? parseFloat(storedWatchIntervalSeconds)
     : 5,
