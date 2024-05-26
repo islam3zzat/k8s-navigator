@@ -25,17 +25,18 @@ K8S Navigator is an Electron desktop application built with TypeScript and React
 3. **Install Dependencies:**
 
    ```bash
-   cd k8s-navigator
    npm install
    ```
 
+   or
+
    ```bash
-   cd k8s-navigator
    yarn install
    ```
 
+   or
+
    ```bash
-   cd k8s-navigator
    pnpm install
    ```
 
@@ -45,13 +46,15 @@ K8S Navigator is an Electron desktop application built with TypeScript and React
    npm start
    ```
 
+   or
+
    ```bash
-   cd k8s-navigator
    yarn start
    ```
 
+   or
+
    ```bash
-   cd k8s-navigator
    pnpm start
    ```
 
