@@ -26,6 +26,7 @@ import {
   ServiceAccountsListPage,
   ServiceDetailsPage,
   ServicesListPage,
+  SettingsPage,
 } from "./pages";
 import { AppProvider } from "./app-context";
 import { AppTheme } from "./theme";
@@ -53,6 +54,7 @@ root.render(
             <HashRouter>
               <Routes>
                 <Route path="/" element={<App />}>
+                  <Route path="/settings" element={<SettingsPage />} />
                   <Route path="/" element={<HomePage />} />
                   <Route
                     path="/deployments"

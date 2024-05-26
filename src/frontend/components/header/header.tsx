@@ -1,12 +1,14 @@
 import { motion, useAnimationControls } from "framer-motion";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import ExploreIcon from "@mui/icons-material/Explore";
+import SettingsIcon from "@mui/icons-material/Settings";
 import Stack from "@mui/material/Stack";
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
 import Badge from "@mui/material/Badge";
@@ -19,6 +21,22 @@ import {
   NamespaceSelect,
 } from "../../components";
 import { PortForward, useAppContext } from "../../app-context";
+
+const IconButtonWithRef = React.forwardRef<HTMLButtonElement, IconButtonProps>(
+  ({ ...props }, ref) => {
+    return <IconButton {...props} ref={ref} />;
+  },
+);
+IconButtonWithRef.displayName = "IconButtonWithRef";
+
+const MotionIconButton = motion(IconButtonWithRef);
+MotionIconButton.displayName = "MotionIconButton";
+
+const settingsIconVarinats = {
+  hover: { rotate: 180, transition: { duration: 0.5 } },
+  focus: { rotate: 180, transition: { duration: 0.5 } },
+  tap: { rotate: 0 }, // You might not need this if the animation automatically resets on mouse leave
+};
 
 export const Header: React.FC = () => {
   const { state, dispatch } = useAppContext();
@@ -69,6 +87,10 @@ export const Header: React.FC = () => {
       handleClose();
     }
   }, [open, activePortForwards, handleClose]);
+  const navigate = useNavigate();
+  const navigateToSettings = React.useCallback(() => {
+    navigate("/settings");
+  }, [navigate]);
 
   return (
     <>
@@ -76,7 +98,6 @@ export const Header: React.FC = () => {
         <Toolbar sx={{ justifyContent: "space-between" }}>
           <Link
             component={RouterLink}
-            flex={1}
             to="/"
             color="inherit"
             onMouseEnter={handleMouseEnter}
@@ -118,6 +139,16 @@ export const Header: React.FC = () => {
           >
             <NamespaceSelect />
             <ContextSelect />
+            <MotionIconButton
+              whileHover="hover"
+              whileFocus="focus"
+              whileTap="tap"
+              variants={settingsIconVarinats}
+              role="link"
+              onClick={navigateToSettings}
+            >
+              <SettingsIcon sx={{ fontSize: 24 }} />
+            </MotionIconButton>
           </Box>
         </Toolbar>
       </AppBar>

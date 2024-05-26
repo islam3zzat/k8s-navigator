@@ -19,3 +19,4 @@ export * from "./cron-job-details-page";
 export * from "./pod-logs-page";
 export * from "./config-maps-list-page";
 export * from "./config-map-details-page";
+export * from "./settings-page";
