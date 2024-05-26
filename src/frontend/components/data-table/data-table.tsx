@@ -228,7 +228,11 @@ export const DataTable = <T,>({
           {isFetching && <BarLoader color={color} />}
         </Stack>
       )}
-      <TableContainer component={Paper} sx={{ maxBlockSize: "50vh" }}>
+      <TableContainer
+        elevation={3}
+        component={Paper}
+        sx={{ maxBlockSize: "50vh" }}
+      >
         <StyledTable
           stickyHeader
           sx={{ minWidth: 650 }}
@@ -278,10 +282,6 @@ export const DataTable = <T,>({
                 transition={{ duration: 0.1, delay: index * 0.05 }}
                 sx={{
                   cursor: onRowClick ? "pointer" : "default",
-                  "&:last-child td, &:last-child th": { border: 0 },
-                  "&:focus": {
-                    backgroundColor: theme.palette.action.hover,
-                  },
                 }}
                 tabIndex={0}
                 onClick={() => onRowClick?.(row)}
