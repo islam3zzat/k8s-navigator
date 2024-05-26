@@ -60,7 +60,7 @@ export const SettingsSelect = ({
       title={value}
       options={options}
       renderOption={(props, option) => (
-        <li {...props} key={option}>
+        <li {...props} key={option as string}>
           <Typography>{option}</Typography>
         </li>
       )}

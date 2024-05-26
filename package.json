@@ -25,6 +25,7 @@
     "@electron-forge/plugin-webpack": "^7.4.0",
     "@electron/fuses": "^1.8.0",
     "@types/jest": "^29.5.12",
+    "@types/js-yaml": "^4.0.9",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^5.0.0",

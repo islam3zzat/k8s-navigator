@@ -66,7 +66,9 @@ const SettingsPage = () => {
               <TextField
                 id="interval-select"
                 value={watchInterval}
-                onChange={(e) => setWatchInterval(parseFloat(e.target.value))}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setWatchInterval(parseFloat(e.target.value))
+                }
                 onBlur={handleIntervalChange}
                 type="number"
                 inputProps={{ step: 0.5 }}

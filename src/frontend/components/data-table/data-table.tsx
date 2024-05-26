@@ -28,7 +28,7 @@ import AlertTitle from "@mui/material/AlertTitle";
 import { WatchCheckbox } from "../watch-checkbox";
 import { RefetchDataButton } from "../refetch-data-button";
 
-const StyledTable = styled(Table)(({ theme }) => ({
+const StyledTable = styled(Table)(({ theme }: { theme: Theme }) => ({
   // Table background (slightly lighter than paper)
   backgroundColor: theme.palette.background.default,
 
