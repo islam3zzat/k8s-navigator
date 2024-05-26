@@ -1,5 +1,4 @@
 import { BarLoader } from "react-spinners";
-import React from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { Typography, useTheme } from "@mui/material";
@@ -50,7 +49,7 @@ export const SettingsSelect = ({
       renderOption={(props, option) => (
         <Typography {...props}>{option}</Typography>
       )}
-      style={{ width: "max-content" }}
+      style={{ maxWidth: "15vw" }}
       renderInput={(params) => {
         return (
           <TextField
