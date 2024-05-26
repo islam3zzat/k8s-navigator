@@ -1,5 +1,4 @@
 import { createTheme } from "@mui/material/styles";
-import { ThemeOptions } from "@mui/material/styles/createTheme";
 
 // Define the Purple Dark color palette
 const purpleDarkColors = {

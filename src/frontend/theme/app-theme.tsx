@@ -1,10 +1,10 @@
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
-import { solarizedDarkTheme } from "./dark-theme";
 import { ReactNode } from "react";
-import { useAppContext } from "../app-context";
+import { solarizedDarkTheme } from "./dark-theme";
 import { lightTheme } from "./light-theme";
 import { purpleDarkTheme } from "./purple-theme";
 import { highContrastTheme } from "./high-contrast";
+import { useAppContext } from "../app-context";
 
 function getTheme(theme: string) {
   switch (theme) {

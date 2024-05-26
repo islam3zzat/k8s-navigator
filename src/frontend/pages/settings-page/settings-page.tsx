@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import React, { useEffect } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
@@ -8,7 +8,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import { useAppContext, State } from "../../app-context";
+import { State, useAppContext } from "../../app-context";
 
 const SettingsPage = () => {
   const { state, dispatch } = useAppContext();
@@ -25,7 +25,7 @@ const SettingsPage = () => {
   const [watchInterval, setWatchInterval] = React.useState<number>(
     state.watchIntervalsSeconds,
   );
-  const handleIntervalChange = (event: React.FocusEvent<HTMLInputElement>) => {
+  const handleIntervalChange = () => {
     dispatch({
       type: "SET_WATCH_INTERVAL",
       watchIntervalsSeconds: watchInterval,

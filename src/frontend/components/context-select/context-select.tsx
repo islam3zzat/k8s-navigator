@@ -1,8 +1,8 @@
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
+import { useCallback } from "react";
 import { useAppContext } from "../../app-context";
 import { SettingsSelect } from "../settings-select";
-import { useCallback } from "react";
 
 export const ContextSelect = () => {
   const navigate = useNavigate();
@@ -22,20 +22,23 @@ export const ContextSelect = () => {
     staleTime: Infinity,
   });
 
-  const setCurrentContext = async (context: string) => {
-    const nextContext = await window.k8sNavigator.switchContext(context);
+  const setCurrentContext = useCallback(
+    async (context: string) => {
+      const nextContext = await window.k8sNavigator.switchContext(context);
 
-    dispatch({ type: "SET_ACTIVE_CONTEXT", context: nextContext });
+      dispatch({ type: "SET_ACTIVE_CONTEXT", context: nextContext });
 
-    if (nextContext.namespace) {
-      dispatch({
-        type: "SET_ACTIVE_NAMESPACE",
-        namespace: nextContext.namespace,
-      });
-    }
+      if (nextContext.namespace) {
+        dispatch({
+          type: "SET_ACTIVE_NAMESPACE",
+          namespace: nextContext.namespace,
+        });
+      }
 
-    navigate("/");
-  };
+      navigate("/");
+    },
+    [dispatch, navigate],
+  );
 
   const handleChange = useCallback(
     (nextContext: string) => {

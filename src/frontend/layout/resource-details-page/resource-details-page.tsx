@@ -7,7 +7,6 @@ import Tab from "@mui/material/Tab";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import useTheme from "@mui/material/styles/useTheme";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { useQuery, useQueryClient } from "react-query";
 import { getResourceFetcher, ResourceFetcherKey } from "../../shared";
@@ -20,17 +19,6 @@ import {
   WatchCheckbox,
 } from "../../components";
 import { useDownloadResource } from "../../hooks/use-dowload-resource";
-
-const refreshIconVariants = {
-  initial: { rotate: 0 },
-  hover: { scale: 1.2 },
-  tap: { scale: 0.9 },
-  refreshing: {
-    // Continuous rotation when refreshing
-    rotate: 360,
-    transition: { duration: 1, ease: "linear", repeat: Infinity },
-  },
-};
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -173,7 +161,6 @@ export const ResourceDetailsPage = <T,>({
     setValue(newValue);
   };
 
-  const theme = useTheme();
   const tabsToUse: TabConfig<T>[] = [...tabs, ...defaultTabs];
 
   return (
