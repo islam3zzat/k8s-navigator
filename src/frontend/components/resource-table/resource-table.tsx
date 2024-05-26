@@ -1,6 +1,7 @@
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { Column, DataTable } from "../data-table";
+import { useAppContext } from "../../app-context";
 
 type Props<T> = {
   columns: Column<T>[];
@@ -21,6 +22,7 @@ export const ResourceTable = <T,>({
   getId,
   onRowClick,
 }: Props<T>) => {
+  const { state } = useAppContext();
   const [isWatching, setIsWatching] = useState<boolean>(false);
   const handleWatchToggle = useCallback(() => {
     setIsWatching((prevValue) => !prevValue);
@@ -35,7 +37,7 @@ export const ResourceTable = <T,>({
     queryKey: id,
     queryFn: dataFetcher,
     staleTime: 1_000 * 60,
-    refetchInterval: isWatching ? 1_000 * 2 : false,
+    refetchInterval: isWatching ? 1_000 * state.watchIntervalsSeconds : false,
   });
 
   return (

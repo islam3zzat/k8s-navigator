@@ -19,7 +19,6 @@ export const ContextSelect = () => {
     queryKey: ["contexts"],
     queryFn: dataFetcher,
     staleTime: Infinity,
-    retry: false,
   });
 
   const setCurrentContext = async (context: string) => {

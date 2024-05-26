@@ -135,7 +135,7 @@ export const ResourceDetailsPage = <T,>({
     queryFn: () =>
       getResourceFetcher<T>(resourceKind)(state.activeNamespace, name),
     enabled: !!state.activeNamespace && !!name,
-    refetchInterval: isWatching ? 1_000 * 2 : false,
+    refetchInterval: isWatching ? 1_000 * state.watchIntervalsSeconds : false,
   });
   const queryClient = useQueryClient();
   const refetch = useCallback(() => {

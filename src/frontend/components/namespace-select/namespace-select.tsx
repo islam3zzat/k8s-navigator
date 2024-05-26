@@ -29,7 +29,6 @@ export const NamespaceSelect = () => {
     queryKey: ["namespaces", { contextName: state.activeContext?.name }],
     queryFn: dataFetcher,
     staleTime: Infinity,
-    retry: false,
   });
 
   const handleChange = (nextNamespace: string) => {

@@ -51,14 +51,24 @@ export const Header: React.FC = () => {
     fetchData();
   }, [dispatch]);
   const iconAnimation = useAnimationControls();
+  const [isMouseOver, setIsMouseOver] = React.useState(false);
 
-  const handleMouseEnter = async () => {
+  const handleMouseEnter = React.useCallback(() => {
     iconAnimation.start({ rotate: 360, transition: { duration: 1 } });
-  };
+  }, [iconAnimation]);
 
-  const handleMouseLeave = async () => {
+  const handleMouseLeave = React.useCallback(() => {
     iconAnimation.start({ rotate: 0, transition: { duration: 1 } });
-  };
+  }, [iconAnimation]);
+
+  React.useEffect(() => {
+    if (isMouseOver) {
+      handleMouseEnter();
+    } else {
+      handleMouseLeave();
+    }
+  }, [isMouseOver, handleMouseEnter, handleMouseLeave]);
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = React.useCallback(() => setOpen(true), []);
   const handleClose = React.useCallback(() => setOpen(false), []);
@@ -100,8 +110,8 @@ export const Header: React.FC = () => {
             component={RouterLink}
             to="/"
             color="inherit"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            onMouseEnter={() => setIsMouseOver(true)}
+            onMouseLeave={() => setIsMouseOver(false)}
           >
             <Stack direction="row" alignItems="center" spacing={1}>
               <motion.div animate={iconAnimation}>

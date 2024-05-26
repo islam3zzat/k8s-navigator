@@ -24,6 +24,7 @@ const initBreadCrumbs: BreadCrumb[] = [
 type Theme = "light" | "dark" | "purple-night" | "high-contrast";
 export type State = {
   theme: Theme;
+  watchIntervalsSeconds: number;
   activeContext: K8sContext | null;
   breadCrumbs: BreadCrumb[];
   contexts: K8sContext[];
@@ -34,9 +35,13 @@ export type State = {
   isFindInPageOpen?: boolean;
 };
 const storedTheme = localStorage.getItem("theme") as Theme | null;
+const storedWatchIntervalSeconds = localStorage.getItem("watchIntervalSeconds");
 
 const initialState: State = {
   theme: storedTheme || "dark",
+  watchIntervalsSeconds: storedWatchIntervalSeconds
+    ? parseFloat(storedWatchIntervalSeconds)
+    : 5,
   activeContext: null,
   isFindInPageOpen: false,
   breadCrumbs: initBreadCrumbs,
@@ -45,6 +50,11 @@ const initialState: State = {
   activeNamespace: "",
   deployment: "",
   pod: "",
+};
+
+type SetWatchIntervalAction = {
+  type: "SET_WATCH_INTERVAL";
+  watchIntervalsSeconds: number;
 };
 
 type SetThemeAction = {
@@ -136,10 +146,16 @@ type Action =
   | ShowFindInPageAction
   | HideFindInPageAction
   | SetThemeAction
-  | ResetThemeAction;
+  | ResetThemeAction
+  | SetWatchIntervalAction;
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
+    case "SET_WATCH_INTERVAL":
+      return {
+        ...state,
+        watchIntervalsSeconds: action.watchIntervalsSeconds,
+      };
     case "SET_THEME":
       return {
         ...state,
