@@ -73,7 +73,7 @@ const HomePage = () => {
       </Helmet>
       <Stack spacing={2}>
         <Stack direction="row" spacing={2} alignItems="center">
-          <Typography variant="h6">Cluster:</Typography>
+          <Typography variant="h6">Context:</Typography>
           <Typography variant="body1">{state.activeContext?.name}</Typography>
         </Stack>
         <Stack direction="row" flexWrap="wrap" gap={1}>
