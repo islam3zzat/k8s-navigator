@@ -297,33 +297,41 @@ const PodGeneralTab: React.FC<TabComponentProps<V1Pod>> = ({
           <Stack spacing={4}>
             {pod?.spec.containers.map((container) => (
               <Stack key={container.name} spacing={1}>
-                <Stack direction="row" spacing={2}>
+                <Stack direction="row" spacing={2} alignItems="center">
                   <TextFieldsIcon fontSize="small" />
                   <Typography width={60} variant="body1">
                     Name
                   </Typography>
                   <Typography>{container.name}</Typography>
+                  <Button
+                    variant="outlined"
+                    startIcon={<ArticleIcon aria-label="View logs" />}
+                    onClick={() =>
+                      navigate(`/pods/${podName}/logs/${container.name}`)
+                    }
+                  >
+                    Logs
+                  </Button>
                 </Stack>
                 <Stack direction="row" spacing={2}>
-                  <Stack direction="row" spacing={2} alignItems="center">
-                    <SettingsEthernetIcon
-                      fontSize="small"
-                      aria-label="Container ports"
-                    />
-                    <Typography width={60} variant="body1">
-                      Ports
-                    </Typography>
-                  </Stack>
-                  <Stack direction="row" spacing={2} alignItems="center">
+                  <SettingsEthernetIcon
+                    fontSize="small"
+                    aria-label="Container ports"
+                  />
+                  <Typography width={60} variant="body1">
+                    Ports
+                  </Typography>
+                  <Stack spacing={1}>
                     {(container.ports || []).length === 0 && (
                       <Typography variant="body2">None</Typography>
                     )}
                     {container.ports?.map((port) => (
                       <Stack
-                        key={port.containerPort}
+                        key={`${port.containerPort}-${port.protocol}`}
                         direction="row"
                         spacing={3}
                         alignItems="center"
+                        justifyContent="space-between"
                       >
                         <Stack direction="row" spacing={1} alignItems="center">
                           <RouterIcon
@@ -367,15 +375,6 @@ const PodGeneralTab: React.FC<TabComponentProps<V1Pod>> = ({
                       </Stack>
                     ))}
                   </Stack>
-                  <Button
-                    variant="outlined"
-                    startIcon={<ArticleIcon aria-label="View logs" />}
-                    onClick={() =>
-                      navigate(`/pods/${podName}/logs/${container.name}`)
-                    }
-                  >
-                    Logs
-                  </Button>
                 </Stack>
 
                 {/* Image */}
