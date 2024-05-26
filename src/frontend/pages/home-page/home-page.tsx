@@ -1,9 +1,9 @@
 import { styled, Theme } from "@mui/material/styles";
 import { Helmet } from "react-helmet-async";
-import { useEffect } from "react";
+import { forwardRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
+import Paper, { PaperProps } from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { motion } from "framer-motion";
 import { ResourceIcon } from "../../components";
@@ -40,6 +40,15 @@ const Item = styled(Paper)(({ theme }: { theme: Theme }) => ({
   minWidth: 200,
   margin: theme.spacing(1),
 }));
+const ItemWithRef = forwardRef<HTMLDivElement, PaperProps>(
+  ({ ...props }, ref) => {
+    return <Item {...props} ref={ref} />;
+  },
+);
+ItemWithRef.displayName = "ItemWithRef";
+
+const MotionItem = motion(ItemWithRef);
+MotionItem.displayName = "MotionItem";
 
 export const HomePage = () => {
   const { state, dispatch } = useAppContext();
@@ -82,33 +91,29 @@ export const HomePage = () => {
             { path: "/secrets", icon: Secret, label: "Secrets" },
             { path: "/config-maps", icon: ConfigMap, label: "Config Maps" },
           ].map(({ path, icon, label }) => (
-            <motion.div
-              key={path}
+            <MotionItem
               variants={iconVariants}
               whileHover="hover"
               whileTap="tap"
+              key={path}
+              role="link"
+              aria-label={`Navigate to ${label}`}
+              tabIndex={0}
+              onClick={() => handleNavigation(path)}
+              onKeyDown={(e: React.KeyboardEvent) =>
+                e.key === "Enter" && handleNavigation(path)
+              }
             >
-              <Item
-                key={path}
-                role="link"
-                aria-label={`Navigate to ${label}`}
-                tabIndex={0}
-                onClick={() => handleNavigation(path)}
-                onKeyDown={(e: React.KeyboardEvent) =>
-                  e.key === "Enter" && handleNavigation(path)
-                }
+              <Stack
+                justifyContent={"flex-start"}
+                alignItems={"center"}
+                direction="row"
+                spacing={1}
               >
-                <Stack
-                  justifyContent={"flex-start"}
-                  alignItems={"center"}
-                  direction="row"
-                  spacing={1}
-                >
-                  <ResourceIcon size={3} icon={icon} isPrimary />
-                  <Typography variant="button">{label}</Typography>
-                </Stack>
-              </Item>
-            </motion.div>
+                <ResourceIcon size={3} icon={icon} isPrimary />
+                <Typography variant="button">{label}</Typography>
+              </Stack>
+            </MotionItem>
           ))}
         </Stack>
       </Stack>

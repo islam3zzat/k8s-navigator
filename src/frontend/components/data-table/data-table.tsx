@@ -24,6 +24,17 @@ import AlertTitle from "@mui/material/AlertTitle";
 import { WatchCheckbox } from "../watch-checkbox";
 import { RefetchDataButton } from "../refetch-data-button";
 
+const StyledTable = styled(Table)(({ theme }) => ({
+  // Table background (slightly lighter than paper)
+  backgroundColor: theme.palette.background.default,
+
+  // Cell padding for better readability
+  "& .MuiTableCell-root": {
+    padding: theme.spacing(1.5), // Adjust spacing as needed
+    borderBottom: `1px solid ${theme.palette.divider}`, // Use divider color for subtle borders
+  },
+}));
+
 const TableRowWithRef = forwardRef<HTMLTableRowElement, TableRowProps>(
   ({ ...props }, ref) => {
     return <TableRow {...props} ref={ref} />;
@@ -38,10 +49,10 @@ const StyledTableSortLabel = styled(TableSortLabel)(
   ({ theme }: { theme: Theme }) => ({
     [`&.${tableSortLabelClasses.active}`]: {
       // Target active sorting column
-      color: theme.palette.secondary.main, // Accent color on focus
+      color: theme.palette.primary.main, // Accent color on focus
     },
     [`&.${tableSortLabelClasses.active} .${tableSortLabelClasses.icon}`]: {
-      color: theme.palette.secondary.main, // Accent color on the icon
+      color: theme.palette.primary.main, // Accent color on the icon
     },
     "&:focus-visible": {
       // Show focus indicator
@@ -218,7 +229,7 @@ export const DataTable = <T,>({
         </Stack>
       )}
       <TableContainer component={Paper} sx={{ maxBlockSize: "50vh" }}>
-        <Table
+        <StyledTable
           stickyHeader
           sx={{ minWidth: 650 }}
           aria-label={title}
@@ -295,7 +306,7 @@ export const DataTable = <T,>({
               </MotionTableRow>
             ))}
           </TableBody>
-        </Table>
+        </StyledTable>
       </TableContainer>
       <div id="table-summary" style={{ position: "absolute", left: "-9999px" }}>
         {description}
