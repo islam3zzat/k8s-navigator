@@ -125,7 +125,14 @@ const PodGeneralTab: React.FC<TabComponentProps<V1Pod>> = ({
   const navigate = useNavigate();
 
   const { data: podOwner, isLoading: isPodOwnerLoading } = useQuery({
-    queryKey: ["podOwner", { namespace: state.activeNamespace, name: podName }],
+    queryKey: [
+      "podOwner",
+      {
+        namespace: state.activeNamespace,
+        name: podName,
+        ctx: state.activeContext?.name,
+      },
+    ],
     queryFn: async () => {
       if (!podName || !state.activeNamespace) return;
 

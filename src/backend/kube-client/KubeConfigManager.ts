@@ -5,7 +5,7 @@ export interface IKubeConfig {
   makeApiClient<T extends k8s.ApiType>(apiClient: new () => T): T;
   contexts: k8s.Context[];
   setCurrentContext(context: string): void;
-  getCurrentContext(): string;
+  getCurrentContext(): Promise<k8s.Context>;
   getContextObject(context: string): k8s.Context;
 }
 
@@ -16,27 +16,27 @@ export class KubeConfigManager implements IKubeConfig {
     this.kc = kc;
   }
 
-  loadFromDefault() {
+  loadFromDefault = () => {
     this.kc.loadFromDefault();
-  }
+  };
 
-  makeApiClient<T extends k8s.ApiType>(apiClient: new () => T): T {
+  makeApiClient = <T extends k8s.ApiType>(apiClient: new () => T): T => {
     return this.kc.makeApiClient(apiClient);
-  }
+  };
 
   get contexts() {
     return this.kc.contexts;
   }
 
-  setCurrentContext(context: string) {
+  setCurrentContext = (context: string) => {
     this.kc.setCurrentContext(context);
-  }
+  };
 
-  getCurrentContext() {
-    return this.kc.getCurrentContext();
-  }
+  getCurrentContext = async () => {
+    return await this.getContextObject(this.kc.getCurrentContext());
+  };
 
-  getContextObject(context: string) {
+  getContextObject = (context: string) => {
     return this.kc.getContextObject(context);
-  }
+  };
 }

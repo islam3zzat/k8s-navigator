@@ -24,7 +24,7 @@ export const ServiceAccountsList = ({ namespace }: Props) => {
 
   return (
     <ResourceTable
-      id={`sercice-accounts-list-${namespace}`}
+      id={`sercice-accounts-list`}
       title="Service accounts list"
       dataFetcher={dataFetcher}
       noResourcesMessage="No serviceAccounts found"

@@ -30,7 +30,7 @@ export const EventsList = ({ name }: Props) => {
 
   return (
     <ResourceTable
-      id={`events-list-${name}-${state.activeNamespace}`}
+      id={`events-list-${name}`}
       title="Events list"
       dataFetcher={dataFetcher}
       noResourcesMessage="No events found matching criteria"

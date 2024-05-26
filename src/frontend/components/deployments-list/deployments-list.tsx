@@ -20,7 +20,7 @@ export const DeploymentsList = ({ namespace }: Props) => {
 
   return (
     <ResourceTable
-      id={`deployments-list-${namespace}`}
+      id={`deployments-list`}
       title="Deployments list"
       dataFetcher={dataFetcher}
       getId={(d) => d.metadata.uid}

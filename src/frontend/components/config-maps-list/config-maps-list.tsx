@@ -21,7 +21,7 @@ export const ConfigMapsList = ({ namespace }: Props) => {
 
   return (
     <ResourceTable
-      id={`sercice-accounts-list-${namespace}`}
+      id={`sercice-accounts-list`}
       title="Config Maps list"
       dataFetcher={dataFetcher}
       noResourcesMessage="No configMaps found"

@@ -25,14 +25,14 @@ export class KubeClient {
     return this.configManager.contexts;
   };
 
-  public switchContext = (name: string) => {
-    this.configManager.setCurrentContext(name);
+  public switchContext = async (name: string) => {
+    await this.configManager.setCurrentContext(name);
+
     return this.configManager.getCurrentContext();
   };
 
   public getCurrentContext = () => {
-    const currentContext = this.configManager.getCurrentContext();
-    return this.configManager.getContextObject(currentContext);
+    return this.configManager.getCurrentContext();
   };
 
   public log = () => {

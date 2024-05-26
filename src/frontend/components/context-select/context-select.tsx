@@ -2,6 +2,7 @@ import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../../app-context";
 import { SettingsSelect } from "../settings-select";
+import { useCallback } from "react";
 
 export const ContextSelect = () => {
   const navigate = useNavigate();
@@ -36,9 +37,12 @@ export const ContextSelect = () => {
     navigate("/");
   };
 
-  const handleChange = (nextContext: string) => {
-    setCurrentContext(nextContext);
-  };
+  const handleChange = useCallback(
+    (nextContext: string) => {
+      setCurrentContext(nextContext);
+    },
+    [setCurrentContext],
+  );
 
   return (
     <SettingsSelect

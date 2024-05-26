@@ -47,7 +47,7 @@ export const PodsList = ({ namespace, deploymentName, selector }: Props) => {
 
   return (
     <ResourceTable
-      id={`pods-list-${deploymentName}-${JSON.stringify(selector)}-${namespace}`}
+      id={`pods-list-${deploymentName}-${JSON.stringify(selector)}`}
       title="Pods list"
       dataFetcher={datFetcher}
       noResourcesMessage="No pods found matching criteria"

@@ -21,7 +21,7 @@ export const SecretsList = ({ namespace }: Props) => {
 
   return (
     <ResourceTable
-      id={`secrets-list-${namespace}`}
+      id={`secrets-list`}
       title="Secrets list"
       noResourcesMessage="No secrets found"
       dataFetcher={dataFetcher}

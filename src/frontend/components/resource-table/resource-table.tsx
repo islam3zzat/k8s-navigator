@@ -23,6 +23,7 @@ export const ResourceTable = <T,>({
   onRowClick,
 }: Props<T>) => {
   const { state } = useAppContext();
+  const queryId = `${id}-${state.activeNamespace}-${state.activeContext?.name}`;
   const [isWatching, setIsWatching] = useState<boolean>(false);
   const handleWatchToggle = useCallback(() => {
     setIsWatching((prevValue) => !prevValue);
@@ -30,11 +31,11 @@ export const ResourceTable = <T,>({
 
   const queryClient = useQueryClient();
   const onRefresh = useCallback(() => {
-    queryClient.invalidateQueries(id);
-  }, [queryClient, id]);
+    queryClient.invalidateQueries(queryId);
+  }, [queryClient, queryId]);
 
   const query = useQuery({
-    queryKey: id,
+    queryKey: queryId,
     queryFn: dataFetcher,
     staleTime: 1_000 * 60,
     refetchInterval: isWatching ? 1_000 * state.watchIntervalsSeconds : false,

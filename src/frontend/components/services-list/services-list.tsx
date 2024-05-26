@@ -19,7 +19,7 @@ export const ServicesList = ({ namespace }: Props) => {
 
   return (
     <ResourceTable
-      id={`services-list-${namespace}`}
+      id={`services-list`}
       title="Service list"
       dataFetcher={dataFetcher}
       noResourcesMessage="No services found"

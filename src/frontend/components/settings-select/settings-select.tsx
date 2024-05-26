@@ -4,6 +4,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { Typography, useTheme } from "@mui/material";
 import fuzzysort from "fuzzysort";
 import "./settings-select.css";
+import { useCallback, useEffect, useState } from "react";
 
 // Custom filter function for fuzzy search using fuzzysort
 function fuzzyFilter(
@@ -22,6 +23,7 @@ type Props = {
   isLoading: boolean;
   onChange: (value: string) => void;
 };
+
 export const SettingsSelect = ({
   options,
   value,
@@ -29,6 +31,20 @@ export const SettingsSelect = ({
   onChange,
 }: Props) => {
   const theme = useTheme();
+  const [inputValue, setInputValue] = useState(value || ""); // State for input value
+
+  // Sync value with input value
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
+
+  const handleChange = useCallback(
+    (_: unknown, newValue: string) => {
+      onChange(newValue);
+      setInputValue(newValue); // Update input value when changed
+    },
+    [onChange, setInputValue],
+  );
 
   if (isLoading) {
     return <BarLoader color={theme.palette.primary.light} />;
@@ -37,43 +53,38 @@ export const SettingsSelect = ({
   return (
     <Autocomplete
       disablePortal
-      onChange={(_: unknown, value: string) => {
-        if (value) {
-          onChange(value);
-        }
-      }}
+      onChange={handleChange}
       className="settings-select"
       filterOptions={fuzzyFilter}
-      value={value}
+      value={inputValue || null}
       title={value}
       options={options}
       renderOption={(props, option) => (
-        <Typography {...props}>{option}</Typography>
+        <li {...props} key={option}>
+          <Typography>{option}</Typography>
+        </li>
       )}
       style={{ maxWidth: "25vw" }}
-      renderInput={(params) => {
-        return (
-          <TextField
-            {...params}
-            disabled={false}
-            inputProps={{
-              ...params.inputProps,
-              style: {
-                padding: "0",
-                paddingInline: "1rem",
-                width: "max-content",
-              },
-            }}
-            InputProps={{
-              ...params.InputProps,
-              style: {
-                color: "inherit",
-              },
-            }}
-            focused
-          />
-        );
-      }}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          value={inputValue}
+          inputProps={{
+            ...params.inputProps,
+            style: {
+              padding: "0",
+              paddingInline: "1rem",
+              width: "max-content",
+            },
+          }}
+          InputProps={{
+            ...params.InputProps,
+            style: {
+              color: "inherit",
+            },
+          }}
+        />
+      )}
     />
   );
 };

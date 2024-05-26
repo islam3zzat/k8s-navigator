@@ -30,7 +30,7 @@ export const JobsList = ({ namespace, selector }: Props) => {
 
   return (
     <ResourceTable
-      id={`jobs-list-${JSON.stringify(selector)}-${namespace}`}
+      id={`jobs-list-${JSON.stringify(selector)}-`}
       title="Jobs list"
       dataFetcher={dataFetcher}
       noResourcesMessage="No jobs found matching criteria"

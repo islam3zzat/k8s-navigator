@@ -21,7 +21,7 @@ export const ReplicaSetsList = ({ namespace }: Props) => {
 
   return (
     <ResourceTable
-      id={`sercice-accounts-list-${namespace}`}
+      id={`sercice-accounts-list`}
       title="Replic sets list"
       dataFetcher={dataFetcher}
       noResourcesMessage="No replicaSets found"

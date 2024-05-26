@@ -20,7 +20,7 @@ export const CronJobsList = ({ namespace }: Props) => {
 
   return (
     <ResourceTable
-      id={`cron-jobs-list-${namespace}`}
+      id={`cron-jobs-list`}
       title="Cron Jobs list"
       dataFetcher={dataFetcher}
       noResourcesMessage="No cron jobs found matching criteria"
