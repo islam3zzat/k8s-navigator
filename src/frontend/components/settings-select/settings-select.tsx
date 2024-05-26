@@ -45,11 +45,12 @@ export const SettingsSelect = ({
       className="settings-select"
       filterOptions={fuzzyFilter}
       value={value}
+      title={value}
       options={options}
       renderOption={(props, option) => (
         <Typography {...props}>{option}</Typography>
       )}
-      style={{ maxWidth: "15vw" }}
+      style={{ maxWidth: "25vw" }}
       renderInput={(params) => {
         return (
           <TextField

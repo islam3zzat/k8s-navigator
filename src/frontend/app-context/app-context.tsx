@@ -21,7 +21,7 @@ const initBreadCrumbs: BreadCrumb[] = [
   },
 ];
 
-type Theme = "light" | "dark" | "purple-night";
+type Theme = "light" | "dark" | "purple-night" | "high-contrast";
 export type State = {
   theme: Theme;
   activeContext: K8sContext | null;

@@ -42,6 +42,7 @@ const SettingsPage = () => {
             <MenuItem value="light">Light</MenuItem>
             <MenuItem value="dark">Dark</MenuItem>
             <MenuItem value="purple-night">Purple Night</MenuItem>
+            <MenuItem value="high-contrast">High Contrast</MenuItem>
           </Select>
         </FormControl>
       </Box>
