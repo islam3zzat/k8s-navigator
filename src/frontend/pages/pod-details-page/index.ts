@@ -1,1 +1,1 @@
-export * from "./pod-details-page";
+export { default } from "./pod-details-page";

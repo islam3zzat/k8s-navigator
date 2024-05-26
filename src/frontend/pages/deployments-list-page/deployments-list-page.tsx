@@ -3,7 +3,7 @@ import Deployment from "../../icons/resources/unlabeled/deploy.svg";
 import { useAppContext } from "../../app-context";
 import { ResourceListPage } from "../../layout";
 
-export const DeploymentsListPage = () => {
+const DeploymentsListPage = () => {
   const { state } = useAppContext();
 
   const namespace = state.activeNamespace;
@@ -22,3 +22,4 @@ export const DeploymentsListPage = () => {
     </ResourceListPage>
   );
 };
+export default DeploymentsListPage;

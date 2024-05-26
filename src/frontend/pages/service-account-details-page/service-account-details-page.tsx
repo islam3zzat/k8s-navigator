@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
-import { ServiceAccountGeneralTab } from "./service-account-general-tab";
+import ServiceAccountGeneralTab from "./service-account-general-tab";
 import ServiceAccount from "../../icons/resources/unlabeled/sa.svg";
 import { ResourceDetailsPage } from "../../layout/resource-details-page";
 
-export const ServiceAccountDetailsPage = () => {
+const ServiceAccountDetailsPage = () => {
   const { serviceAccountName } = useParams<{ serviceAccountName: string }>();
 
   return (
@@ -25,3 +25,5 @@ export const ServiceAccountDetailsPage = () => {
     />
   );
 };
+
+export default ServiceAccountDetailsPage;

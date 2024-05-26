@@ -8,7 +8,7 @@ import ArticleIcon from "@mui/icons-material/Article";
 import Paper from "@mui/material/Paper";
 import { useAppContext } from "../../app-context";
 
-export const PodLogsPage = () => {
+const PodLogsPage = () => {
   const { podName, containerName } = useParams<{
     podName: string;
     containerName: string;
@@ -111,3 +111,5 @@ export const PodLogsPage = () => {
     </Stack>
   );
 };
+
+export default PodLogsPage;

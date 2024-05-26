@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
-import { JobGeneralTab } from "./job-general-tab";
+import JobGeneralTab from "./job-general-tab";
 import Job from "../../icons/resources/unlabeled/job.svg";
 import { ResourceDetailsPage } from "../../layout/resource-details-page";
 
-export const JobDetailsPage = () => {
+const JobDetailsPage = () => {
   const { jobName } = useParams<{ jobName: string }>();
 
   return (
@@ -20,3 +20,4 @@ export const JobDetailsPage = () => {
     />
   );
 };
+export default JobDetailsPage;

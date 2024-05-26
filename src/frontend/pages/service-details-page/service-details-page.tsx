@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
-import { ServiceGeneralTab } from "./service-general-tab";
+import ServiceGeneralTab from "./service-general-tab";
 
 import Service from "../../icons/resources/unlabeled/svc.svg";
 import { ResourceDetailsPage } from "../../layout/resource-details-page";
 
-export const ServiceDetailsPage = () => {
+const ServiceDetailsPage = () => {
   const { serviceName } = useParams<{ serviceName: string }>();
 
   return (
@@ -26,3 +26,5 @@ export const ServiceDetailsPage = () => {
     />
   );
 };
+
+export default ServiceDetailsPage;

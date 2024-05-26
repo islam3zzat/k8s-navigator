@@ -3,7 +3,7 @@ import CronJob from "../../icons/resources/unlabeled/cronjob.svg";
 import { useAppContext } from "../../app-context";
 import { ResourceListPage } from "../../layout";
 
-export const CronJobsListPage = () => {
+const CronJobsListPage = () => {
   const { state } = useAppContext();
 
   const namespace = state.activeNamespace;
@@ -22,3 +22,4 @@ export const CronJobsListPage = () => {
     </ResourceListPage>
   );
 };
+export default CronJobsListPage;

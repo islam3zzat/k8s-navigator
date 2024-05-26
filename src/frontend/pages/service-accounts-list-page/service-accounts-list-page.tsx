@@ -3,7 +3,7 @@ import { ServiceAccountsList } from "../../components";
 import ServiceAccount from "../../icons/resources/unlabeled/sa.svg";
 import { useAppContext } from "../../app-context";
 
-export const ServiceAccountsListPage = () => {
+const ServiceAccountsListPage = () => {
   const { state } = useAppContext();
 
   return (
@@ -20,3 +20,5 @@ export const ServiceAccountsListPage = () => {
     </ResourceListPage>
   );
 };
+
+export default ServiceAccountsListPage;

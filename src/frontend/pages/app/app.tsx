@@ -62,7 +62,7 @@ const BreadCrumbIcon = React.memo(
 );
 BreadCrumbIcon.displayName = "BreadCrumbIcon";
 
-export const App: React.FC = () => {
+const App: React.FC = () => {
   const { state, dispatch } = useAppContext();
   // listen for command-f, or control-f keyboad shortcut
   useEffect(() => {
@@ -143,3 +143,5 @@ export const App: React.FC = () => {
     </Stack>
   );
 };
+
+export default App;

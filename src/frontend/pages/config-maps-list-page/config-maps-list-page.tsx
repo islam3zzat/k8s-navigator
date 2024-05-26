@@ -3,7 +3,7 @@ import { ConfigMapsList } from "../../components";
 import ConfigMap from "../../icons/resources/unlabeled/cm.svg";
 import { useAppContext } from "../../app-context";
 
-export const ConfigMapsListPage = () => {
+const ConfigMapsListPage = () => {
   const { state } = useAppContext();
 
   return (
@@ -20,3 +20,5 @@ export const ConfigMapsListPage = () => {
     </ResourceListPage>
   );
 };
+
+export default ConfigMapsListPage;

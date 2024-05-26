@@ -1,1 +1,1 @@
-export * from "./secrets-list-page";
+export { default } from "./secrets-list-page";

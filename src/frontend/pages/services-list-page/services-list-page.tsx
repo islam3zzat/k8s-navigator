@@ -3,7 +3,7 @@ import Service from "../../icons/resources/unlabeled/svc.svg";
 import { useAppContext } from "../../app-context";
 import { ResourceListPage } from "../../layout";
 
-export const ServicesListPage = () => {
+const ServicesListPage = () => {
   const { state } = useAppContext();
 
   const namespace = state.activeNamespace;
@@ -22,3 +22,5 @@ export const ServicesListPage = () => {
     </ResourceListPage>
   );
 };
+
+export default ServicesListPage;

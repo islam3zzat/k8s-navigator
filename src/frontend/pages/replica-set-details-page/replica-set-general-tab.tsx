@@ -13,7 +13,7 @@ import { useAppContext } from "../../app-context";
 import ServiceAccount from "../../icons/resources/unlabeled/sa.svg";
 import { PodsList, ResourceIcon } from "../../components";
 
-export const ReplicaSetGeneralTab = ({
+const ReplicaSetGeneralTab = ({
   resource: replicaSet,
 }: {
   resource: V1ReplicaSet;
@@ -114,3 +114,4 @@ export const ReplicaSetGeneralTab = ({
     </Stack>
   );
 };
+export default ReplicaSetGeneralTab;

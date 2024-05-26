@@ -116,7 +116,7 @@ function PodStatusIcon({ status, color }: { status: string; color?: string }) {
   );
 }
 
-export const PodGeneralTab: React.FC<TabComponentProps<V1Pod>> = ({
+const PodGeneralTab: React.FC<TabComponentProps<V1Pod>> = ({
   resource: pod,
 }) => {
   const { state, dispatch } = useAppContext();
@@ -509,3 +509,5 @@ export const PodGeneralTab: React.FC<TabComponentProps<V1Pod>> = ({
     </>
   );
 };
+
+export default PodGeneralTab;

@@ -1,1 +1,1 @@
-export * from "./pod-logs-page";
+export { default } from "./pod-logs-page";

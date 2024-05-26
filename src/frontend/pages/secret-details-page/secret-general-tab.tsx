@@ -7,11 +7,7 @@ import SecurityIcon from "@mui/icons-material/Security";
 import CopyAllIcon from "@mui/icons-material/CopyAll";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 
-export const SecretGeneralTab = ({
-  resource: secret,
-}: {
-  resource: V1Secret;
-}) => {
+const SecretGeneralTab = ({ resource: secret }: { resource: V1Secret }) => {
   return (
     <Stack spacing={4}>
       <Stack spacing={2}>
@@ -63,3 +59,5 @@ export const SecretGeneralTab = ({
     </Stack>
   );
 };
+
+export default SecretGeneralTab;

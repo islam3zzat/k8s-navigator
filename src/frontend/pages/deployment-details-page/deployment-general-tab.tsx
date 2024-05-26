@@ -33,7 +33,7 @@ function DeploymentStrategyIcon({ strategy }: { strategy: string }) {
 
   return <StrategyIcon />;
 }
-export const DeploymentGeneralTab = ({
+const DeploymentGeneralTab = ({
   resource: deployment,
   refetch,
 }: {
@@ -177,3 +177,4 @@ export const DeploymentGeneralTab = ({
     </>
   );
 };
+export default DeploymentGeneralTab;

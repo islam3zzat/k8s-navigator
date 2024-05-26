@@ -1,1 +1,1 @@
-export * from "./pods-list-page";
+export { default } from "./pods-list-page";

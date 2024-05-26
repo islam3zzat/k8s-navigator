@@ -7,7 +7,7 @@ import SecurityIcon from "@mui/icons-material/Security";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import LockIcon from "@mui/icons-material/Lock";
 
-export const ServiceAccountGeneralTab = ({
+const ServiceAccountGeneralTab = ({
   resource: serviceAccount,
 }: {
   resource: V1ServiceAccount;
@@ -67,3 +67,5 @@ export const ServiceAccountGeneralTab = ({
     </Stack>
   );
 };
+
+export default ServiceAccountGeneralTab;

@@ -3,7 +3,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { V1Pod } from "@kubernetes/client-node";
 import React from "react";
-import { PodGeneralTab } from "./pod-general-tab";
+import PodGeneralTab from "./pod-general-tab";
 import Pod from "../../icons/resources/unlabeled/pod.svg";
 import { ContainerStatusList, EnvVarsList } from "../../components";
 import {
@@ -36,7 +36,7 @@ const EnvironmentVariablesTab: React.FC<TabComponentProps<V1Pod>> = ({
     </Stack>
   );
 };
-export const PodDetailsPage = () => {
+const PodDetailsPage = () => {
   const { podName } = useParams<{ podName: string }>();
 
   return (
@@ -66,3 +66,4 @@ export const PodDetailsPage = () => {
     />
   );
 };
+export default PodDetailsPage;

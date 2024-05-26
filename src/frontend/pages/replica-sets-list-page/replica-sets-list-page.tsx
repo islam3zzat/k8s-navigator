@@ -3,7 +3,7 @@ import ReplicaSet from "../../icons/resources/unlabeled/sa.svg";
 import { useAppContext } from "../../app-context";
 import { ResourceListPage } from "../../layout";
 
-export const ReplicaSetsListPage = () => {
+const ReplicaSetsListPage = () => {
   const { state } = useAppContext();
 
   return (
@@ -20,3 +20,5 @@ export const ReplicaSetsListPage = () => {
     </ResourceListPage>
   );
 };
+
+export default ReplicaSetsListPage;

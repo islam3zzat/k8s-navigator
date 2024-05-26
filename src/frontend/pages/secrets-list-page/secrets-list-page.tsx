@@ -3,7 +3,7 @@ import Secret from "../../icons/resources/unlabeled/secret.svg";
 import { useAppContext } from "../../app-context";
 import { ResourceListPage } from "../../layout";
 
-export const SecretsListPage = () => {
+const SecretsListPage = () => {
   const { state } = useAppContext();
 
   return (
@@ -20,3 +20,5 @@ export const SecretsListPage = () => {
     </ResourceListPage>
   );
 };
+
+export default SecretsListPage;

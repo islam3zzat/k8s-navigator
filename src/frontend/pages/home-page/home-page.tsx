@@ -50,7 +50,7 @@ ItemWithRef.displayName = "ItemWithRef";
 const MotionItem = motion(ItemWithRef);
 MotionItem.displayName = "MotionItem";
 
-export const HomePage = () => {
+const HomePage = () => {
   const { state, dispatch } = useAppContext();
   const navigate = useNavigate();
 
@@ -120,3 +120,4 @@ export const HomePage = () => {
     </>
   );
 };
+export default HomePage;

@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { useAppContext, State } from "../../app-context";
 
-export const SettingsPage = () => {
+const SettingsPage = () => {
   const { state, dispatch } = useAppContext();
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,3 +48,5 @@ export const SettingsPage = () => {
     </>
   );
 };
+
+export default SettingsPage;

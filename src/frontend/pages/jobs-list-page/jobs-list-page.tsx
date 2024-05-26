@@ -3,7 +3,7 @@ import { ResourceListPage } from "../../layout";
 import Job from "../../icons/resources/unlabeled/job.svg";
 import { useAppContext } from "../../app-context";
 
-export const JobsListPage = () => {
+const JobsListPage = () => {
   const { state } = useAppContext();
   const namespace = state.activeNamespace;
 
@@ -21,3 +21,4 @@ export const JobsListPage = () => {
     </ResourceListPage>
   );
 };
+export default JobsListPage;

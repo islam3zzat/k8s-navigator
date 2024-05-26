@@ -3,7 +3,7 @@ import { PodsList } from "../../components";
 import Pod from "../../icons/resources/unlabeled/pod.svg";
 import { useAppContext } from "../../app-context";
 
-export const PodsListPage = () => {
+const PodsListPage = () => {
   const { state } = useAppContext();
 
   const namespace = state.activeNamespace;
@@ -22,3 +22,4 @@ export const PodsListPage = () => {
     </ResourceListPage>
   );
 };
+export default PodsListPage;

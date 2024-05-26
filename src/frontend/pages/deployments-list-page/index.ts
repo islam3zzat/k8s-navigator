@@ -1,1 +1,1 @@
-export * from "./deployments-list-page";
+export { default } from "./deployments-list-page";

@@ -12,7 +12,7 @@ import { PodsList, ResourceIcon } from "../../components";
 import { useAppContext } from "../../app-context";
 import CronJob from "../../icons/resources/unlabeled/cronjob.svg";
 
-export const JobGeneralTab = ({ resource: job }: { resource: V1Job }) => {
+const JobGeneralTab = ({ resource: job }: { resource: V1Job }) => {
   const { state } = useAppContext();
 
   const namespace = state.activeNamespace;
@@ -90,3 +90,5 @@ export const JobGeneralTab = ({ resource: job }: { resource: V1Job }) => {
     </Stack>
   );
 };
+
+export default JobGeneralTab;

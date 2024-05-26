@@ -9,11 +9,7 @@ import { V1CronJob } from "@kubernetes/client-node";
 import { JobsList } from "../../components";
 import { useAppContext } from "../../app-context";
 
-export const CronJobGeneralTab = ({
-  resource: cronJob,
-}: {
-  resource: V1CronJob;
-}) => {
+const CronJobGeneralTab = ({ resource: cronJob }: { resource: V1CronJob }) => {
   const { state } = useAppContext();
 
   const jobLabels = cronJob?.spec?.jobTemplate?.spec?.template?.metadata.labels;
@@ -82,3 +78,5 @@ export const CronJobGeneralTab = ({
     </Stack>
   );
 };
+
+export default CronJobGeneralTab;

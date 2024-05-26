@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import { V1Deployment } from "@kubernetes/client-node";
 import { EnvVarsList } from "../../components";
 
-export const EnvironmentVariablesTab = ({
+const EnvironmentVariablesTab = ({
   resource: deployment,
 }: {
   resource: V1Deployment;
@@ -19,3 +19,5 @@ export const EnvironmentVariablesTab = ({
     </Stack>
   );
 };
+
+export default EnvironmentVariablesTab;

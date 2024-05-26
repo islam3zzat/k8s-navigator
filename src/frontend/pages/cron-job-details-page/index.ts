@@ -1,1 +1,1 @@
-export * from "./cron-job-details-page";
+export { default } from "./cron-job-details-page";

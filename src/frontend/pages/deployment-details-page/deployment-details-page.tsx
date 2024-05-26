@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
-import { DeploymentGeneralTab } from "./deployment-general-tab";
-import { EnvironmentVariablesTab } from "./environment-variables-tab";
+import DeploymentGeneralTab from "./deployment-general-tab";
+import EnvironmentVariablesTab from "./environment-variables-tab";
 import Deployment from "../../icons/resources/unlabeled/deploy.svg";
 import { ResourceDetailsPage } from "../../layout/resource-details-page";
 
-export const DeploymentDetailsPage = () => {
+const DeploymentDetailsPage = () => {
   const { deploymentName } = useParams<{ deploymentName: string }>();
 
   return (
@@ -30,3 +30,4 @@ export const DeploymentDetailsPage = () => {
     />
   );
 };
+export default DeploymentDetailsPage;

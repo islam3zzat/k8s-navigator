@@ -1,1 +1,1 @@
-export * from "./replica-sets-list-page";
+export { default } from "./replica-sets-list-page";

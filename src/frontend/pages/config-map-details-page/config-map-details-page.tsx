@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
 
-import { ConfigMapGeneralTab } from "./config-map-general-tab";
+import ConfigMapGeneralTab from "./config-map-general-tab";
 import ConfigMap from "../../icons/resources/unlabeled/cm.svg";
 import { ResourceDetailsPage } from "../../layout/resource-details-page";
 
-export const ConfigMapDetailsPage = () => {
+const ConfigMapDetailsPage = () => {
   const { configMapName } = useParams<{ configMapName: string }>();
 
   return (
@@ -26,3 +26,4 @@ export const ConfigMapDetailsPage = () => {
     />
   );
 };
+export default ConfigMapDetailsPage;

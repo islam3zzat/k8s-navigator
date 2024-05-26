@@ -1,1 +1,1 @@
-export * from "./config-maps-list-page";
+export { default } from "./config-maps-list-page";

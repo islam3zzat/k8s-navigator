@@ -8,7 +8,7 @@ import StorageIcon from "@mui/icons-material/Storage";
 import CopyAllIcon from "@mui/icons-material/CopyAll";
 import { TabComponentProps } from "../../layout/resource-details-page";
 
-export const ConfigMapGeneralTab: React.FC<TabComponentProps<V1ConfigMap>> = ({
+const ConfigMapGeneralTab: React.FC<TabComponentProps<V1ConfigMap>> = ({
   resource: configMap,
 }: {
   resource: V1ConfigMap;
@@ -88,3 +88,5 @@ export const ConfigMapGeneralTab: React.FC<TabComponentProps<V1ConfigMap>> = ({
     </Stack>
   );
 };
+
+export default ConfigMapGeneralTab;

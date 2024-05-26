@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
-import { SecretGeneralTab } from "./secret-general-tab";
+import SecretGeneralTab from "./secret-general-tab";
 import Secret from "../../icons/resources/unlabeled/secret.svg";
 import { ResourceDetailsPage } from "../../layout/resource-details-page";
 
-export const SecretDetailsPage = () => {
+const SecretDetailsPage = () => {
   const { secretName } = useParams<{ secretName: string }>();
 
   return (
@@ -25,3 +25,5 @@ export const SecretDetailsPage = () => {
     />
   );
 };
+
+export default SecretDetailsPage;

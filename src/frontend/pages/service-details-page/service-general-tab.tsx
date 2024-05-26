@@ -26,11 +26,7 @@ const formatPort = (svcPort: V1ServicePort): string => {
     .join(" - ");
 };
 
-export const ServiceGeneralTab = ({
-  resource: service,
-}: {
-  resource: V1Service;
-}) => {
+const ServiceGeneralTab = ({ resource: service }: { resource: V1Service }) => {
   const { state } = useAppContext();
 
   const namespace = state.activeNamespace;
@@ -81,3 +77,5 @@ export const ServiceGeneralTab = ({
     </Stack>
   );
 };
+
+export default ServiceGeneralTab;
