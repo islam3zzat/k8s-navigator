@@ -1,6 +1,17 @@
 import { motion } from "framer-motion";
-import IconButton from "@mui/material/IconButton";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import { forwardRef } from "react";
+
+const IconButtonWithRef = forwardRef<HTMLButtonElement, IconButtonProps>(
+  ({ ...props }, ref) => {
+    return <IconButton {...props} ref={ref} />;
+  },
+);
+IconButtonWithRef.displayName = "IconButtonWithRef";
+
+const MotionIconButton = motion(IconButtonWithRef);
+MotionIconButton.displayName = "MotionIconButton";
 
 const refreshIconVariants = {
   initial: { rotate: 0 },
@@ -19,21 +30,18 @@ type Props = {
 };
 export const RefetchDataButton = ({ isLoading, refetch }: Props) => {
   return (
-    <motion.div
+    <MotionIconButton
       variants={refreshIconVariants}
       initial="initial"
       whileHover="hover"
       whileTap="tap"
       animate={isLoading ? "refreshing" : "initial"}
+      color="primary"
+      aria-label="Refetch data"
+      size="small"
+      onClick={refetch}
     >
-      <IconButton
-        color="primary"
-        aria-label="Refetch data"
-        size="small"
-        onClick={refetch}
-      >
-        <RefreshIcon />
-      </IconButton>
-    </motion.div>
+      <RefreshIcon />
+    </MotionIconButton>
   );
 };

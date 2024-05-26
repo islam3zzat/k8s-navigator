@@ -30,12 +30,39 @@ export const theme = responsiveFontSizes(
         main: "#2aa198", // Solarized Cyan
       },
       text: {
-        primary: "#586e75", // Solarized Base01 (Darker grey for readability)
-        secondary: "#657b83", // Solarized Base00 (Lighter grey for secondary text)
+        primary: "#586e75", // Slightly darker than Base01 for a touch more contrast
+        secondary: "#002b36", // Unchanged - still good contrast
+        disabled: "#93a1a1", // Unchanged - light enough for disabled
       },
     },
     typography: {
       fontFamily: ['"Source Code Pro"', "monospace"].join(","),
+    },
+
+    components: {
+      MuiTable: {
+        styleOverrides: {
+          root: {
+            backgroundColor: "#fdf6e3", // Use your default background color
+            "& .MuiTableCell-root": {
+              // padding: theme.spacing(1.5),
+              // borderBottom: `1px solid ${theme.palette.divider}`, // Use divider color
+            },
+          },
+        },
+      },
+      MuiTableRow: {
+        styleOverrides: {
+          root: {
+            "&:nth-of-type(odd)": {
+              backgroundColor: "#eee8d5", // Use paper background color for striping
+            },
+            "&:hover": {
+              backgroundColor: "#eee8d5", // Use paper background color for hover
+            },
+          },
+        },
+      },
     },
   }),
 );

@@ -2,7 +2,6 @@ import { styled, Theme } from "@mui/material/styles";
 import TableSortLabel, {
   tableSortLabelClasses,
 } from "@mui/material/TableSortLabel";
-
 import React, { forwardRef, useRef, useState } from "react";
 import Table from "@mui/material/Table";
 import Box from "@mui/material/Box";
@@ -24,17 +23,6 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import { WatchCheckbox } from "../watch-checkbox";
 import { RefetchDataButton } from "../refetch-data-button";
-
-const refreshIconVariants = {
-  initial: { rotate: 0 },
-  hover: { scale: 1.2 },
-  tap: { scale: 0.9 },
-  refreshing: {
-    // Continuous rotation when refreshing
-    rotate: 360,
-    transition: { duration: 1, ease: "linear", repeat: Infinity },
-  },
-};
 
 const TableRowWithRef = forwardRef<HTMLTableRowElement, TableRowProps>(
   ({ ...props }, ref) => {
