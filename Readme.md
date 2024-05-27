@@ -16,7 +16,7 @@ K8S Navigator is an Electron desktop application built with TypeScript and React
 ### Demo
 
 <a href="https://youtu.be/bM6vmwOkjxE">
-  <img src="https://github.com/islam3zzat/k8s-navigator/raw/main/assets/thumbnail.png" alt="Watch the video" width="600" height="400">
+  <img src="https://github.com/islam3zzat/k8s-navigator/raw/main/assets/thumbnail.png" alt="Watch the video" width="600" />
 </a>
 
 ## Installation
