@@ -1,11 +1,12 @@
 {
   "name": "k8s-navigator",
   "productName": "k8s-navigator",
-  "version": "2.0.0",
+  "version": "0.0.2",
   "description": "My Electron application description",
   "main": ".webpack/main",
   "scripts": {
-    "generate-resource": "ts-node ./scripts/generateResource.ts",
+    "install-prod": "npm run publish && cp -r out/*/k8s-navigator.app /Applications",
+    "link-binaries": "ln -s /Applications/k8s-navigator.app/Contents/MacOS/k8s-navigator /usr/local/bin/k8s-navigator",
     "test-backend": "jest --config ./jest.config.backend.js",
     "start": "electron-forge start",
     "package": "electron-forge package",
