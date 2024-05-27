@@ -30,7 +30,7 @@ const SettingsPage = () => {
       type: "SET_WATCH_INTERVAL",
       watchIntervalsSeconds: watchInterval,
     });
-    // localStorage.setItem("watchIntervalSeconds", watchInterval.toString());
+    localStorage.setItem("watchIntervalSeconds", watchInterval.toString());
   };
   return (
     <>
