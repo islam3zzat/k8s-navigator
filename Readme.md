@@ -13,6 +13,10 @@ K8S Navigator is an Electron desktop application built with TypeScript and React
   - **High Contrast Mode:** Optimized color contrast for users with visual impairments.
   - **Focus Management:** Clear focus indicators for keyboard navigation.
 
+### Demo
+
+[![Watch the video](https://github.com/islam3zzat/k8s-navigator/raw/main/assets/thumbnail.png)](https://github.com/islam3zzat/k8s-navigator/raw/main/assets/demo.mp4)
+
 ## Installation
 
 1. **Prerequisites:**
