@@ -34,14 +34,21 @@ export type State = {
   pod: string;
   isFindInPageOpen?: boolean;
 };
-const storedTheme = localStorage.getItem("theme") as Theme | null;
-const storedWatchIntervalSeconds = localStorage.getItem("watchIntervalSeconds");
+
+let storedTheme: Theme = "purple-night";
+let storedWatchIntervalSeconds = 5;
+try {
+  storedTheme = localStorage.getItem("theme") as Theme;
+  storedWatchIntervalSeconds = parseFloat(
+    localStorage.getItem("watchIntervalSeconds") || "5",
+  );
+} catch (e) {
+  console.error("Error loading theme from local storage", e);
+}
 
 const initialState: State = {
   theme: storedTheme || "purple-night",
-  watchIntervalsSeconds: storedWatchIntervalSeconds
-    ? parseFloat(storedWatchIntervalSeconds)
-    : 5,
+  watchIntervalsSeconds: storedWatchIntervalSeconds,
   activeContext: null,
   isFindInPageOpen: false,
   breadCrumbs: initBreadCrumbs,

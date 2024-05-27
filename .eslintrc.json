@@ -38,8 +38,8 @@
     "react-hooks",
     "jsx-a11y",
     "import",
-    "prettier",
-    "unused-imports"
+    "prettier"
+    // "unused-imports"
   ],
   "rules": {
     "no-unused-vars": "off", // or "@typescript-eslint/no-unused-vars": "off",
@@ -64,17 +64,17 @@
           "index"
         ]
       }
-    ],
-    "unused-imports/no-unused-imports": "error",
-    "unused-imports/no-unused-vars": [
-      "warn",
-      {
-        "vars": "all",
-        "varsIgnorePattern": "^_",
-        "args": "after-used",
-        "argsIgnorePattern": "^_"
-      }
     ]
+    // "unused-imports/no-unused-imports": "error",
+    // "unused-imports/no-unused-vars": [
+    //   "warn",
+    //   {
+    //     "vars": "all",
+    //     "varsIgnorePattern": "^_",
+    //     "args": "after-used",
+    //     "argsIgnorePattern": "^_"
+    //   }
+    // ]
   },
   "parser": "@typescript-eslint/parser"
 }

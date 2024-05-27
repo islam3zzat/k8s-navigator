@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain, session } from "electron";
 import { PassThrough } from "node:stream";
 import { ipcControllers, pod, portForwardManager } from "./ipc-controllers";
 
@@ -14,7 +14,9 @@ if (require("electron-squirrel-startup")) {
 }
 let mainWindow: BrowserWindow | null = null;
 
-const createWindow = (): void => {
+const createWindow = async (): Promise<void> => {
+  await session.defaultSession.clearCache();
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
     height: 800,
@@ -23,11 +25,22 @@ const createWindow = (): void => {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
   });
+  mainWindow.webContents.session.webRequest.onHeadersReceived(
+    (details, callback) => {
+      callback({
+        responseHeaders: {
+          ...details.responseHeaders,
+          "Cache-Control": "no-cache",
+        },
+      });
+    },
+  );
 
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
   Object.entries(ipcControllers).forEach(([channel, listener]) => {
+    ipcMain.removeHandler(channel);
     ipcMain.handle(channel, listener);
   });
   // Handle find in page requests
