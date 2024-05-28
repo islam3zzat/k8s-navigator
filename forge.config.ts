@@ -7,14 +7,31 @@ import { AutoUnpackNativesPlugin } from "@electron-forge/plugin-auto-unpack-nati
 import { WebpackPlugin } from "@electron-forge/plugin-webpack";
 import { FusesPlugin } from "@electron-forge/plugin-fuses";
 import { FuseV1Options, FuseVersion } from "@electron/fuses";
-
+import * as dotenv from "dotenv";
 import { mainConfig } from "./webpack.main.config";
 import { rendererConfig } from "./webpack.renderer.config";
+
+dotenv.config();
 
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
     icon: "./src/images/icon",
+    osxSign: {
+      identity: process.env.SIGN_ID,
+      // @ts-expect-error unknown property
+      hardenedRuntime: true,
+      entitlements: "./config/entitlements.plist",
+      "entitlements-inherit": "./config/entitlements.plist",
+      "gatekeeper-assess": false,
+    },
+    osxNotarize: {
+      // @ts-expect-error unknown property
+      tool: "notarytool",
+      appleApiKey: process.env.APPLE_API_KEY as string,
+      appleApiKeyId: process.env.APPLE_API_KEY_ID as string,
+      appleApiIssuer: process.env.APPLE_API_ISSUER as string,
+    },
   },
   rebuildConfig: {},
   makers: [
@@ -22,6 +39,19 @@ const config: ForgeConfig = {
     new MakerZIP({}, ["darwin"]),
     new MakerRpm({}),
     new MakerDeb({}),
+  ],
+  publishers: [
+    {
+      name: "@electron-forge/publisher-gcs",
+      config: {
+        storageOptions: {
+          projectId: process.env.GCLOUD_PROJECT as string,
+        },
+        bucket: "k8s-navigator-bucket",
+        folder: "release",
+        public: true,
+      },
+    },
   ],
   plugins: [
     new AutoUnpackNativesPlugin({}),
@@ -41,8 +71,6 @@ const config: ForgeConfig = {
         ],
       },
     }),
-    // Fuses are used to enable/disable various Electron functionality
-    // at package time, before code signing the application
     new FusesPlugin({
       version: FuseVersion.V1,
       [FuseV1Options.RunAsNode]: false,
