@@ -26,11 +26,7 @@ const config: ForgeConfig = {
       "gatekeeper-assess": false,
     },
     osxNotarize: {
-      // @ts-expect-error unknown property
-      tool: "notarytool",
-      appleApiKey: process.env.APPLE_API_KEY as string,
-      appleApiKeyId: process.env.APPLE_API_KEY_ID as string,
-      appleApiIssuer: process.env.APPLE_API_ISSUER as string,
+      keychainProfile: process.env.KEYCHAIN_PROFILE as string,
     },
   },
   rebuildConfig: {},
