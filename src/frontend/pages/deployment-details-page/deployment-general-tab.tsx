@@ -14,7 +14,6 @@ import type { OverridableComponent } from "@mui/material/OverridableComponent";
 import { Button, SvgIconTypeMap, TextField } from "@mui/material";
 import { V1Deployment } from "@kubernetes/client-node";
 import { ConfirmationDialog, PodsList, ResourceIcon } from "../../components";
-import ServiceAccount from "../../icons/resources/unlabeled/sa.svg";
 import { useAppContext } from "../../app-context";
 
 const StrategyIconMapping: Record<
@@ -71,7 +70,7 @@ const DeploymentGeneralTab = ({
           {deployment && deployment.spec?.template.spec.serviceAccountName && (
             <Stack direction="row" spacing={2} alignItems="center">
               <Typography fontSize="small">
-                <ResourceIcon size={3} icon={ServiceAccount} />
+                <ResourceIcon size={3} resourceName="ServiceAccount" />
               </Typography>
               <Typography variant="h6">Service Account</Typography>
               <Link

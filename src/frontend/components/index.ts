@@ -15,7 +15,6 @@ export * from "./cron-jobs-list";
 export * from "./find-in-page";
 export * from "./replica-sets-list";
 export * from "./settings-select";
-export * from "./config-maps-list";
 export * from "./confirmation-dialog";
 export * from "./data-table";
 export * from "./env-vars-list";

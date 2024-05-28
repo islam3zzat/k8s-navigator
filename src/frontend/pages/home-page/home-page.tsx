@@ -9,15 +9,7 @@ import Stack from "@mui/material/Stack";
 import { motion } from "framer-motion";
 import { ResourceIcon } from "../../components";
 import { useAppContext } from "../../app-context";
-import Deployment from "../../icons/resources/unlabeled/deploy.svg";
-import Pod from "../../icons/resources/unlabeled/pod.svg";
-import Service from "../../icons/resources/unlabeled/svc.svg";
-import Job from "../../icons/resources/unlabeled/job.svg";
-import CronJob from "../../icons/resources/unlabeled/cronjob.svg";
-import ServiceAccount from "../../icons/resources/unlabeled/sa.svg";
-import Secret from "../../icons/resources/unlabeled/secret.svg";
-import ConfigMap from "../../icons/resources/unlabeled/cm.svg";
-import ReplicaSet from "../../icons/resources/unlabeled/rs.svg";
+import { ResourceName } from "../../components/resource-icon/icon-loader";
 
 const iconVariants = {
   hover: { scale: 1.02, transition: { duration: 0.3 } }, // Adjust the scale factor and duration as needed
@@ -51,6 +43,40 @@ ItemWithRef.displayName = "ItemWithRef";
 const MotionItem = motion(ItemWithRef);
 MotionItem.displayName = "MotionItem";
 
+type HomepageItem = {
+  path: string;
+  resourceName: ResourceName;
+  label: string;
+};
+
+const homepageItems: HomepageItem[] = [
+  {
+    path: "/deployments",
+    resourceName: "Deployment",
+    label: "Deployments",
+  },
+  {
+    path: "/replica-sets",
+    resourceName: "ReplicaSet",
+    label: "ReplicaSets",
+  },
+  { path: "/pods", resourceName: "Pod", label: "Pods" },
+  { path: "/services", resourceName: "Service", label: "Services" },
+  { path: "/jobs", resourceName: "Job", label: "Jobs" },
+  { path: "/cron-jobs", resourceName: "CronJob", label: "Cron Jobs" },
+  {
+    path: "/service-accounts",
+    resourceName: "ServiceAccount",
+    label: "Service Accounts",
+  },
+  { path: "/secrets", resourceName: "Secret", label: "Secrets" },
+  {
+    path: "/config-maps",
+    resourceName: "ConfigMap",
+    label: "Config Maps",
+  },
+];
+
 const HomePage = () => {
   const { state, dispatch } = useAppContext();
   const navigate = useNavigate();
@@ -77,21 +103,7 @@ const HomePage = () => {
           <Typography variant="body1">{state.activeContext?.name}</Typography>
         </Stack>
         <Stack direction="row" flexWrap="wrap" gap={1}>
-          {[
-            { path: "/deployments", icon: Deployment, label: "Deployments" },
-            { path: "/replica-sets", icon: ReplicaSet, label: "ReplicaSets" },
-            { path: "/pods", icon: Pod, label: "Pods" },
-            { path: "/services", icon: Service, label: "Services" },
-            { path: "/jobs", icon: Job, label: "Jobs" },
-            { path: "/cron-jobs", icon: CronJob, label: "Cron Jobs" },
-            {
-              path: "/service-accounts",
-              icon: ServiceAccount,
-              label: "Service Accounts",
-            },
-            { path: "/secrets", icon: Secret, label: "Secrets" },
-            { path: "/config-maps", icon: ConfigMap, label: "Config Maps" },
-          ].map(({ path, icon, label }) => (
+          {homepageItems.map(({ path, resourceName, label }) => (
             <MotionItem
               variants={iconVariants}
               whileHover="hover"
@@ -111,7 +123,7 @@ const HomePage = () => {
                 direction="row"
                 spacing={1}
               >
-                <ResourceIcon size={3} icon={icon} isPrimary />
+                <ResourceIcon size={3} resourceName={resourceName} isPrimary />
                 <Typography variant="button">{label}</Typography>
               </Stack>
             </MotionItem>

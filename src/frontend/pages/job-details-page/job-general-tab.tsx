@@ -23,7 +23,7 @@ const JobGeneralTab = ({ resource: job }: { resource: V1Job }) => {
     <Stack spacing={4}>
       <Stack spacing={2}>
         <Stack direction="row" spacing={2} alignItems="center">
-          <ResourceIcon icon={CronJob} size={2.5} />
+          <ResourceIcon resourceName="CronJob" size={2.5} />
           <Typography variant="h6" width={150}>
             Controlled By
           </Typography>

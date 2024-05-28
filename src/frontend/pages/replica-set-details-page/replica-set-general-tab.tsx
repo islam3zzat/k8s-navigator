@@ -30,7 +30,7 @@ const ReplicaSetGeneralTab = ({
         {replicaSet?.spec.template.spec.serviceAccountName && (
           <Stack direction="row" spacing={2} alignItems="center">
             <Typography fontSize="small">
-              <ResourceIcon size={3} icon={ServiceAccount} />
+              <ResourceIcon size={3} resourceName="ServiceAccount" />
             </Typography>
             <Typography variant="h6">Service Account</Typography>
             <Link
@@ -56,7 +56,7 @@ const ReplicaSetGeneralTab = ({
               justifyContent="center"
             >
               <Typography fontSize="small">
-                <ResourceIcon size={3} icon={Deployment} />
+                <ResourceIcon size={3} resourceName="Deployment" />
               </Typography>
               <Link
                 component={RouterLink}

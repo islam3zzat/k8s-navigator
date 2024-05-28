@@ -8,38 +8,31 @@ import Link from "@mui/material/Link";
 import HomeIcon from "@mui/icons-material/Home";
 import { FindInPage, Header, ResourceIcon } from "../../components";
 import { useAppContext } from "../../app-context";
-import Deployment from "../../icons/resources/unlabeled/deploy.svg";
-import Pod from "../../icons/resources/unlabeled/pod.svg";
-import CronJob from "../../icons/resources/unlabeled/cronjob.svg";
-import Service from "../../icons/resources/unlabeled/svc.svg";
-import Job from "../../icons/resources/unlabeled/job.svg";
-import ServiceAccount from "../../icons/resources/unlabeled/sa.svg";
-import ConfigMap from "../../icons/resources/unlabeled/cm.svg";
-import Secret from "../../icons/resources/unlabeled/secret.svg";
-import ReplicaSet from "../../icons/resources/unlabeled/rs.svg";
 
 const getBradCrumbIcon = (name: string, isPrimary: boolean) => {
   switch (name) {
     case "Home":
       return <HomeIcon sx={{ width: "1rem" }} />;
     case "Deployment":
-      return <ResourceIcon icon={Deployment} isPrimary={isPrimary} />;
+      return <ResourceIcon resourceName="Deployment" isPrimary={isPrimary} />;
     case "Pod":
-      return <ResourceIcon icon={Pod} isPrimary={isPrimary} />;
+      return <ResourceIcon resourceName="Pod" isPrimary={isPrimary} />;
     case "Service":
-      return <ResourceIcon icon={Service} isPrimary={isPrimary} />;
+      return <ResourceIcon resourceName="Service" isPrimary={isPrimary} />;
     case "Job":
-      return <ResourceIcon icon={Job} isPrimary={isPrimary} />;
+      return <ResourceIcon resourceName="Job" isPrimary={isPrimary} />;
     case "CronJobs":
-      return <ResourceIcon icon={CronJob} isPrimary={isPrimary} />;
+      return <ResourceIcon resourceName="CronJob" isPrimary={isPrimary} />;
     case "ServiceAccount":
-      return <ResourceIcon icon={ServiceAccount} isPrimary={isPrimary} />;
+      return (
+        <ResourceIcon resourceName="ServiceAccount" isPrimary={isPrimary} />
+      );
     case "Secret":
-      return <ResourceIcon icon={Secret} isPrimary={isPrimary} />;
+      return <ResourceIcon resourceName="Secret" isPrimary={isPrimary} />;
     case "ConfigMap":
-      return <ResourceIcon icon={ConfigMap} isPrimary={isPrimary} />;
+      return <ResourceIcon resourceName="ConfigMap" isPrimary={isPrimary} />;
     case "ReplicaSet":
-      return <ResourceIcon icon={ReplicaSet} isPrimary={isPrimary} />;
+      return <ResourceIcon resourceName="ReplicaSet" isPrimary={isPrimary} />;
     default:
       return null;
   }

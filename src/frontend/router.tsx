@@ -6,6 +6,7 @@ import ReactDOM from "react-dom/client";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import { AppProvider } from "./app-context";
 import { AppTheme } from "./theme";
+import PageLoadingFallback from "./components/page-loading-fallback";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -17,38 +18,152 @@ import "@fontsource/source-code-pro/700.css";
 const App = lazy(() => import("./pages/app"));
 // Lazy Load Pages
 const ConfigMapDetailsPage = lazy(
-  () => import("./pages/config-map-details-page"),
+  () =>
+    import(
+      /* webpackChunkName: "config-map-details-page" */
+      "./pages/config-map-details-page"
+    ),
 );
-const ConfigMapsListPage = lazy(() => import("./pages/config-maps-list-page"));
-const CronJobDetailsPage = lazy(() => import("./pages/cron-job-details-page"));
-const CronJobsListPage = lazy(() => import("./pages/cron-jobs-list-page"));
+const ConfigMapsListPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "config-maps-list-page" */
+      "./pages/config-maps-list-page"
+    ),
+);
+const CronJobDetailsPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "cron-job-details-page" */
+      "./pages/cron-job-details-page"
+    ),
+);
+const CronJobsListPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "cron-jobs-list-page" */
+      "./pages/cron-jobs-list-page"
+    ),
+);
 const DeploymentDetailsPage = lazy(
-  () => import("./pages/deployment-details-page"),
+  () =>
+    import(
+      /* webpackChunkName: "deployment-details-page" */
+      "./pages/deployment-details-page"
+    ),
 );
-const DeploymentsListPage = lazy(() => import("./pages/deployments-list-page"));
-const HomePage = lazy(() => import("./pages/home-page")); // Assuming HomePage is also kebab case
-const JobDetailsPage = lazy(() => import("./pages/job-details-page"));
-const JobsListPage = lazy(() => import("./pages/jobs-list-page"));
-const PodDetailsPage = lazy(() => import("./pages/pod-details-page"));
-const PodLogsPage = lazy(() => import("./pages/pod-logs-page"));
-const PodsListPage = lazy(() => import("./pages/pods-list-page"));
+const DeploymentsListPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "deployment-list-page" */
+      "./pages/deployments-list-page"
+    ),
+);
+const HomePage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "home-page" */
+      "./pages/home-page"
+    ),
+); // Assuming HomePage is also kebab case
+const JobDetailsPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "job-details-page" */
+      "./pages/job-details-page"
+    ),
+);
+const JobsListPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "jobs-list-page" */
+      "./pages/jobs-list-page"
+    ),
+);
+const PodDetailsPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "pod-details-page" */
+      "./pages/pod-details-page"
+    ),
+);
+const PodLogsPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "pod-logs-page" */
+      "./pages/pod-logs-page"
+    ),
+);
+const PodsListPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "pods-list-page" */
+      "./pages/pods-list-page"
+    ),
+);
 const ReplicaSetDetailsPage = lazy(
-  () => import("./pages/replica-set-details-page"),
+  () =>
+    import(
+      /* webpackChunkName: "replica-set-details-page" */
+      "./pages/replica-set-details-page"
+    ),
 );
 const ReplicaSetsListPage = lazy(
-  () => import("./pages/replica-sets-list-page"),
+  () =>
+    import(
+      /* webpackChunkName: "replica-set-list-page" */
+      "./pages/replica-sets-list-page"
+    ),
 );
-const SecretDetailsPage = lazy(() => import("./pages/secret-details-page"));
-const SecretsListPage = lazy(() => import("./pages/secrets-list-page"));
+const SecretDetailsPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "secret-details-page" */
+      "./pages/secret-details-page"
+    ),
+);
+const SecretsListPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "secret-list-page" */
+      "./pages/secrets-list-page"
+    ),
+);
 const ServiceAccountDetailsPage = lazy(
-  () => import("./pages/service-account-details-page"),
+  () =>
+    import(
+      /* webpackChunkName: "service-account-details-page" */
+      "./pages/service-account-details-page"
+    ),
 );
 const ServiceAccountsListPage = lazy(
-  () => import("./pages/service-accounts-list-page"),
+  () =>
+    import(
+      /* webpackChunkName: "service-account-list-page" */
+      "./pages/service-accounts-list-page"
+    ),
 );
-const ServiceDetailsPage = lazy(() => import("./pages/service-details-page"));
-const ServicesListPage = lazy(() => import("./pages/services-list-page"));
-const SettingsPage = lazy(() => import("./pages/settings-page"));
+const ServiceDetailsPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "service-details-page" */
+      "./pages/service-details-page"
+    ),
+);
+const ServicesListPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "service-list-details-page" */
+      "./pages/services-list-page"
+    ),
+);
+const SettingsPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "settings" */
+      "./pages/settings-page"
+    ),
+);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -64,7 +179,7 @@ root.render(
           <AppTheme>
             <CssBaseline />
             <HashRouter>
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<PageLoadingFallback isFullPage />}>
                 <Routes>
                   <Route path="/" element={<App />}>
                     <Route path="/settings" element={<SettingsPage />} />

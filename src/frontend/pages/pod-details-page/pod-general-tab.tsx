@@ -50,7 +50,7 @@ const PodOwnerLink = ({ kind, name }: { kind: string; name: string }) => {
         justifyContent="center"
       >
         <Typography fontSize="small">
-          <ResourceIcon size={3} icon={ReplicaSet} />
+          <ResourceIcon size={3} resourceName="ReplicaSet" />
         </Typography>
         <Link
           component={RouterLink}
@@ -73,7 +73,7 @@ const PodOwnerLink = ({ kind, name }: { kind: string; name: string }) => {
         justifyContent="center"
       >
         <Typography fontSize="small">
-          <ResourceIcon size={3} icon={Job} />
+          <ResourceIcon size={3} resourceName="Job" />
         </Typography>
         <Link component={RouterLink} flex={1} to={`/jobs/${name}`} sx={{}}>
           <Typography variant="body1">{name} (job)</Typography>
@@ -276,7 +276,7 @@ const PodGeneralTab: React.FC<TabComponentProps<V1Pod>> = ({
         {pod?.spec.serviceAccountName && (
           <Stack direction="row" spacing={2} alignItems="center">
             <Typography fontSize="small">
-              <ResourceIcon size={3} icon={ServiceAccount} />
+              <ResourceIcon size={3} resourceName="ServiceAccount" />
             </Typography>
             <Typography variant="h6">Service Account</Typography>
             <Link

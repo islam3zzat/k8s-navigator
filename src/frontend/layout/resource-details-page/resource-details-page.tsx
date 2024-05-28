@@ -19,6 +19,7 @@ import {
   WatchCheckbox,
 } from "../../components";
 import { useDownloadResource } from "../../hooks/use-dowload-resource";
+import type { ResourceName } from "../../components/resource-icon/icon-loader";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -69,8 +70,7 @@ type Props<T> = {
   routeOptions: {
     path: string;
     label: string;
-    iconName: string;
-    icon: unknown;
+    iconName: ResourceName;
   };
 };
 const labelsTab = {
@@ -177,7 +177,11 @@ export const ResourceDetailsPage = <T,>({
           justifyContent="center"
           spacing={2}
         >
-          <ResourceIcon isPrimary icon={routeOptions.icon} size={6} />
+          <ResourceIcon
+            isPrimary
+            resourceName={routeOptions.iconName}
+            size={6}
+          />
           <Typography variant="h4">{name}</Typography>
           <Button
             disabled={isLoading}

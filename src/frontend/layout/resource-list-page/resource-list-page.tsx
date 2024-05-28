@@ -4,6 +4,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { ResourceIcon } from "../../components";
 import { useAppContext } from "../../app-context";
+import { ResourceName } from "../../components/resource-icon/icon-loader";
 
 type Props = {
   children: React.ReactElement;
@@ -11,7 +12,7 @@ type Props = {
   routeOptions: {
     path: string;
     label: string;
-    iconName: string;
+    iconName: ResourceName;
     icon: unknown;
   };
 };
@@ -58,7 +59,7 @@ export const ResourceListPage = ({ children, title, routeOptions }: Props) => {
         >
           <ResourceIcon
             isPrimary
-            icon={routeOptions.icon}
+            resourceName={routeOptions.iconName}
             size={6}
             aria-label={routeOptions.label}
           />

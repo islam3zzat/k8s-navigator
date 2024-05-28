@@ -7,7 +7,7 @@ import { ResourceTable } from "../resource-table";
 type Props = {
   namespace: string;
 };
-export const ConfigMapsList = ({ namespace }: Props) => {
+const ConfigMapsList = ({ namespace }: Props) => {
   const dataFetcher = useCallback(async () => {
     if (!namespace) return [];
 
@@ -33,3 +33,5 @@ export const ConfigMapsList = ({ namespace }: Props) => {
     />
   );
 };
+
+export default ConfigMapsList;
