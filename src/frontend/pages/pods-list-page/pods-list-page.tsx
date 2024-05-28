@@ -1,6 +1,5 @@
 import { ResourceListPage } from "../../layout";
 import { PodsList } from "../../components";
-import Pod from "../../icons/resources/unlabeled/pod.svg";
 import { useAppContext } from "../../app-context";
 
 const PodsListPage = () => {
@@ -15,7 +14,6 @@ const PodsListPage = () => {
         label: "Pods",
         path: "/pods",
         iconName: "Pod",
-        icon: Pod,
       }}
     >
       <PodsList namespace={namespace} />

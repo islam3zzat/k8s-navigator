@@ -1,6 +1,5 @@
 import { JobsList } from "../../components";
 import { ResourceListPage } from "../../layout";
-import Job from "../../icons/resources/unlabeled/job.svg";
 import { useAppContext } from "../../app-context";
 
 const JobsListPage = () => {
@@ -14,7 +13,6 @@ const JobsListPage = () => {
         label: "Jobs",
         path: "/jobs",
         iconName: "Job",
-        icon: Job,
       }}
     >
       <JobsList namespace={namespace} />

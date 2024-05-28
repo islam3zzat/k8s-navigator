@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import DeploymentGeneralTab from "./deployment-general-tab";
 import EnvironmentVariablesTab from "./environment-variables-tab";
-import Deployment from "../../icons/resources/unlabeled/deploy.svg";
 import { ResourceDetailsPage } from "../../layout/resource-details-page";
 
 const DeploymentDetailsPage = () => {
@@ -25,7 +24,6 @@ const DeploymentDetailsPage = () => {
         path: "/deployments/" + deploymentName,
         label: "Deployment Details",
         iconName: "Deployment",
-        icon: Deployment,
       }}
     />
   );

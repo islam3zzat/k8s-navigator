@@ -1,7 +1,5 @@
-import React, { lazy, Suspense } from "react";
-import { useTheme } from "@mui/material/styles";
+import { lazy, Suspense } from "react";
 import { ResourceListPage } from "../../layout";
-import ConfigMap from "../../icons/resources/unlabeled/cm.svg";
 import { useAppContext } from "../../app-context";
 import PageLoadingFallback from "../../components/page-loading-fallback";
 // Utility function to introduce a delay
@@ -25,7 +23,6 @@ const ConfigMapsListPage = () => {
         label: "Config Maps",
         path: "/config-maps",
         iconName: "ConfigMap",
-        icon: ConfigMap,
       }}
     >
       <Suspense fallback={<PageLoadingFallback />}>

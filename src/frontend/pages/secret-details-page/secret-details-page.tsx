@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import SecretGeneralTab from "./secret-general-tab";
-import Secret from "../../icons/resources/unlabeled/secret.svg";
 import { ResourceDetailsPage } from "../../layout/resource-details-page";
 
 const SecretDetailsPage = () => {
@@ -20,7 +19,6 @@ const SecretDetailsPage = () => {
         path: "/secrets/" + secretName,
         label: "Secret Details",
         iconName: "Secret",
-        icon: Secret,
       }}
     />
   );

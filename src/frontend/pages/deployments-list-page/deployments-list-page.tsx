@@ -1,5 +1,4 @@
 import { DeploymentsList } from "../../components";
-import Deployment from "../../icons/resources/unlabeled/deploy.svg";
 import { useAppContext } from "../../app-context";
 import { ResourceListPage } from "../../layout";
 
@@ -15,7 +14,6 @@ const DeploymentsListPage = () => {
         label: "Deployments",
         path: "/deployments",
         iconName: "Deployment",
-        icon: Deployment,
       }}
     >
       <DeploymentsList namespace={namespace} />

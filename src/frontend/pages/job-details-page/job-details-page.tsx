@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import JobGeneralTab from "./job-general-tab";
-import Job from "../../icons/resources/unlabeled/job.svg";
 import { ResourceDetailsPage } from "../../layout/resource-details-page";
 
 const JobDetailsPage = () => {
@@ -15,7 +14,6 @@ const JobDetailsPage = () => {
         path: "/jobs/" + jobName,
         label: "Job Details",
         iconName: "Job",
-        icon: Job,
       }}
     />
   );

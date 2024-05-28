@@ -1,5 +1,4 @@
 import { CronJobsList } from "../../components";
-import CronJob from "../../icons/resources/unlabeled/cronjob.svg";
 import { useAppContext } from "../../app-context";
 import { ResourceListPage } from "../../layout";
 
@@ -15,7 +14,6 @@ const CronJobsListPage = () => {
         path: "/cron-jobs",
         label: "CronJobs",
         iconName: "CronJob",
-        icon: CronJob,
       }}
     >
       <CronJobsList namespace={namespace} />

@@ -4,7 +4,6 @@ import Typography from "@mui/material/Typography";
 import { V1Pod } from "@kubernetes/client-node";
 import React from "react";
 import PodGeneralTab from "./pod-general-tab";
-import Pod from "../../icons/resources/unlabeled/pod.svg";
 import { ContainerStatusList, EnvVarsList } from "../../components";
 import {
   ResourceDetailsPage,
@@ -61,7 +60,6 @@ const PodDetailsPage = () => {
         path: "/pods/" + podName,
         label: "Pod Details",
         iconName: "Pod",
-        icon: Pod,
       }}
     />
   );

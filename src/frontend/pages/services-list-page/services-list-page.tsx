@@ -15,7 +15,6 @@ const ServicesListPage = () => {
         label: "Services",
         path: "/services",
         iconName: "Service",
-        icon: Service,
       }}
     >
       <ServicesList namespace={namespace} />

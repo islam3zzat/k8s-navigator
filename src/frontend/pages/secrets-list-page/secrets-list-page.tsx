@@ -1,5 +1,4 @@
 import { SecretsList } from "../../components";
-import Secret from "../../icons/resources/unlabeled/secret.svg";
 import { useAppContext } from "../../app-context";
 import { ResourceListPage } from "../../layout";
 
@@ -13,7 +12,6 @@ const SecretsListPage = () => {
         label: "Secrets",
         path: "/secrets",
         iconName: "Secret",
-        icon: Secret,
       }}
     >
       <SecretsList namespace={state.activeNamespace} />

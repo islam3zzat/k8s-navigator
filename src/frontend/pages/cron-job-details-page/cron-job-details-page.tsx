@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import CronJobGeneralTab from "./cron-job-general-tab";
-import CronJob from "../../icons/resources/unlabeled/cronjob.svg";
 import { ResourceDetailsPage } from "../../layout/resource-details-page";
 
 const CronJobDetailsPage = () => {
@@ -20,7 +19,6 @@ const CronJobDetailsPage = () => {
         path: "/cron-jobs/" + cronJobName,
         label: "CronJob Details",
         iconName: "CronJob",
-        icon: CronJob,
       }}
     />
   );

@@ -20,7 +20,6 @@ const ServiceAccountDetailsPage = () => {
         path: "/serviceAccounts/" + serviceAccountName,
         label: "ServiceAccount Details",
         iconName: "ServiceAccount",
-        icon: ServiceAccount,
       }}
     />
   );

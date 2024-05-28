@@ -13,7 +13,6 @@ type Props = {
     path: string;
     label: string;
     iconName: ResourceName;
-    icon: unknown;
   };
 };
 export const ResourceListPage = ({ children, title, routeOptions }: Props) => {
