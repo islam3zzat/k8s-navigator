@@ -3,6 +3,7 @@ import { MakerSquirrel } from "@electron-forge/maker-squirrel";
 import { MakerZIP } from "@electron-forge/maker-zip";
 import { MakerDeb } from "@electron-forge/maker-deb";
 import { MakerRpm } from "@electron-forge/maker-rpm";
+import { MakerPKG } from "@electron-forge/maker-pkg";
 import { AutoUnpackNativesPlugin } from "@electron-forge/plugin-auto-unpack-natives";
 import { WebpackPlugin } from "@electron-forge/plugin-webpack";
 import { FusesPlugin } from "@electron-forge/plugin-fuses";
@@ -26,7 +27,9 @@ const config: ForgeConfig = {
       "gatekeeper-assess": false,
     },
     osxNotarize: {
-      keychainProfile: process.env.KEYCHAIN_PROFILE as string,
+      appleApiKey: process.env.APPLE_API_KEY as string,
+      appleApiKeyId: process.env.APPLE_API_KEY_ID as string,
+      appleApiIssuer: process.env.APPLE_API_ISSUER as string,
     },
   },
   rebuildConfig: {},
@@ -35,6 +38,9 @@ const config: ForgeConfig = {
     new MakerZIP({}, ["darwin"]),
     new MakerRpm({}),
     new MakerDeb({}),
+    new MakerPKG({
+      identity: process.env.INSTALLER_ID as string,
+    }),
   ],
   publishers: [
     {
