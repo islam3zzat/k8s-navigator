@@ -19,6 +19,7 @@ const config: ForgeConfig = {
     asar: true,
     icon: "./src/images/icon",
     osxSign: {
+      type: "distribution",
       identity: process.env.SIGN_ID,
       // @ts-expect-error unknown property
       hardenedRuntime: true,
