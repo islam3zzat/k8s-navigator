@@ -19,7 +19,7 @@ const SettingsPage = () => {
       type: "SET_THEME",
       theme: selectedTheme,
     });
-    // localStorage.setItem("theme", selectedTheme);
+    localStorage.setItem("theme", selectedTheme);
   };
 
   const [watchInterval, setWatchInterval] = React.useState<number>(

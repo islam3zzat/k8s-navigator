@@ -12,7 +12,7 @@ import { useAppContext } from "../../app-context";
 import { ResourceName } from "../../components/resource-icon/icon-loader";
 
 const iconVariants = {
-  hover: { scale: 1.02, transition: { duration: 0.3 } }, // Adjust the scale factor and duration as needed
+  hover: { scale: 1.02, transition: { duration: 0.3 } },
   tap: { scale: 0.98 },
 };
 const Item = styled(Paper)(({ theme }: { theme: Theme }) => ({

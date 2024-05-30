@@ -28,7 +28,6 @@ const mockConfigMaps: V1ConfigMapList = {
 };
 
 beforeAll(() => {
-  // Set up the mock implementation before running the tests
   (
     window.k8sNavigator.listConfigMaps as jest.MockedFunction<
       typeof window.k8sNavigator.listConfigMaps

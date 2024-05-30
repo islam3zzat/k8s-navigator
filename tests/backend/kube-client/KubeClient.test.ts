@@ -39,13 +39,6 @@ describe("KubeClient", () => {
   });
 
   it.skip("should switch context", async () => {
-    // kubeConfigManager.setCurrentContext.mockImplementation(() => {
-    //   // test
-    // });
-    // kubeConfigManager.getCurrentContext.mockReturnValue(
-    //   Promise.resolve({ name: "context1" } as k8s.Context),
-    // );
-
     await kubeClient.switchContext("context1");
 
     expect(kubeConfigManager.setCurrentContext).toHaveBeenCalledWith(

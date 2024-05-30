@@ -71,7 +71,7 @@ export const purpleDarkTheme = createTheme({
           },
           "&:hover": {
             backgroundColor: purpleDarkColors.base01,
-            color: purpleDarkColors.base3, // Lighter text color on hover
+            color: purpleDarkColors.base3,
           },
         },
       },

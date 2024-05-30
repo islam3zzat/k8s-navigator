@@ -6,7 +6,7 @@ import ReactDOM from "react-dom/client";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import { AppProvider } from "./app-context";
 import { AppTheme } from "./theme";
-import PageLoadingFallback from "./components/page-loading-fallback";
+import LoadingFallback from "./components/loading-fallback";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -65,7 +65,7 @@ const HomePage = lazy(
       /* webpackChunkName: "home-page" */
       "./pages/home-page"
     ),
-); // Assuming HomePage is also kebab case
+);
 const JobDetailsPage = lazy(
   () =>
     import(
@@ -179,7 +179,7 @@ root.render(
           <AppTheme>
             <CssBaseline />
             <HashRouter>
-              <Suspense fallback={<PageLoadingFallback isFullPage />}>
+              <Suspense fallback={<LoadingFallback isFullPage />}>
                 <Routes>
                   <Route path="/" element={<App />}>
                     <Route path="/settings" element={<SettingsPage />} />

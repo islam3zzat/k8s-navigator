@@ -29,13 +29,11 @@ import { WatchCheckbox } from "../watch-checkbox";
 import { RefetchDataButton } from "../refetch-data-button";
 
 const StyledTable = styled(Table)(({ theme }: { theme: Theme }) => ({
-  // Table background (slightly lighter than paper)
   backgroundColor: theme.palette.background.default,
 
-  // Cell padding for better readability
   "& .MuiTableCell-root": {
-    padding: theme.spacing(1.5), // Adjust spacing as needed
-    borderBottom: `1px solid ${theme.palette.divider}`, // Use divider color for subtle borders
+    padding: theme.spacing(1.5),
+    borderBottom: `1px solid ${theme.palette.divider}`,
   },
 }));
 
@@ -52,7 +50,6 @@ MotionTableRow.displayName = "MotionTableRow";
 const StyledTableSortLabel = styled(TableSortLabel)(
   ({ theme }: { theme: Theme }) => ({
     [`&.${tableSortLabelClasses.active}`]: {
-      // Target active sorting column
       color: theme.palette.primary.main, // Accent color on focus
     },
     [`&.${tableSortLabelClasses.active} .${tableSortLabelClasses.icon}`]: {

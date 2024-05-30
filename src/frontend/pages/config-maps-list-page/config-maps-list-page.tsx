@@ -1,10 +1,8 @@
 import { lazy, Suspense } from "react";
 import { ResourceListPage } from "../../layout";
 import { useAppContext } from "../../app-context";
-import PageLoadingFallback from "../../components/page-loading-fallback";
-// Utility function to introduce a delay
+import LoadingFallback from "../../components/loading-fallback";
 
-// Lazy load the config-maps-list component with a delay
 const ConfigMapsList = lazy(
   () =>
     import(
@@ -25,7 +23,7 @@ const ConfigMapsListPage = () => {
         iconName: "ConfigMap",
       }}
     >
-      <Suspense fallback={<PageLoadingFallback />}>
+      <Suspense fallback={<LoadingFallback />}>
         <ConfigMapsList namespace={state.activeNamespace} />
       </Suspense>
     </ResourceListPage>

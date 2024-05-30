@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { Outlet, Link as RouterLink } from "react-router-dom";
 import Stack from "@mui/material/Stack";
 import Container from "@mui/material/Container";
@@ -8,6 +8,7 @@ import Link from "@mui/material/Link";
 import HomeIcon from "@mui/icons-material/Home";
 import { FindInPage, Header, ResourceIcon } from "../../components";
 import { useAppContext } from "../../app-context";
+import LoadingFallback from "../../components/loading-fallback";
 
 const getBradCrumbIcon = (name: string, isPrimary: boolean) => {
   switch (name) {
@@ -128,7 +129,9 @@ const App: React.FC = () => {
                 <Typography>{lastBreadcrumb.label}</Typography>
               </Stack>
             </Breadcrumbs>
-            <Outlet />
+            <Suspense fallback={<LoadingFallback />}>
+              <Outlet />
+            </Suspense>
           </Stack>
         </Container>
       </main>

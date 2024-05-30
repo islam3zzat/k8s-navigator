@@ -71,7 +71,7 @@ export const solarizedDarkTheme = createTheme({
           },
           "&:hover": {
             backgroundColor: solarizedDarkColors.base01,
-            color: solarizedDarkColors.base3, // Lighter text color on hover
+            color: solarizedDarkColors.base3,
           },
         },
       },

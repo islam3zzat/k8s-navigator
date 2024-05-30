@@ -20,7 +20,6 @@ import {
 import { IpcActions } from "./shared/ipc-actions";
 import { Secret } from "./backend/secret";
 
-// Instantiate objects from the backend and call their methods
 const kubeConfig = new k8s.KubeConfig();
 kubeConfig.loadFromDefault();
 const apiClientFactory = new ApiClientFactory(kubeConfig);

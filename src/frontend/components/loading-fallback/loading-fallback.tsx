@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 type Props = {
   isFullPage?: boolean;
 };
-const PageLoadingFallback = ({ isFullPage }: Props) => {
+const LoadingFallback = ({ isFullPage }: Props) => {
   const theme = useTheme();
 
   const height = isFullPage ? "100vh" : "20vh";
@@ -22,4 +22,4 @@ const PageLoadingFallback = ({ isFullPage }: Props) => {
   );
 };
 
-export default PageLoadingFallback;
+export default LoadingFallback;
