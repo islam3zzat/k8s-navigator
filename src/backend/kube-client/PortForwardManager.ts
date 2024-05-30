@@ -122,9 +122,9 @@ export class PortForwardManager {
   public closeAllPortForwards = async () => {
     await Promise.all(
       this.portForwards.map(
-        (server) =>
+        ({ server }) =>
           new Promise<void>((resolve, reject) => {
-            server.server.close((err) => {
+            server.close((err) => {
               if (err) {
                 reject(err);
               } else {

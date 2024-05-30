@@ -154,7 +154,7 @@ describe("PortForwardManager", () => {
           }
         }),
         listen: jest.fn(),
-        close: jest.fn(),
+        close: jest.fn((callback) => callback()),
       };
       (net.createServer as jest.Mock).mockReturnValue(serverMock);
 
@@ -165,7 +165,7 @@ describe("PortForwardManager", () => {
         userPort: 3000,
       });
 
-      portForwardManager.closeAllPortForwards();
+      await portForwardManager.closeAllPortForwards();
       expect(serverMock.close).toHaveBeenCalled();
       expect(portForwardManager.listPortForwards()).toHaveLength(0);
     });
