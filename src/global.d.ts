@@ -1,4 +1,5 @@
 import { Context, V1CronJobList } from "@kubernetes/client-node";
+
 interface K8sNavigator {
   // Contexts
   listContexts: () => Promise<Context[]>;
@@ -67,23 +68,9 @@ interface K8sNavigator {
     name: string,
     targetPort: string,
     userPort: string,
-  ) => void;
+  ) => Promise<void>;
 
-  listForwardedPortServers: () => Array<{
-    namespace: string;
-    name: string;
-    userPort: string;
-    targetPort: string;
-  }>;
-
-  closePortForward: (
-    namespace: string,
-    name: string,
-    targetPort: string,
-    userPort: string,
-  ) => void;
-
-  closeAllPortForwards: () => void;
+  closeAllPortForwards: () => Promise<void>;
 
   queryPodsBySelector: (
     namespace: string,

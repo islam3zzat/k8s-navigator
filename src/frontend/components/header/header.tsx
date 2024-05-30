@@ -74,21 +74,25 @@ export const Header: React.FC = () => {
   const handleClose = React.useCallback(() => setOpen(false), []);
   const handleClosePortForward = React.useCallback(
     (portForward: PortForward) => {
-      window.k8sNavigator.closePortForward(
-        state.activeNamespace,
-        portForward.name,
-        portForward.targetPort,
-        portForward.userPort,
-      );
-      dispatch({ type: "REMOVE_PORT_FORWARD", portForward });
+      window.k8sNavigator
+        .closePortForward(
+          state.activeNamespace,
+          portForward.name,
+          portForward.targetPort,
+          portForward.userPort,
+        )
+        .then(() => {
+          dispatch({ type: "REMOVE_PORT_FORWARD", portForward });
+        });
     },
 
     [state.activeNamespace, dispatch],
   );
 
   const handleCloseAllPortForwards = React.useCallback(() => {
-    window.k8sNavigator.closeAllPortForwards();
-    dispatch({ type: "REMOVE_ALL_PORT_FORWARDS" });
+    window.k8sNavigator.closeAllPortForwards().then(() => {
+      dispatch({ type: "REMOVE_ALL_PORT_FORWARDS" });
+    });
   }, [dispatch]);
 
   React.useEffect(() => {

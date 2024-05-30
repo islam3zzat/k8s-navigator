@@ -213,14 +213,6 @@ const PodGeneralTab: React.FC<TabComponentProps<V1Pod>> = ({
 
   const handleClosePortForward = useCallback(
     (portForward: PortForward) => {
-      window.k8sNavigator.closePortForward(
-        state.activeNamespace,
-        podName,
-        portForward.targetPort,
-        portForward.userPort,
-      );
-      dispatch({ type: "REMOVE_PORT_FORWARD", portForward });
-
       async function fetchPortForwards() {
         const portForwards =
           await window.k8sNavigator.listForwardedPortServers();
@@ -228,7 +220,17 @@ const PodGeneralTab: React.FC<TabComponentProps<V1Pod>> = ({
         dispatch({ type: "SET_PORT_FORWARDS", portForwards });
       }
 
-      fetchPortForwards();
+      window.k8sNavigator
+        .closePortForward(
+          state.activeNamespace,
+          podName,
+          portForward.targetPort,
+          portForward.userPort,
+        )
+        .then(() => {
+          dispatch({ type: "REMOVE_PORT_FORWARD", portForward });
+          fetchPortForwards();
+        });
     },
 
     [state.activeNamespace, dispatch, podName],

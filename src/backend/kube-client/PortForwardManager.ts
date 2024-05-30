@@ -95,9 +95,17 @@ export class PortForwardManager {
       throw new Error("Port-forward does not exist for this pod");
     }
 
-    const portForward = this.portForwards[index];
-    portForward.server.close();
-    this.portForwards.splice(index, 1);
+    return new Promise<void>((resolve, reject) => {
+      const portForward = this.portForwards[index];
+      portForward.server.close((err) => {
+        if (err) {
+          reject(err);
+        } else {
+          this.portForwards.splice(index, 1);
+          resolve();
+        }
+      });
+    });
   };
 
   public listPortForwards = () => {
@@ -111,8 +119,21 @@ export class PortForwardManager {
     );
   };
 
-  public closeAllPortForwards = () => {
-    this.portForwards.forEach((server) => server.server.close());
+  public closeAllPortForwards = async () => {
+    await Promise.all(
+      this.portForwards.map(
+        (server) =>
+          new Promise<void>((resolve, reject) => {
+            server.server.close((err) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve();
+              }
+            });
+          }),
+      ),
+    );
     this.portForwards = [];
   };
 
