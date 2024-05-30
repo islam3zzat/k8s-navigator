@@ -7,7 +7,7 @@
   "scripts": {
     "install-prod": "npm run publish && cp -r out/*/k8s-navigator.app /Applications",
     "link-binaries": "ln -s /Applications/k8s-navigator.app/Contents/MacOS/k8s-navigator /usr/local/bin/k8s-navigator",
-    "test-backend": "jest --config ./jest.config.backend.js",
+    "test:backend": "jest --config ./jest.config.backend.js",
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",

@@ -38,12 +38,17 @@ describe("KubeConfigManager", () => {
     expect(kubeConfig.setCurrentContext).toHaveBeenCalledWith("context1");
   });
 
-  it("should get the current context name", () => {
+  it("should get the current context name", async () => {
+    kubeConfig.getContextObject.mockImplementation((name: string) => {
+      if (name === "context1") return { name: "context1" } as k8s.Context;
+
+      return null;
+    });
     kubeConfig.getCurrentContext.mockReturnValue("context1");
 
-    const context = kubeConfigManager.getCurrentContext();
+    const context = await kubeConfigManager.getCurrentContext();
     expect(kubeConfig.getCurrentContext).toHaveBeenCalled();
-    expect(context).toBe("context1");
+    expect(context).toEqual({ name: "context1" });
   });
 
   it("should get the context object", () => {
