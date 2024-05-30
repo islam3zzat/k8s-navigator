@@ -18,10 +18,9 @@ export const NamespaceSelect = () => {
 
       return namespaces.items.map((ns) => ns.metadata.name);
     } catch (error) {
-      alert(
-        "Error fetching namespaces. Falling back to default context namespace.",
+      throw new Error(
+        `Failed to fetch namespaces. Please check your access to the cluster: ${state.activeContext.cluster}.`,
       );
-      return [state.activeContext?.namespace || "default"];
     }
   }, [state.activeContext]);
 
@@ -29,6 +28,7 @@ export const NamespaceSelect = () => {
     queryKey: ["namespaces", { contextName: state.activeContext?.name }],
     queryFn: dataFetcher,
     staleTime: Infinity,
+    useErrorBoundary: true,
   });
 
   const handleChange = (nextNamespace: string) => {
@@ -41,7 +41,7 @@ export const NamespaceSelect = () => {
       value={state.activeNamespace}
       isLoading={isLoading}
       onChange={handleChange}
-      options={namespaces}
+      options={namespaces || []}
     />
   );
 };

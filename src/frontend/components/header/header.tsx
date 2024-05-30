@@ -21,6 +21,7 @@ import {
   NamespaceSelect,
 } from "../../components";
 import { PortForward, useAppContext } from "../../app-context";
+import ErrorBoundary from "../error-boundry";
 
 const IconButtonWithRef = React.forwardRef<HTMLButtonElement, IconButtonProps>(
   ({ ...props }, ref) => {
@@ -108,65 +109,67 @@ export const Header: React.FC = () => {
 
   return (
     <>
-      <AppBar position="fixed">
-        <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Link
-            component={RouterLink}
-            to="/"
-            color="inherit"
-            onMouseEnter={() => setIsMouseOver(true)}
-            onMouseLeave={() => setIsMouseOver(false)}
-          >
-            <Stack direction="row" alignItems="center" spacing={1}>
-              <motion.div animate={iconAnimation}>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <ExploreIcon sx={{ fontSize: 24 }} />
-                </div>
-              </motion.div>
-              <Typography variant="h6" component="div">
-                K8S Navigator
-              </Typography>
-            </Stack>
-          </Link>
-          {!!activePortForwards && (
-            <Badge badgeContent={activePortForwards} color="info">
-              <RouterIcon
-                sx={{ cursor: "pointer" }}
-                titleAccess={`${activePortForwards} running port forwards`}
-                onClick={handleOpen}
-              />
-            </Badge>
-          )}
-
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 2,
-            }}
-          >
-            <NamespaceSelect />
-            <ContextSelect />
-            <MotionIconButton
-              whileHover="hover"
-              whileFocus="focus"
-              whileTap="tap"
-              variants={settingsIconVarinats}
-              role="link"
-              onClick={navigateToSettings}
-              color="default"
+      <ErrorBoundary>
+        <AppBar position="fixed">
+          <Toolbar sx={{ justifyContent: "space-between" }}>
+            <Link
+              component={RouterLink}
+              to="/"
+              color="inherit"
+              onMouseEnter={() => setIsMouseOver(true)}
+              onMouseLeave={() => setIsMouseOver(false)}
             >
-              <SettingsIcon sx={{ fontSize: 24 }} />
-            </MotionIconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <motion.div animate={iconAnimation}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <ExploreIcon sx={{ fontSize: 24 }} />
+                  </div>
+                </motion.div>
+                <Typography variant="h6" component="div">
+                  K8S Navigator
+                </Typography>
+              </Stack>
+            </Link>
+            {!!activePortForwards && (
+              <Badge badgeContent={activePortForwards} color="info">
+                <RouterIcon
+                  sx={{ cursor: "pointer" }}
+                  titleAccess={`${activePortForwards} running port forwards`}
+                  onClick={handleOpen}
+                />
+              </Badge>
+            )}
+
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
+              }}
+            >
+              <NamespaceSelect />
+              <ContextSelect />
+              <MotionIconButton
+                whileHover="hover"
+                whileFocus="focus"
+                whileTap="tap"
+                variants={settingsIconVarinats}
+                role="link"
+                onClick={navigateToSettings}
+                color="default"
+              >
+                <SettingsIcon sx={{ fontSize: 24 }} />
+              </MotionIconButton>
+            </Box>
+          </Toolbar>
+        </AppBar>
+      </ErrorBoundary>
 
       <ConfirmationDialog
         isOpen={open}
