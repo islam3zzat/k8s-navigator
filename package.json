@@ -1,7 +1,7 @@
 {
   "name": "k8s-navigator",
   "productName": "k8s-navigator",
-  "version": "0.0.799",
+  "version": "0.0.9",
   "description": "My Electron application description",
   "main": ".webpack/main",
   "scripts": {
@@ -96,6 +96,7 @@
     "react-helmet-async": "^2.0.5",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.23.1",
-    "react-spinners": "^0.13.8"
+    "react-spinners": "^0.13.8",
+    "update-electron-app": "^3.0.0"
   }
 }

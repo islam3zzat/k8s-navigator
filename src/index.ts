@@ -1,3 +1,4 @@
+import { updateElectronApp } from "update-electron-app";
 import { app, BrowserWindow, ipcMain, session } from "electron";
 import { PassThrough } from "node:stream";
 import { ipcControllers, pod, portForwardManager } from "./ipc-controllers";
@@ -7,6 +8,11 @@ import { ipcControllers, pod, portForwardManager } from "./ipc-controllers";
 // whether you're running in development or production).
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+
+// Update electron app
+updateElectronApp({
+  repo: "islam3zzat/k8s-navigator",
+});
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {

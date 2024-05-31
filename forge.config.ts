@@ -50,6 +50,16 @@ const config: ForgeConfig = {
         public: true,
       },
     },
+    {
+      name: "@electron-forge/publisher-github",
+      config: {
+        repository: {
+          owner: "islam3zzat",
+          name: "k8s-navigator",
+        },
+        prerelease: true,
+      },
+    },
   ],
   plugins: [
     new AutoUnpackNativesPlugin({}),
