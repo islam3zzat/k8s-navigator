@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import HomeIcon from "@mui/icons-material/Home";
+import ErrorBoundary from "src/frontend/components/error-boundry/error-boundry";
 import { FindInPage, Header, ResourceIcon } from "../../components";
 import { useAppContext } from "../../app-context";
 import LoadingFallback from "../../components/loading-fallback";
@@ -90,7 +91,9 @@ const App: React.FC = () => {
 
   return (
     <Stack spacing={2} alignItems="center">
-      <Header />
+      <ErrorBoundary>
+        <Header />
+      </ErrorBoundary>
       <main style={{ width: "100%" }}>
         <Container maxWidth="lg" sx={{ marginBlock: 8 }}>
           <Stack justifyContent="center">
@@ -130,7 +133,9 @@ const App: React.FC = () => {
               </Stack>
             </Breadcrumbs>
             <Suspense fallback={<LoadingFallback />}>
-              <Outlet />
+              <ErrorBoundary>
+                <Outlet />
+              </ErrorBoundary>
             </Suspense>
           </Stack>
         </Container>

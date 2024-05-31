@@ -179,79 +179,71 @@ root.render(
         <AppProvider>
           <AppTheme>
             <CssBaseline />
-            <ErrorBoundary>
-              <HashRouter>
-                <Suspense fallback={<LoadingFallback isFullPage />}>
-                  <Routes>
-                    <Route path="/" element={<App />}>
-                      <Route path="/settings" element={<SettingsPage />} />
-                      <Route path="/" element={<HomePage />} />
-                      <Route
-                        path="/deployments"
-                        element={<DeploymentsListPage />}
-                      />
-                      <Route
-                        path="/deployments/:deploymentName"
-                        element={<DeploymentDetailsPage />}
-                      />
-                      <Route
-                        path="/replica-sets"
-                        element={<ReplicaSetsListPage />}
-                      />
-                      <Route
-                        path="/replica-sets/:replicaSetName"
-                        element={<ReplicaSetDetailsPage />}
-                      />
-                      <Route path="/pods" element={<PodsListPage />} />
-                      <Route
-                        path="/pods/:podName"
-                        element={<PodDetailsPage />}
-                      />
-                      <Route
-                        path="/pods/:podName/logs/:containerName"
-                        element={<PodLogsPage />}
-                      />
-                      <Route
-                        path="/service-accounts"
-                        element={<ServiceAccountsListPage />}
-                      />
-                      <Route
-                        path="/service-accounts/:serviceAccountName"
-                        element={<ServiceAccountDetailsPage />}
-                      />
-                      <Route
-                        path="/config-maps"
-                        element={<ConfigMapsListPage />}
-                      />
-                      <Route
-                        path="/config-maps/:configMapName"
-                        element={<ConfigMapDetailsPage />}
-                      />
-                      <Route path="/secrets" element={<SecretsListPage />} />
-                      <Route
-                        path="/secrets/:secretName"
-                        element={<SecretDetailsPage />}
-                      />
-                      <Route path="/services" element={<ServicesListPage />} />
-                      <Route
-                        path="/services/:serviceName"
-                        element={<ServiceDetailsPage />}
-                      />
-                      <Route path="/jobs" element={<JobsListPage />} />
-                      <Route
-                        path="/jobs/:jobName"
-                        element={<JobDetailsPage />}
-                      />
-                      <Route path="/cron-jobs" element={<CronJobsListPage />} />
-                      <Route
-                        path="/cron-jobs/:cronJobName"
-                        element={<CronJobDetailsPage />}
-                      />
-                    </Route>
-                  </Routes>
-                </Suspense>
-              </HashRouter>
-            </ErrorBoundary>
+            <HashRouter>
+              <Suspense fallback={<LoadingFallback isFullPage />}>
+                <Routes>
+                  <Route path="/" element={<App />}>
+                    <Route path="/settings" element={<SettingsPage />} />
+                    <Route path="/" element={<HomePage />} />
+                    <Route
+                      path="/deployments"
+                      element={<DeploymentsListPage />}
+                    />
+                    <Route
+                      path="/deployments/:deploymentName"
+                      element={<DeploymentDetailsPage />}
+                    />
+                    <Route
+                      path="/replica-sets"
+                      element={<ReplicaSetsListPage />}
+                    />
+                    <Route
+                      path="/replica-sets/:replicaSetName"
+                      element={<ReplicaSetDetailsPage />}
+                    />
+                    <Route path="/pods" element={<PodsListPage />} />
+                    <Route path="/pods/:podName" element={<PodDetailsPage />} />
+                    <Route
+                      path="/pods/:podName/logs/:containerName"
+                      element={<PodLogsPage />}
+                    />
+                    <Route
+                      path="/service-accounts"
+                      element={<ServiceAccountsListPage />}
+                    />
+                    <Route
+                      path="/service-accounts/:serviceAccountName"
+                      element={<ServiceAccountDetailsPage />}
+                    />
+                    <Route
+                      path="/config-maps"
+                      element={<ConfigMapsListPage />}
+                    />
+                    <Route
+                      path="/config-maps/:configMapName"
+                      element={<ConfigMapDetailsPage />}
+                    />
+                    <Route path="/secrets" element={<SecretsListPage />} />
+                    <Route
+                      path="/secrets/:secretName"
+                      element={<SecretDetailsPage />}
+                    />
+                    <Route path="/services" element={<ServicesListPage />} />
+                    <Route
+                      path="/services/:serviceName"
+                      element={<ServiceDetailsPage />}
+                    />
+                    <Route path="/jobs" element={<JobsListPage />} />
+                    <Route path="/jobs/:jobName" element={<JobDetailsPage />} />
+                    <Route path="/cron-jobs" element={<CronJobsListPage />} />
+                    <Route
+                      path="/cron-jobs/:cronJobName"
+                      element={<CronJobDetailsPage />}
+                    />
+                  </Route>
+                </Routes>
+              </Suspense>
+            </HashRouter>
           </AppTheme>
         </AppProvider>
       </QueryClientProvider>
