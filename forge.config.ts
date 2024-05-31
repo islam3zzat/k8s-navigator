@@ -21,16 +21,11 @@ const config: ForgeConfig = {
     osxSign: {
       type: "distribution",
       identity: process.env.SIGN_ID,
-      // @ts-expect-error unknown property
-      hardenedRuntime: true,
-      entitlements: "./config/entitlements.plist",
-      "entitlements-inherit": "./config/entitlements.plist",
-      "gatekeeper-assess": false,
     },
     osxNotarize: {
-      appleApiKey: process.env.APPLE_API_KEY as string,
-      appleApiKeyId: process.env.APPLE_API_KEY_ID as string,
-      appleApiIssuer: process.env.APPLE_API_ISSUER as string,
+      teamId: process.env.APPLE_TEAM_ID as string,
+      appleId: process.env.APPLE_ID as string,
+      appleIdPassword: process.env.APPLE_APP_SPECIFIC_PASSWORD as string,
     },
   },
   rebuildConfig: {},

@@ -1,7 +1,7 @@
 {
   "name": "k8s-navigator",
   "productName": "k8s-navigator",
-  "version": "0.0.77",
+  "version": "0.0.299",
   "description": "My Electron application description",
   "main": ".webpack/main",
   "scripts": {
@@ -12,8 +12,8 @@
     "test:watch": "jest --watch",
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make --arch=universal --platform=darwin",
-    "make:mac": "electron-forge make",
+    "make:mac": "electron-forge make --arch=universal --platform=darwin",
+    "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx . --fix",
     "format": "prettier --write ."
