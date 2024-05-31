@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import HomeIcon from "@mui/icons-material/Home";
-import ErrorBoundary from "src/frontend/components/error-boundry/error-boundry";
+import ErrorBoundary from "../../components/error-boundry/error-boundry";
 import { FindInPage, Header, ResourceIcon } from "../../components";
 import { useAppContext } from "../../app-context";
 import LoadingFallback from "../../components/loading-fallback";
