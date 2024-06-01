@@ -67,6 +67,7 @@ export const SettingsSelect = ({
           <Typography>{option}</Typography>
         </li>
       )}
+      aria-label={`Select ${name}`}
       style={{ maxWidth: "25vw" }}
       renderInput={(params) => (
         <TextField
@@ -74,7 +75,6 @@ export const SettingsSelect = ({
           value={inputValue}
           inputProps={{
             ...params.inputProps,
-            "aria-label": `Select ${name}`,
             style: {
               padding: "0",
               paddingInline: "1rem",
@@ -83,7 +83,7 @@ export const SettingsSelect = ({
           }}
           InputProps={{
             ...params.InputProps,
-            "aria-label": `Select ${name}`,
+            "aria-label": "",
             style: {
               color: "inherit",
             },

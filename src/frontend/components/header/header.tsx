@@ -18,7 +18,6 @@ import RouterIcon from "@mui/icons-material/Router";
 import { ContextSelect, NamespaceSelect } from "../../components";
 import ConfirmationDialog from "../../components/confirmation-dialog";
 import { PortForward, useAppContext } from "../../app-context";
-import ErrorBoundary from "../error-boundry";
 
 const IconButtonWithRef = React.forwardRef<HTMLButtonElement, IconButtonProps>(
   ({ ...props }, ref) => {
@@ -159,6 +158,7 @@ export const Header: React.FC = () => {
               role="link"
               onClick={navigateToSettings}
               color="default"
+              aria-label="Settings"
             >
               <SettingsIcon sx={{ fontSize: 24 }} />
             </MotionIconButton>
