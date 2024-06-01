@@ -4,7 +4,8 @@ import Typography from "@mui/material/Typography";
 import { V1Pod } from "@kubernetes/client-node";
 import React from "react";
 import PodGeneralTab from "./pod-general-tab";
-import { ContainerStatusList, EnvVarsList } from "../../components";
+import { EnvVarsList } from "../../components";
+import ContainerStatusList from "../../components/container-status-list";
 import {
   ResourceDetailsPage,
   TabComponentProps,

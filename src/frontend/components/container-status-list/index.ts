@@ -1,1 +1,1 @@
-export * from "./container-status-list";
+export { default } from "./container-status-list";

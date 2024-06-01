@@ -31,7 +31,8 @@ import ArticleIcon from "@mui/icons-material/Article";
 import DangerousIcon from "@mui/icons-material/Dangerous";
 import { PortForward, useAppContext } from "../../app-context";
 import ConfirmationDialog from "../../components/confirmation-dialog";
-import { ContainerStatusList, ResourceIcon } from "../../components";
+import { ResourceIcon } from "../../components";
+import ContainerStatusList from "../../components/container-status-list";
 import { TabComponentProps } from "../../layout/resource-details-page";
 
 const PodOwnerLink = ({ kind, name }: { kind: string; name: string }) => {

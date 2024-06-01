@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { V1ContainerStatus } from "@kubernetes/client-node";
-import { ContainerStatusList } from "./container-status-list";
+import ContainerStatusList from "./container-status-list";
 
 const mockStatuses: V1ContainerStatus[] = [
   {
