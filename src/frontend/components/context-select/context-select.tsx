@@ -49,6 +49,7 @@ export const ContextSelect = () => {
 
   return (
     <SettingsSelect
+      name="Context"
       value={currentContext}
       isLoading={isLoading}
       onChange={handleChange}

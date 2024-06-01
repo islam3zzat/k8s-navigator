@@ -38,6 +38,7 @@ export const NamespaceSelect = () => {
 
   return (
     <SettingsSelect
+      name="Namespace"
       value={state.activeNamespace}
       isLoading={isLoading}
       onChange={handleChange}

@@ -19,6 +19,7 @@ function fuzzyFilter(
 
 type Props = {
   options: string[];
+  name: string;
   value: string;
   isLoading: boolean;
   onChange: (value: string) => void;
@@ -27,13 +28,14 @@ type Props = {
 export const SettingsSelect = ({
   options,
   value,
+  name,
   isLoading,
   onChange,
 }: Props) => {
   const theme = useTheme();
-  const [inputValue, setInputValue] = useState(value || ""); // State for input value
+  const [inputValue, setInputValue] = useState(value || "");
 
-  // Sync value with input value
+  // Sync settings value with local input value
   useEffect(() => {
     setInputValue(value);
   }, [value]);
@@ -41,7 +43,7 @@ export const SettingsSelect = ({
   const handleChange = useCallback(
     (_: unknown, newValue: string) => {
       onChange(newValue);
-      setInputValue(newValue); // Update input value when changed
+      setInputValue(newValue);
     },
     [onChange, setInputValue],
   );
@@ -55,6 +57,7 @@ export const SettingsSelect = ({
       disablePortal
       onChange={handleChange}
       className="settings-select"
+      getOptionLabel={(option) => option}
       filterOptions={fuzzyFilter}
       value={inputValue || null}
       title={value}
@@ -71,6 +74,7 @@ export const SettingsSelect = ({
           value={inputValue}
           inputProps={{
             ...params.inputProps,
+            "aria-label": `Select ${name}`,
             style: {
               padding: "0",
               paddingInline: "1rem",
@@ -79,6 +83,7 @@ export const SettingsSelect = ({
           }}
           InputProps={{
             ...params.InputProps,
+            "aria-label": `Select ${name}`,
             style: {
               color: "inherit",
             },
