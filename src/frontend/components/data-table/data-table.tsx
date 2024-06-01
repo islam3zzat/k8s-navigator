@@ -3,7 +3,7 @@ import { Theme } from "@mui/material/styles";
 import TableSortLabel, {
   tableSortLabelClasses,
 } from "@mui/material/TableSortLabel";
-import React, { forwardRef, useRef, useState } from "react";
+import React, { forwardRef, useCallback, useRef, useState } from "react";
 import Table from "@mui/material/Table";
 import Box from "@mui/material/Box";
 import TableBody from "@mui/material/TableBody";
@@ -148,6 +148,22 @@ export const DataTable = <T,>({
       return column.compare(a, b) * (isAsc ? 1 : -1);
     });
   }, [columns, filteredData, order, orderBy]);
+
+  const getCellAriaLabel = useCallback((column: Column<T>, row: T) => {
+    const value = column.getSearchableString?.(row) || column.getData(row);
+    return `${column.name}: ${value}`;
+  }, []);
+
+  const rowAriaLabel = useCallback(
+    (row: T) => {
+      return columns
+        .map((column) => {
+          return getCellAriaLabel(column, row);
+        })
+        .join(", ");
+    },
+    [columns, getCellAriaLabel],
+  );
 
   const theme = useTheme();
   const color = theme.palette.primary.main;
@@ -296,6 +312,7 @@ export const DataTable = <T,>({
                     },
                   }}
                   tabIndex={0}
+                  aria-label={rowAriaLabel(row)}
                   onClick={() => onRowClick?.(row)}
                   onKeyDown={(e: React.KeyboardEvent) => {
                     if (e.key === "Enter" && onRowClick) {
@@ -311,6 +328,7 @@ export const DataTable = <T,>({
                         lineBreak: "anywhere",
                       }}
                       key={column.name}
+                      aria-label={getCellAriaLabel(column, row)}
                     >
                       {column.getData(row)}
                     </TableCell>
