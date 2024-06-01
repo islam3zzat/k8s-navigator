@@ -44,7 +44,6 @@ export const ResourceTable = <T,>({
   return (
     <DataTable
       title={title}
-      description={title}
       columns={columns}
       data={query.data}
       noResourcesMessage={noResourcesMessage}

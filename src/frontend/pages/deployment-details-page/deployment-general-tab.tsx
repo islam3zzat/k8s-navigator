@@ -148,10 +148,11 @@ const DeploymentGeneralTab = ({
             </Typography>
           </Stack>
         </Stack>
-        <Stack spacing={2}>
-          <Typography variant="h5">Pods</Typography>
-          <PodsList namespace={namespace} deploymentName={deploymentName} />
-        </Stack>
+        <PodsList
+          title="Deployment Pods"
+          namespace={namespace}
+          deploymentName={deploymentName}
+        />
       </Stack>
       <ConfirmationDialog
         title="Rescale Deployment"

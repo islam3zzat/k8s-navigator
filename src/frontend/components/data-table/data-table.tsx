@@ -1,5 +1,5 @@
 import styled from "@mui/material/styles/styled";
-import type { Theme } from "@mui/material/styles";
+import { Theme } from "@mui/material/styles";
 import TableSortLabel, {
   tableSortLabelClasses,
 } from "@mui/material/TableSortLabel";
@@ -12,9 +12,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import { motion } from "framer-motion";
 import Typography from "@mui/material/Typography";
-import TableRow from "@mui/material/TableRow";
+import TableRow, { TableRowProps } from "@mui/material/TableRow";
 import useTheme from "@mui/material/styles/useTheme";
-import type { TableRowProps } from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -88,7 +87,6 @@ type Props<T> = {
   columns: Column<T>[];
   data: T[];
   title: string;
-  description: string;
   getId: (row: T) => string;
   hideSearch?: boolean;
   noResourcesMessage?: string;
@@ -109,7 +107,6 @@ export const DataTable = <T,>({
   noResourcesMessage,
   getId,
   title,
-  description,
   hideSearch,
   onRowClick,
   error,
@@ -178,145 +175,152 @@ export const DataTable = <T,>({
   }
 
   return (
-    <Stack spacing={2}>
-      <Stack direction="row" justifyContent="flex-start" alignItems="flex-end">
-        {!hideSearch && (
-          <>
-            <label
-              htmlFor="searchInput"
-              style={{ position: "absolute", left: "-9999px" }}
-            >
-              Search
-            </label>
-            {/* Hidden Label */}
-            <TextField
-              id="searchInput" // Add id to input
-              value={filter || ""}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setFilter(e.target.value)
-              }
-              placeholder="Search..."
-              sx={{ width: 300 }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Search />
-                  </InputAdornment>
-                ),
-              }}
-              variant="standard"
-            />
-          </>
-        )}
-      </Stack>
-      {dataUpdatedAt && (
-        <Stack direction="row" alignItems="center" spacing={2}>
-          {onRefresh && (
-            <RefetchDataButton
-              isLoading={isLoading || isFetching}
-              refetch={onRefresh}
-            />
-          )}
-          <Typography>
-            Last fetched {moment(dataUpdatedAt).format("h:mm:ss a")}
+    <section>
+      <Stack spacing={2}>
+        <header>
+          <Typography id="table-title" variant="h6" component="h2">
+            {title}
           </Typography>
-          {handleWatchToggle && (
-            <WatchCheckbox
-              isWatching={isWatching}
-              onWatchToggle={handleWatchToggle}
-            />
-          )}
-          {isFetching && <BarLoader color={color} />}
-        </Stack>
-      )}
-      <TableContainer
-        elevation={3}
-        component={Paper}
-        sx={{ maxBlockSize: "50vh" }}
-      >
-        <StyledTable
-          stickyHeader
-          sx={{ minWidth: 650 }}
-          aria-label={title}
-          aria-describedby="table-summary"
-          ref={tableRef}
+        </header>
+        <Stack
+          direction="row"
+          justifyContent="flex-start"
+          alignItems="flex-end"
         >
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.name}
-                  align={column.align}
-                  sortDirection={orderBy === column.name ? order : false}
-                  sx={{ width: column.width }}
-                >
-                  <StyledTableSortLabel // Use the styled component
-                    active={orderBy === column.name}
-                    direction={orderBy === column.name ? order : "asc"}
-                    onClick={() => {
-                      const isAsc = orderBy === column.name && order === "asc";
-                      setOrder(isAsc ? "desc" : "asc");
-                      setOrderBy(column.name);
-                    }}
-                  >
-                    {column.label || column.name}
-                    {orderBy === column.name ? (
-                      <Box component="span" sx={visuallyHidden}>
-                        {order === "desc"
-                          ? "sorted descending"
-                          : "sorted ascending"}
-                      </Box>
-                    ) : null}
-                  </StyledTableSortLabel>
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {resources.map((row, index) => (
-              <MotionTableRow
-                hover
-                key={getId(row)}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.1, delay: index * 0.05 }}
-                sx={{
-                  cursor: onRowClick ? "pointer" : "default",
-                  "&:last-child td, &:last-child th": { border: 0 },
-                  "&:focus": {
-                    backgroundColor: theme.palette.action.hover,
-                    opacity: theme.palette.action.hoverOpacity,
-                  },
-                }}
-                tabIndex={0}
-                onClick={() => onRowClick?.(row)}
-                onKeyDown={(e: React.KeyboardEvent) => {
-                  if (e.key === "Enter" && onRowClick) {
-                    onRowClick(row);
-                  }
-                }}
+          {!hideSearch && (
+            <>
+              <label
+                htmlFor="searchInput"
+                style={{ position: "absolute", left: "-9999px" }}
               >
+                Search
+              </label>
+              <TextField
+                id="searchInput"
+                value={filter || ""}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setFilter(e.target.value)
+                }
+                placeholder="Search..."
+                sx={{ width: 300 }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Search />
+                    </InputAdornment>
+                  ),
+                }}
+                variant="standard"
+              />
+            </>
+          )}
+        </Stack>
+        {dataUpdatedAt && (
+          <Stack direction="row" alignItems="center" spacing={2}>
+            {onRefresh && (
+              <RefetchDataButton
+                isLoading={isLoading || isFetching}
+                refetch={onRefresh}
+              />
+            )}
+            <Typography>
+              Last fetched {moment(dataUpdatedAt).format("h:mm:ss a")}
+            </Typography>
+            {handleWatchToggle && (
+              <WatchCheckbox
+                isWatching={isWatching}
+                onWatchToggle={handleWatchToggle}
+              />
+            )}
+            {isFetching && <BarLoader color={color} />}
+          </Stack>
+        )}
+        <TableContainer
+          elevation={3}
+          component={Paper}
+          sx={{ maxBlockSize: "50vh" }}
+        >
+          <StyledTable
+            stickyHeader
+            sx={{ minWidth: 650 }}
+            ref={tableRef}
+            aria-labelledby="table-title"
+          >
+            <TableHead>
+              <TableRow>
                 {columns.map((column) => (
                   <TableCell
-                    align={column.align}
-                    sx={{
-                      width: column.width,
-                      lineBreak: "anywhere",
-                    }}
                     key={column.name}
+                    align={column.align}
+                    sortDirection={orderBy === column.name ? order : false}
+                    sx={{ width: column.width }}
                   >
-                    {column.getData(row)}
+                    <StyledTableSortLabel // Use the styled component
+                      active={orderBy === column.name}
+                      direction={orderBy === column.name ? order : "asc"}
+                      onClick={() => {
+                        const isAsc =
+                          orderBy === column.name && order === "asc";
+                        setOrder(isAsc ? "desc" : "asc");
+                        setOrderBy(column.name);
+                      }}
+                    >
+                      {column.label || column.name}
+                      {orderBy === column.name ? (
+                        <Box component="span" sx={visuallyHidden}>
+                          {order === "desc"
+                            ? "sorted descending"
+                            : "sorted ascending"}
+                        </Box>
+                      ) : null}
+                    </StyledTableSortLabel>
                   </TableCell>
                 ))}
-              </MotionTableRow>
-            ))}
-          </TableBody>
-        </StyledTable>
-      </TableContainer>
-      <div id="table-summary" style={{ position: "absolute", left: "-9999px" }}>
-        {description}
-      </div>
-    </Stack>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {resources.map((row, index) => (
+                <MotionTableRow
+                  hover
+                  key={getId(row)}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.1, delay: index * 0.05 }}
+                  sx={{
+                    cursor: onRowClick ? "pointer" : "default",
+                    "&:last-child td, &:last-child th": { border: 0 },
+                    "&:focus": {
+                      backgroundColor: theme.palette.action.hover,
+                      opacity: theme.palette.action.hoverOpacity,
+                    },
+                  }}
+                  tabIndex={0}
+                  onClick={() => onRowClick?.(row)}
+                  onKeyDown={(e: React.KeyboardEvent) => {
+                    if (e.key === "Enter" && onRowClick) {
+                      onRowClick(row);
+                    }
+                  }}
+                >
+                  {columns.map((column) => (
+                    <TableCell
+                      align={column.align}
+                      sx={{
+                        width: column.width,
+                        lineBreak: "anywhere",
+                      }}
+                      key={column.name}
+                    >
+                      {column.getData(row)}
+                    </TableCell>
+                  ))}
+                </MotionTableRow>
+              ))}
+            </TableBody>
+          </StyledTable>
+        </TableContainer>
+      </Stack>
+    </section>
   );
 };

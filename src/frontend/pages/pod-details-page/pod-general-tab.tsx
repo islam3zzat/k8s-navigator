@@ -415,10 +415,7 @@ const PodGeneralTab: React.FC<TabComponentProps<V1Pod>> = ({
           </Stack>
         </Stack>
 
-        <Stack spacing={2}>
-          <Typography variant="h6">Containers Status</Typography>
-          <ContainerStatusList statuses={pod?.status.containerStatuses} />
-        </Stack>
+        <ContainerStatusList statuses={pod?.status.containerStatuses} />
       </Stack>
 
       <ConfirmationDialog

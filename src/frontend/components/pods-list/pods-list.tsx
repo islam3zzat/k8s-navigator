@@ -6,11 +6,16 @@ import { ResourceTable } from "../resource-table";
 
 type Props = {
   namespace: string;
+  title?: string;
   deploymentName?: string;
   selector?: Record<string, string>;
 };
-export const PodsList = ({ namespace, deploymentName, selector }: Props) => {
-  // const { state } = useAppContext();
+export const PodsList = ({
+  namespace,
+  deploymentName,
+  selector,
+  title = "Pods list",
+}: Props) => {
   const navigate = useNavigate();
   const datFetcher = useCallback(async () => {
     if (!namespace) return [];
@@ -48,7 +53,7 @@ export const PodsList = ({ namespace, deploymentName, selector }: Props) => {
   return (
     <ResourceTable
       id={`pods-list-${deploymentName}-${JSON.stringify(selector)}`}
-      title="Pods list"
+      title={title}
       dataFetcher={datFetcher}
       noResourcesMessage="No pods found matching criteria"
       getId={(p) => p.metadata.uid}

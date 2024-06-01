@@ -104,13 +104,11 @@ const ReplicaSetGeneralTab = ({
           <Typography variant="h6">Strategy</Typography>
         </Stack>
       </Stack>
-      <Stack spacing={2}>
-        <Typography variant="h5">Pods</Typography>
-        <PodsList
-          namespace={namespace}
-          selector={replicaSet?.spec.selector.matchLabels}
-        />
-      </Stack>
+      <PodsList
+        title="Pods"
+        namespace={namespace}
+        selector={replicaSet?.spec.selector.matchLabels}
+      />
     </Stack>
   );
 };

@@ -22,7 +22,7 @@ export const EndpointsList = ({ namespace, selector }: Props) => {
   return (
     <ResourceTable
       id={`endpoints-list-${JSON.stringify(selector)}`}
-      title="Endpoints list"
+      title="Endpoints"
       dataFetcher={dataFetcher}
       noResourcesMessage="No endpoints found matching criteria"
       getId={(p) => p.metadata.uid}

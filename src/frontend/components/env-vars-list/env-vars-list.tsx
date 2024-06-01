@@ -9,7 +9,6 @@ export const EnvVarsList = ({ envs }: Props) => {
   return (
     <DataTable
       title="Environment variables"
-      description="List of environment variables"
       noResourcesMessage="No environment variables found"
       columns={columns}
       data={envs}

@@ -79,13 +79,11 @@ const JobGeneralTab = ({ resource: job }: { resource: V1Job }) => {
       </Stack>
 
       {job?.spec?.selector.matchLabels && (
-        <Stack spacing={2}>
-          <Typography variant="h5">Target Pods</Typography>
-          <PodsList
-            namespace={namespace}
-            selector={job.spec.selector.matchLabels}
-          />
-        </Stack>
+        <PodsList
+          title="Target Pods"
+          namespace={namespace}
+          selector={job.spec.selector.matchLabels}
+        />
       )}
     </Stack>
   );

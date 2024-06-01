@@ -61,17 +61,15 @@ const ServiceGeneralTab = ({ resource: service }: { resource: V1Service }) => {
 
       {service?.spec?.selector && (
         <>
-          <Stack spacing={2}>
-            <Typography variant="h5">Target Pods</Typography>
-            <PodsList namespace={namespace} selector={service.spec.selector} />
-          </Stack>
-          <Stack spacing={2}>
-            <Typography variant="h5">Endpoints</Typography>
-            <EndpointsList
-              namespace={namespace}
-              selector={service.spec.selector}
-            />
-          </Stack>
+          <PodsList
+            title="Target Pods"
+            namespace={namespace}
+            selector={service.spec.selector}
+          />
+          <EndpointsList
+            namespace={namespace}
+            selector={service.spec.selector}
+          />
         </>
       )}
     </Stack>

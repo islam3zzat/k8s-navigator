@@ -132,11 +132,13 @@ const App: React.FC = () => {
                 <Typography>{lastBreadcrumb.label}</Typography>
               </Stack>
             </Breadcrumbs>
-            <Suspense fallback={<LoadingFallback />}>
-              <ErrorBoundary>
-                <Outlet />
-              </ErrorBoundary>
-            </Suspense>
+            <main>
+              <Suspense fallback={<LoadingFallback />}>
+                <ErrorBoundary>
+                  <Outlet />
+                </ErrorBoundary>
+              </Suspense>
+            </main>
           </Stack>
         </Container>
       </main>

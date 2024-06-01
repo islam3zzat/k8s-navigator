@@ -8,12 +8,11 @@ type Props = {
 export const ContainerStatusList = ({ statuses }: Props) => {
   return (
     <DataTable
-      title="Container statuses"
-      description="List of container statuses"
+      title="Containers statuses"
       noResourcesMessage="No container statuses found."
       columns={columns}
       data={statuses}
-      getId={(e) => e.name}
+      getId={(s) => s.name}
     />
   );
 };

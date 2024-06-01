@@ -22,7 +22,6 @@ export const ResourceLabels = ({ title, values }: Props) => {
 
       <DataTable
         title={title}
-        description={`List of ${title}`}
         noResourcesMessage={`No ${title}!`}
         columns={columns}
         data={data}
