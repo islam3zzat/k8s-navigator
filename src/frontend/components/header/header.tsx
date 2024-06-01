@@ -15,11 +15,8 @@ import Badge from "@mui/material/Badge";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SettingsEthernetIcon from "@mui/icons-material/SettingsEthernet";
 import RouterIcon from "@mui/icons-material/Router";
-import {
-  ConfirmationDialog,
-  ContextSelect,
-  NamespaceSelect,
-} from "../../components";
+import { ContextSelect, NamespaceSelect } from "../../components";
+import ConfirmationDialog from "../../components/confirmation-dialog";
 import { PortForward, useAppContext } from "../../app-context";
 import ErrorBoundary from "../error-boundry";
 

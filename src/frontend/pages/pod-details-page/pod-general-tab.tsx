@@ -29,15 +29,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SendIcon from "@mui/icons-material/Send";
 import ArticleIcon from "@mui/icons-material/Article";
 import DangerousIcon from "@mui/icons-material/Dangerous";
-import ReplicaSet from "../../icons/resources/unlabeled/rs.svg";
-import ServiceAccount from "../../icons/resources/unlabeled/sa.svg";
-import Job from "../../icons/resources/unlabeled/job.svg";
 import { PortForward, useAppContext } from "../../app-context";
-import {
-  ConfirmationDialog,
-  ContainerStatusList,
-  ResourceIcon,
-} from "../../components";
+import ConfirmationDialog from "../../components/confirmation-dialog";
+import { ContainerStatusList, ResourceIcon } from "../../components";
 import { TabComponentProps } from "../../layout/resource-details-page";
 
 const PodOwnerLink = ({ kind, name }: { kind: string; name: string }) => {

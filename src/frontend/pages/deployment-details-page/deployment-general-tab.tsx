@@ -13,7 +13,8 @@ import AutorenewIcon from "@mui/icons-material/Autorenew";
 import type { OverridableComponent } from "@mui/material/OverridableComponent";
 import { Button, SvgIconTypeMap, TextField } from "@mui/material";
 import { V1Deployment } from "@kubernetes/client-node";
-import { ConfirmationDialog, PodsList, ResourceIcon } from "../../components";
+import { PodsList, ResourceIcon } from "../../components";
+import ConfirmationDialog from "../../components/confirmation-dialog";
 import { useAppContext } from "../../app-context";
 
 const StrategyIconMapping: Record<

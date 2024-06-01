@@ -17,7 +17,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-type Props = {
+export type Props = {
   isOpen: boolean;
   title: string;
   onClose: () => void;
@@ -28,7 +28,7 @@ type Props = {
   secondaryButtonText?: string;
   secondaryButtonColor?: ButtonOwnProps["color"];
 };
-export const ConfirmationDialog = ({
+const ConfirmationDialog = ({
   isOpen,
   title,
   onClose,
@@ -54,3 +54,5 @@ export const ConfirmationDialog = ({
     </Dialog>
   );
 };
+
+export default ConfirmationDialog;
