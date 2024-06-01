@@ -17,9 +17,37 @@ describe("KubeClient", () => {
 
   beforeEach(() => {
     kubeConfig = new k8s.KubeConfig();
+    kubeConfig.loadFromString(`
+apiVersion: v1
+clusters:
+- cluster:
+    server: https://localhost:6443
+  name: kubernetes
+contexts:
+- context:
+    cluster: kubernetes
+    user: kubernetes-admin
+  name: kubernetes-admin@kubernetes
+current-context: kubernetes-admin@kubernetes
+kind: Config
+preferences: {}
+users:
+- name: kubernetes-admin
+  user:
+    client-certificate-data: REDACTED
+    client-key-data: REDACTED
+`);
     kubeConfigManager = new KubeConfigManager(
       kubeConfig,
     ) as jest.Mocked<KubeConfigManager>;
+
+    // Mocking necessary methods
+    kubeConfigManager.setCurrentContext = jest.fn();
+    kubeConfigManager.getCurrentContext = jest.fn();
+    kubeConfigManager.getContextObject = jest.fn();
+    // ts-ignore because the property is read only
+    kubeConfigManager.contexts = [];
+
     apiClientFactory = new ApiClientFactory(
       kubeConfig,
     ) as jest.Mocked<ApiClientFactory>;
@@ -32,13 +60,13 @@ describe("KubeClient", () => {
 
   it("should list contexts", () => {
     const contexts = [{ name: "context1" }, { name: "context2" }];
-    // @ts-expect-error testing
+    // ts-ignore because the property is read only
     kubeConfigManager.contexts = contexts;
 
     expect(kubeClient.listContexts()).toBe(contexts);
   });
 
-  it.skip("should switch context", async () => {
+  it("should switch context", async () => {
     await kubeClient.switchContext("context1");
 
     expect(kubeConfigManager.setCurrentContext).toHaveBeenCalledWith(

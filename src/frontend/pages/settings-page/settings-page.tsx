@@ -7,7 +7,7 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
 import { State, useAppContext } from "../../app-context";
 
 const SettingsPage = () => {
@@ -38,14 +38,12 @@ const SettingsPage = () => {
         <title>Settings</title>
       </Helmet>
       <Box p={2}>
-        <Typography variant="h5" gutterBottom>
-          Settings
-        </Typography>
+        <Stack spacing={4}>
+          <Typography variant="h5" gutterBottom>
+            Settings
+          </Typography>
 
-        <Grid container spacing={2}>
-          {" "}
-          {/* Grid container for layout */}
-          <Grid item xs={12} sm={6}>
+          <Stack spacing={2}>
             <FormControl variant="outlined" margin="normal" fullWidth>
               <InputLabel htmlFor="theme-select">Theme</InputLabel>
               <Select
@@ -60,8 +58,7 @@ const SettingsPage = () => {
                 <MenuItem value="high-contrast">High Contrast</MenuItem>
               </Select>
             </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={6}>
+
             <FormControl variant="outlined" margin="normal" fullWidth>
               <TextField
                 id="interval-select"
@@ -76,8 +73,8 @@ const SettingsPage = () => {
                 variant="outlined"
               />
             </FormControl>
-          </Grid>
-        </Grid>
+          </Stack>
+        </Stack>
       </Box>
     </>
   );

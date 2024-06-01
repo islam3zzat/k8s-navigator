@@ -1,5 +1,12 @@
 import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  getByRole,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { axe } from "jest-axe";
@@ -19,22 +26,6 @@ jest.mock("../../app-context", () => ({
   useAppContext: jest.fn(),
 }));
 
-jest.mock("../settings-select", () => ({
-  SettingsSelect: ({ value, isLoading, onChange, options }) => (
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      disabled={isLoading}
-    >
-      {options?.map((option) => (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
-  ),
-}));
-
 describe("ContextSelect", () => {
   const mockNavigate = jest.fn();
   const mockDispatch = jest.fn();
@@ -47,6 +38,7 @@ describe("ContextSelect", () => {
       state: { activeContext: { name: "default" } },
       dispatch: mockDispatch,
     });
+    // @ts-expect-error mock for testing
     window.k8sNavigator = {
       listContexts: mockListContexts,
       switchContext: jest.fn().mockResolvedValue({
@@ -64,7 +56,9 @@ describe("ContextSelect", () => {
 
     render(<ContextSelect />);
 
-    expect(screen.getByRole("combobox")).toBeDisabled();
+    expect(
+      screen.getByLabelText(/Loading context options/i),
+    ).toBeInTheDocument();
   });
 
   test("renders ContextSelect with data", async () => {
@@ -75,12 +69,19 @@ describe("ContextSelect", () => {
 
     render(<ContextSelect />);
 
-    expect(screen.getByRole("combobox")).not.toBeDisabled();
     expect(
-      screen.getByRole("option", { name: "context1" }),
+      screen.queryByLabelText(/Loading context options/i),
+    ).not.toBeInTheDocument();
+
+    fireEvent.change(screen.getByRole("combobox"), {
+      target: { value: "context" },
+    });
+
+    expect(
+      await screen.findByRole("option", { name: "context1" }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("option", { name: "context2" }),
+      await screen.findByRole("option", { name: "context2" }),
     ).toBeInTheDocument();
   });
 
@@ -93,13 +94,11 @@ describe("ContextSelect", () => {
     render(<ContextSelect />);
 
     fireEvent.change(screen.getByRole("combobox"), {
-      target: { value: "context2" },
+      target: { value: "context" },
     });
 
-    await waitFor(() => {
-      expect(window.k8sNavigator.switchContext).toHaveBeenCalledWith(
-        "context2",
-      );
+    await act(() => {
+      screen.getByRole("option", { name: "context2" }).click();
     });
 
     await waitFor(() => {

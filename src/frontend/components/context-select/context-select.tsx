@@ -28,7 +28,7 @@ export const ContextSelect = () => {
 
       dispatch({ type: "SET_ACTIVE_CONTEXT", context: nextContext });
 
-      if (nextContext.namespace) {
+      if (nextContext?.namespace) {
         dispatch({
           type: "SET_ACTIVE_NAMESPACE",
           namespace: nextContext.namespace,
@@ -40,19 +40,12 @@ export const ContextSelect = () => {
     [dispatch, navigate],
   );
 
-  const handleChange = useCallback(
-    (nextContext: string) => {
-      setCurrentContext(nextContext);
-    },
-    [setCurrentContext],
-  );
-
   return (
     <SettingsSelect
       name="Context"
-      value={currentContext}
+      value={currentContext || contexts?.[0]}
       isLoading={isLoading}
-      onChange={handleChange}
+      onChange={setCurrentContext}
       options={contexts}
     />
   );

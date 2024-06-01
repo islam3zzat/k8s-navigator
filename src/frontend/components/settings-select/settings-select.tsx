@@ -3,7 +3,6 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { Typography, useTheme } from "@mui/material";
 import fuzzysort from "fuzzysort";
-import "./settings-select.css";
 import { useCallback, useEffect, useState } from "react";
 
 // Custom filter function for fuzzy search using fuzzysort
@@ -42,6 +41,8 @@ export const SettingsSelect = ({
 
   const handleChange = useCallback(
     (_: unknown, newValue: string) => {
+      if (!newValue) return; // unsetting the value is not allowed
+
       onChange(newValue);
       setInputValue(newValue);
     },
@@ -49,26 +50,37 @@ export const SettingsSelect = ({
   );
 
   if (isLoading) {
-    return <BarLoader color={theme.palette.primary.light} />;
+    return (
+      <BarLoader
+        aria-busy
+        aria-label={`Loading ${name} Options`}
+        color={theme.palette.primary.light}
+      />
+    );
   }
 
   return (
     <Autocomplete
       disablePortal
       onChange={handleChange}
-      className="settings-select"
       getOptionLabel={(option) => option}
       filterOptions={fuzzyFilter}
       value={inputValue || null}
       title={value}
       options={options}
       renderOption={(props, option) => (
-        <li {...props} key={option as string}>
+        <li
+          {...props}
+          role="option"
+          aria-selected={option === inputValue}
+          aria-label={option}
+          key={option as string}
+        >
           <Typography>{option}</Typography>
         </li>
       )}
       aria-label={`Select ${name}`}
-      style={{ maxWidth: "25vw" }}
+      style={{ maxWidth: "25vw", color: "inherit" }}
       renderInput={(params) => (
         <TextField
           {...params}

@@ -8,16 +8,25 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
 import Badge from "@mui/material/Badge";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SettingsEthernetIcon from "@mui/icons-material/SettingsEthernet";
 import RouterIcon from "@mui/icons-material/Router";
-import { ContextSelect, NamespaceSelect } from "../../components";
-import ConfirmationDialog from "../../components/confirmation-dialog";
+import Drawer from "@mui/material/Drawer";
 import { PortForward, useAppContext } from "../../app-context";
+import ConfirmationDialog from "../../components/confirmation-dialog";
+import { ContextSelect, NamespaceSelect } from "../../components";
+
+const SettingsPage = React.lazy(
+  () =>
+    import(
+      /* webpackChunkName: "settings" */
+      "../../pages/settings-page"
+    ),
+);
 
 const IconButtonWithRef = React.forwardRef<HTMLButtonElement, IconButtonProps>(
   ({ ...props }, ref) => {
@@ -37,6 +46,23 @@ const settingsIconVarinats = {
 
 export const Header: React.FC = () => {
   const { state, dispatch } = useAppContext();
+  const [isDrawerVisible, setIsDrawerVisible] = React.useState(false);
+
+  const toggleDrawer = React.useCallback(
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
+
+      setIsDrawerVisible(open);
+    },
+    [],
+  );
+
   const activePortForwards = state.portForwards.length;
   React.useEffect(() => {
     async function fetchData() {
@@ -98,10 +124,6 @@ export const Header: React.FC = () => {
       handleClose();
     }
   }, [open, activePortForwards, handleClose]);
-  const navigate = useNavigate();
-  const navigateToSettings = React.useCallback(() => {
-    navigate("/settings");
-  }, [navigate]);
 
   return (
     <>
@@ -156,7 +178,7 @@ export const Header: React.FC = () => {
               whileTap="tap"
               variants={settingsIconVarinats}
               role="link"
-              onClick={navigateToSettings}
+              onClick={() => setIsDrawerVisible(true)}
               color="default"
               aria-label="Settings"
             >
@@ -166,6 +188,15 @@ export const Header: React.FC = () => {
         </Toolbar>
       </AppBar>
 
+      <React.Suspense fallback={null}>
+        <Drawer
+          anchor={"right"}
+          open={isDrawerVisible}
+          onClose={toggleDrawer(false)}
+        >
+          <SettingsPage />
+        </Drawer>
+      </React.Suspense>
       <ConfirmationDialog
         isOpen={open}
         onClose={handleClose}
