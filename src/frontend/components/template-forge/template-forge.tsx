@@ -194,13 +194,14 @@ const TemplateForge = <T,>({
           margin="normal"
         />
         <TextField
-          label="Template String"
+          aria-label="Template body"
           value={templateString}
           onChange={(e) => setTemplateString(e.target.value)}
           fullWidth
           margin="normal"
           multiline
           rows={4}
+          placeholder="kubectl get {{kind}} {{metadata.name}}"
           helperText="Use {{path}} to reference values from the resource. e.g {{metadata.name}}"
         />
         <Button variant="contained" color="primary" onClick={handleGenerate}>
