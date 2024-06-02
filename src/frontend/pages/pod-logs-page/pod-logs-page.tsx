@@ -199,7 +199,6 @@ const PodLogsPage = () => {
               onChange={handleSearchChange}
               variant="outlined"
               size="small"
-              sx={{ marginLeft: 2 }}
             />
           </Stack>
           <List
