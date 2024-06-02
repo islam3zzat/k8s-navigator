@@ -20,6 +20,7 @@ import {
 } from "../../components";
 import { useDownloadResource } from "../../hooks/use-dowload-resource";
 import type { ResourceName } from "../../components/resource-icon/icon-loader";
+import TemplateForge from "../../components/template-forge";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -242,6 +243,9 @@ export const ResourceDetailsPage = <T,>({
             })}
           </>
         )}
+        <Box sx={{ mt: 4 }}>
+          <TemplateForge resourceName={name} resourceValue={resource} />
+        </Box>
       </Stack>
     </>
   );
