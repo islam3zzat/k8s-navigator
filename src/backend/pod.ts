@@ -103,6 +103,7 @@ export class Pod {
       .log(namespace, name, container, logStream, {
         follow: follow,
         pretty: true,
+        timestamps: true,
       })
       .catch((err) => {
         console.error("Error getting logs:", err);
