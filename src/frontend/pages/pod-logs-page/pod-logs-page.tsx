@@ -85,7 +85,10 @@ const PodLogsPage = () => {
     });
 
     window.logs.onLogData((log: string) => {
-      setLogs((prevLogs: string[]) => [...prevLogs, log]);
+      setLogs((prevLogs: string[]) => [
+        ...prevLogs,
+        ...log.split("\n").filter(Boolean),
+      ]);
     });
 
     window.logs.tailPodLogs(
