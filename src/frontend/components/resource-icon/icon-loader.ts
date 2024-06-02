@@ -16,5 +16,5 @@ export type ResourceName = keyof typeof iconLoader;
 
 export default iconLoader as Record<
   ResourceName,
-  () => Promise<{ default: ComponentType<any> }>
+  () => Promise<{ default: ComponentType<unknown> }>
 >;
