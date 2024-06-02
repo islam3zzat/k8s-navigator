@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Button,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  Paper,
-  Snackbar,
-  Stack,
-  TextField,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Paper from "@mui/material/Paper";
+import Snackbar from "@mui/material/Snackbar";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 import CopyAllIcon from "@mui/icons-material/CopyAll";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -28,31 +26,35 @@ interface TemplateForgeProps {
   resourceValue: Record<string, any>;
 }
 
-const getTemplates = (): Template[] => {
-  const savedTemplates = localStorage.getItem("templates");
+const getTemplates = (resourceName: string): Template[] => {
+  const savedTemplates = localStorage.getItem(`templates_${resourceName}`);
   return savedTemplates ? JSON.parse(savedTemplates) : [];
 };
 
-const saveTemplates = (templates: Template[]): void => {
-  localStorage.setItem("templates", JSON.stringify(templates));
+const saveTemplates = (resourceName: string, templates: Template[]): void => {
+  localStorage.setItem(`templates_${resourceName}`, JSON.stringify(templates));
 };
 
-const addTemplate = (template: Template): void => {
-  const templates = getTemplates();
+const addTemplate = (resourceName: string, template: Template): void => {
+  const templates = getTemplates(resourceName);
   templates.push(template);
-  saveTemplates(templates);
+  saveTemplates(resourceName, templates);
 };
 
-const updateTemplate = (index: number, template: Template): void => {
-  const templates = getTemplates();
+const updateTemplate = (
+  resourceName: string,
+  index: number,
+  template: Template,
+): void => {
+  const templates = getTemplates(resourceName);
   templates[index] = template;
-  saveTemplates(templates);
+  saveTemplates(resourceName, templates);
 };
 
-const deleteTemplate = (index: number): void => {
-  const templates = getTemplates();
+const deleteTemplate = (resourceName: string, index: number): void => {
+  const templates = getTemplates(resourceName);
   templates.splice(index, 1);
-  saveTemplates(templates);
+  saveTemplates(resourceName, templates);
 };
 
 const applyTemplate = (
@@ -69,26 +71,32 @@ const TemplateForge: React.FC<TemplateForgeProps> = ({
   const [templateName, setTemplateName] = useState("");
   const [templateString, setTemplateString] = useState("");
   const [output, setOutput] = useState("");
-  const [templates, setTemplates] = useState<Template[]>(getTemplates);
+  const [templates, setTemplates] = useState<Template[]>(
+    getTemplates(resourceName),
+  );
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [editIndex, setEditIndex] = useState<number | null>(null);
 
   useEffect(() => {
+    setTemplates(getTemplates(resourceName));
     setOutput("");
   }, [resourceName, resourceValue]);
 
   const handleGenerate = () => {
     try {
       if (editIndex !== null) {
-        updateTemplate(editIndex, {
+        updateTemplate(resourceName, editIndex, {
           name: templateName,
           template: templateString,
         });
         setEditIndex(null);
       } else {
-        addTemplate({ name: templateName, template: templateString });
+        addTemplate(resourceName, {
+          name: templateName,
+          template: templateString,
+        });
       }
-      setTemplates(getTemplates());
+      setTemplates(getTemplates(resourceName));
       const result = applyTemplate(templateString, resourceValue);
       setOutput(result);
       setTemplateName("");
@@ -108,8 +116,8 @@ const TemplateForge: React.FC<TemplateForgeProps> = ({
   };
 
   const handleDelete = (index: number) => {
-    deleteTemplate(index);
-    setTemplates(getTemplates());
+    deleteTemplate(resourceName, index);
+    setTemplates(getTemplates(resourceName));
   };
 
   const handleCopy = (text: string) => {
@@ -121,57 +129,12 @@ const TemplateForge: React.FC<TemplateForgeProps> = ({
   return (
     <Box sx={{ padding: 3 }}>
       <Typography variant="h4" gutterBottom>
-        Template Forge
+        Command Forge
       </Typography>
-      <Paper sx={{ padding: 2, marginBottom: 2 }}>
-        <Typography variant="h6" gutterBottom>
-          {editIndex !== null ? "Edit Template" : "Create Template"}
-        </Typography>
-        <TextField
-          label="Template Name"
-          value={templateName}
-          onChange={(e) => setTemplateName(e.target.value)}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Template String"
-          value={templateString}
-          onChange={(e) => setTemplateString(e.target.value)}
-          fullWidth
-          margin="normal"
-          multiline
-          rows={4}
-          helperText="Use {{key}} to reference values from the resource"
-        />
-        <Button variant="contained" color="primary" onClick={handleGenerate}>
-          {editIndex !== null ? "Save Changes" : "Generate Command"}
-        </Button>
-      </Paper>
-      {output && (
-        <Paper sx={{ padding: 2, marginTop: 2 }}>
-          <Typography variant="h6" gutterBottom>
-            Generated Command
-          </Typography>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Typography
-              variant="body1"
-              component="div"
-              sx={{ whiteSpace: "pre-wrap", flexGrow: 1 }}
-            >
-              {output}
-            </Typography>
-            <Tooltip title="Copy to clipboard">
-              <IconButton onClick={() => handleCopy(output)}>
-                <CopyAllIcon />
-              </IconButton>
-            </Tooltip>
-          </Box>
-        </Paper>
-      )}
+
       <Paper sx={{ padding: 2, marginTop: 2 }}>
         <Typography variant="h6" gutterBottom>
-          Saved Templates
+          Saved Commands
         </Typography>
         <List>
           {templates.map((template, index) => {
@@ -207,6 +170,55 @@ const TemplateForge: React.FC<TemplateForgeProps> = ({
           })}
         </List>
       </Paper>
+
+      <Paper sx={{ padding: 2, marginBlock: 2 }}>
+        <Typography variant="h6" gutterBottom>
+          {editIndex !== null
+            ? "Edit Command Template"
+            : "Create a Command Template"}
+        </Typography>
+        <TextField
+          label="Template Name"
+          value={templateName}
+          onChange={(e) => setTemplateName(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Template String"
+          value={templateString}
+          onChange={(e) => setTemplateString(e.target.value)}
+          fullWidth
+          margin="normal"
+          multiline
+          rows={4}
+          helperText="Use {{path}} to reference values from the resource. e.g {{metadata.name}}"
+        />
+        <Button variant="contained" color="primary" onClick={handleGenerate}>
+          {editIndex !== null ? "Save Changes" : "Generate Command"}
+        </Button>
+      </Paper>
+      {output && (
+        <Paper sx={{ padding: 2, marginTop: 2 }}>
+          <Typography variant="h6" gutterBottom>
+            Generated Command
+          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Typography
+              variant="body1"
+              component="div"
+              sx={{ whiteSpace: "pre-wrap", flexGrow: 1 }}
+            >
+              {output}
+            </Typography>
+            <Tooltip title="Copy to clipboard">
+              <IconButton onClick={() => handleCopy(output)}>
+                <CopyAllIcon />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        </Paper>
+      )}
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={3000}

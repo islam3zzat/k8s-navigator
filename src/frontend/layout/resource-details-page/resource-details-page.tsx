@@ -244,7 +244,7 @@ export const ResourceDetailsPage = <T,>({
           </>
         )}
         <Box sx={{ mt: 4 }}>
-          <TemplateForge resourceName={name} resourceValue={resource} />
+          <TemplateForge resourceName={resourceKind} resourceValue={resource} />
         </Box>
       </Stack>
     </>
