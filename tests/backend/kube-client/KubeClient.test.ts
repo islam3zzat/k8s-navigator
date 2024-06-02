@@ -1,4 +1,5 @@
 import * as k8s from "@kubernetes/client-node";
+import { DeepWritable } from "./types-helper";
 import {
   ApiClientFactory,
   KubeClient,
@@ -37,16 +38,15 @@ users:
     client-certificate-data: REDACTED
     client-key-data: REDACTED
 `);
-    kubeConfigManager = new KubeConfigManager(
-      kubeConfig,
-    ) as jest.Mocked<KubeConfigManager>;
+    kubeConfigManager = new KubeConfigManager(kubeConfig) as jest.Mocked<
+      DeepWritable<KubeConfigManager>
+    >;
 
     // Mocking necessary methods
     kubeConfigManager.setCurrentContext = jest.fn();
     kubeConfigManager.getCurrentContext = jest.fn();
     kubeConfigManager.getContextObject = jest.fn();
-    // ts-ignore because the property is read only
-    kubeConfigManager.contexts = [];
+    (kubeConfigManager as DeepWritable<KubeConfigManager>).contexts = [];
 
     apiClientFactory = new ApiClientFactory(
       kubeConfig,
@@ -61,7 +61,7 @@ users:
   it("should list contexts", () => {
     const contexts = [{ name: "context1" }, { name: "context2" }];
     // ts-ignore because the property is read only
-    kubeConfigManager.contexts = contexts;
+    (kubeConfigManager as any).contexts = contexts;
 
     expect(kubeClient.listContexts()).toBe(contexts);
   });
