@@ -38,9 +38,9 @@ users:
     client-certificate-data: REDACTED
     client-key-data: REDACTED
 `);
-    kubeConfigManager = new KubeConfigManager(kubeConfig) as jest.Mocked<
-      DeepWritable<KubeConfigManager>
-    >;
+    kubeConfigManager = new KubeConfigManager(
+      kubeConfig,
+    ) as jest.Mocked<KubeConfigManager>;
 
     // Mocking necessary methods
     kubeConfigManager.setCurrentContext = jest.fn();
@@ -60,7 +60,7 @@ users:
 
   it("should list contexts", () => {
     const contexts = [{ name: "context1" }, { name: "context2" }];
-    // ts-ignore because the property is read only
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (kubeConfigManager as any).contexts = contexts;
 
     expect(kubeClient.listContexts()).toBe(contexts);
