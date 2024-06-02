@@ -1,7 +1,7 @@
 import InfoIcon from "@mui/icons-material/Info";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
@@ -11,6 +11,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Typography from "@mui/material/Typography";
 import ArticleIcon from "@mui/icons-material/Article";
 import Paper from "@mui/material/Paper";
+import { FixedSizeList as List, ListChildComponentProps } from "react-window";
 import { useAppContext } from "../../app-context";
 
 type Severity = "error" | "warning" | "info";
@@ -102,6 +103,35 @@ const PodLogsPage = () => {
     };
   }, [containerName, podName, state.activeNamespace]);
 
+  const filteredLogs = useMemo(() => {
+    if (selectedValue === "all") return logs;
+    return logs.filter((log) => logToSeverity(log) === selectedValue);
+  }, [logs, selectedValue]);
+
+  const Row = ({ index, style }: ListChildComponentProps) => {
+    const log = filteredLogs[index];
+    const severity = logToSeverity(log);
+
+    return (
+      <div style={style}>
+        <Stack direction="row" spacing={0}>
+          <LogIcon severity={severity} />
+          <Typography
+            sx={{
+              p: 1,
+              textWrap: "wrap",
+              mb: 2,
+              width: "min(max-content, 100%)",
+              lineBreak: "anywhere",
+            }}
+          >
+            {log}
+          </Typography>
+        </Stack>
+      </div>
+    );
+  };
+
   const downloadLogs = useCallback(() => {
     const blob = new Blob(logs, { type: "text/plain" });
     const url = URL.createObjectURL(blob);
@@ -117,7 +147,7 @@ const PodLogsPage = () => {
     <Stack spacing={4}>
       <Stack
         direction="row"
-        alignItems="center"
+        alignItems="flex-end"
         justifyContent="center"
         spacing={2}
       >
@@ -152,29 +182,14 @@ const PodLogsPage = () => {
               label="Error"
             />
           </Stack>
-          {logs.map((log: string, index: number) => {
-            const severity = logToSeverity(log);
-            if (selectedValue !== "all" && selectedValue !== severity) {
-              return null;
-            }
-
-            return (
-              <Stack key={index} direction="row" spacing={0}>
-                <LogIcon severity={severity} />
-                <Typography
-                  sx={{
-                    p: 1,
-                    textWrap: "wrap",
-                    mb: 2,
-                    width: "min(max-content, 100%)",
-                    lineBreak: "anywhere",
-                  }}
-                >
-                  {log}
-                </Typography>
-              </Stack>
-            );
-          })}
+          <List
+            height={400}
+            itemCount={filteredLogs.length}
+            itemSize={50}
+            width="100%"
+          >
+            {Row}
+          </List>
         </Stack>
       </Paper>
     </Stack>
