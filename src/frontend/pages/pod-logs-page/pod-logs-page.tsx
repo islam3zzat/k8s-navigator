@@ -193,7 +193,8 @@ const PodLogsPage = () => {
               label="Error"
             />
             <TextField
-              label="Search"
+              label="Search logs"
+              aria-label="Search logs"
               value={searchTerm}
               onChange={handleSearchChange}
               variant="outlined"
