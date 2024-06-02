@@ -185,7 +185,7 @@ const PodLogsPage = () => {
           <List
             height={400}
             itemCount={filteredLogs.length}
-            itemSize={50}
+            itemSize={150}
             width="100%"
           >
             {Row}
