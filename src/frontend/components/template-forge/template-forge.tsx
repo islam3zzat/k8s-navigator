@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
@@ -21,9 +21,9 @@ interface Template {
   template: string;
 }
 
-interface TemplateForgeProps {
+interface TemplateForgeProps<T> {
   resourceName: string;
-  resourceValue: Record<string, any>;
+  resourceValue: T;
 }
 
 const getTemplates = (resourceName: string): Template[] => {
@@ -57,17 +57,14 @@ const deleteTemplate = (resourceName: string, index: number): void => {
   saveTemplates(resourceName, templates);
 };
 
-const applyTemplate = (
-  templateString: string,
-  data: Record<string, any>,
-): string => {
+const applyTemplate = <T,>(templateString: string, data: T): string => {
   return Mustache.render(templateString, data);
 };
 
-const TemplateForge: React.FC<TemplateForgeProps> = ({
+const TemplateForge = <T,>({
   resourceName,
   resourceValue,
-}) => {
+}: TemplateForgeProps<T>) => {
   const [templateName, setTemplateName] = useState("");
   const [templateString, setTemplateString] = useState("");
   const [output, setOutput] = useState("");
@@ -82,7 +79,7 @@ const TemplateForge: React.FC<TemplateForgeProps> = ({
     setOutput("");
   }, [resourceName, resourceValue]);
 
-  const handleGenerate = () => {
+  const handleGenerate = useCallback(() => {
     try {
       if (editIndex !== null) {
         updateTemplate(resourceName, editIndex, {
@@ -106,25 +103,31 @@ const TemplateForge: React.FC<TemplateForgeProps> = ({
         "Failed to apply template. Please check the template syntax.",
       );
     }
-  };
+  }, [editIndex, resourceName, templateName, templateString, resourceValue]);
 
-  const handleEdit = (index: number) => {
-    const template = templates[index];
-    setTemplateName(template.name);
-    setTemplateString(template.template);
-    setEditIndex(index);
-  };
+  const handleEdit = useCallback(
+    (index: number) => {
+      const template = templates[index];
+      setTemplateName(template.name);
+      setTemplateString(template.template);
+      setEditIndex(index);
+    },
+    [templates],
+  );
 
-  const handleDelete = (index: number) => {
-    deleteTemplate(resourceName, index);
-    setTemplates(getTemplates(resourceName));
-  };
+  const handleDelete = useCallback(
+    (index: number) => {
+      deleteTemplate(resourceName, index);
+      setTemplates(getTemplates(resourceName));
+    },
+    [resourceName],
+  );
 
-  const handleCopy = (text: string) => {
+  const handleCopy = useCallback((text: string) => {
     navigator.clipboard.writeText(text).then(() => {
       setSnackbarOpen(true);
     });
-  };
+  }, []);
 
   return (
     <Box sx={{ padding: 3 }}>
@@ -140,7 +143,7 @@ const TemplateForge: React.FC<TemplateForgeProps> = ({
           {templates.map((template, index) => {
             const interpolatedValue = applyTemplate(
               template.template,
-              resourceValue,
+              resourceValue as Record<string, any>,
             );
             return (
               <ListItem key={index}>
