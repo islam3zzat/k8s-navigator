@@ -16,5 +16,6 @@ export type ResourceName = keyof typeof iconLoader;
 
 export default iconLoader as Record<
   ResourceName,
-  () => Promise<{ default: ComponentType<unknown> }>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  () => Promise<{ default: ComponentType<any> }>
 >;
