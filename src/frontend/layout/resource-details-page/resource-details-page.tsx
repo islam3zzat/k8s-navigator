@@ -241,11 +241,14 @@ export const ResourceDetailsPage = <T,>({
                 </TabPanel>
               );
             })}
+            <Box sx={{ mt: 4 }}>
+              <TemplateForge
+                resourceName={resourceKind}
+                resourceValue={resource}
+              />
+            </Box>
           </>
         )}
-        <Box sx={{ mt: 4 }}>
-          <TemplateForge resourceName={resourceKind} resourceValue={resource} />
-        </Box>
       </Stack>
     </>
   );

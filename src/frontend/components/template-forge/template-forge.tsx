@@ -128,6 +128,7 @@ const TemplateForge = <T,>({
       setSnackbarOpen(true);
     });
   }, []);
+  const hasSavedTemplates = templates.length > 0;
 
   return (
     <Box sx={{ padding: 3 }}>
@@ -135,50 +136,55 @@ const TemplateForge = <T,>({
         Command Forge
       </Typography>
 
-      <Paper sx={{ padding: 2, marginTop: 2 }}>
-        <Typography variant="h6" gutterBottom>
-          Saved Commands
-        </Typography>
-        <List>
-          {templates.map((template, index) => {
-            const interpolatedValue = applyTemplate(
-              template.template,
-              resourceValue as Record<string, any>,
-            );
-            return (
-              <ListItem key={index}>
-                <ListItemText
-                  primary={template.name}
-                  secondary={interpolatedValue}
-                />
-                <Stack direction="row" spacing={1}>
-                  <Tooltip title="Edit template">
-                    <IconButton onClick={() => handleEdit(index)}>
-                      <EditIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Delete template">
-                    <IconButton onClick={() => handleDelete(index)}>
-                      <DeleteIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Copy to clipboard">
-                    <IconButton onClick={() => handleCopy(interpolatedValue)}>
-                      <CopyAllIcon />
-                    </IconButton>
-                  </Tooltip>
-                </Stack>
-              </ListItem>
-            );
-          })}
-        </List>
-      </Paper>
+      {hasSavedTemplates && (
+        <Paper sx={{ padding: 2, marginTop: 2 }}>
+          <Typography variant="h6" gutterBottom>
+            Saved Commands
+          </Typography>
+          <List>
+            {templates.map((template, index) => {
+              const interpolatedValue = applyTemplate(
+                template.template,
+                resourceValue as Record<string, any>,
+              );
+              return (
+                <ListItem key={index}>
+                  <ListItemText
+                    primary={template.name}
+                    secondary={interpolatedValue}
+                  />
+                  <Stack direction="row" spacing={1}>
+                    <Tooltip title="Edit template">
+                      <IconButton onClick={() => handleEdit(index)}>
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete template">
+                      <IconButton onClick={() => handleDelete(index)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Copy to clipboard">
+                      <IconButton onClick={() => handleCopy(interpolatedValue)}>
+                        <CopyAllIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </Stack>
+                </ListItem>
+              );
+            })}
+          </List>
+        </Paper>
+      )}
 
       <Paper sx={{ padding: 2, marginBlock: 2 }}>
         <Typography variant="h6" gutterBottom>
           {editIndex !== null
             ? "Edit Command Template"
             : "Create a Command Template"}
+        </Typography>
+        <Typography variant="caption" gutterBottom>
+          Use templates to generate commands for the resource: {resourceName}
         </Typography>
         <TextField
           label="Template Name"
