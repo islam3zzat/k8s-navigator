@@ -11,6 +11,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Typography from "@mui/material/Typography";
 import ArticleIcon from "@mui/icons-material/Article";
 import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
 import { FixedSizeList as List, ListChildComponentProps } from "react-window";
 import { useAppContext } from "../../app-context";
 
@@ -43,9 +44,14 @@ const PodLogsPage = () => {
   }>();
   const { state, dispatch } = useAppContext();
   const [selectedValue, setSelectedValue] = useState<Severity | "all">("all");
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedValue(event.target.value as Severity | "all");
+  };
+
+  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
   };
 
   const controlProps = (item: string) => ({
@@ -104,9 +110,14 @@ const PodLogsPage = () => {
   }, [containerName, podName, state.activeNamespace]);
 
   const filteredLogs = useMemo(() => {
-    if (selectedValue === "all") return logs;
-    return logs.filter((log) => logToSeverity(log) === selectedValue);
-  }, [logs, selectedValue]);
+    const severityFilteredLogs =
+      selectedValue === "all"
+        ? logs
+        : logs.filter((log) => logToSeverity(log) === selectedValue);
+    return severityFilteredLogs.filter((log) =>
+      log.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+  }, [logs, selectedValue, searchTerm]);
 
   const Row = ({ index, style }: ListChildComponentProps) => {
     const log = filteredLogs[index];
@@ -160,7 +171,7 @@ const PodLogsPage = () => {
       {/* Sticky position */}
       <Paper elevation={2} sx={{ p: 2 }}>
         <Stack spacing={2}>
-          <Stack alignSelf="center" direction="row" spacing={2}>
+          <Stack direction="row" alignItems="center" spacing={2}>
             <FormControlLabel
               value="all"
               control={<Radio {...controlProps("all")} />}
@@ -180,6 +191,14 @@ const PodLogsPage = () => {
               value="error"
               control={<Radio color="error" {...controlProps("error")} />}
               label="Error"
+            />
+            <TextField
+              label="Search"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              variant="outlined"
+              size="small"
+              sx={{ marginLeft: 2 }}
             />
           </Stack>
           <List
