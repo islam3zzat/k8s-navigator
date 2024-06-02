@@ -30,7 +30,7 @@ const SettingsPage = React.lazy(
 
 const IconButtonWithRef = React.forwardRef<HTMLButtonElement, IconButtonProps>(
   ({ ...props }, ref) => {
-    return <IconButton {...props} ref={ref} />;
+    return <IconButton sx={{ color: "inherit" }} {...props} ref={ref} />;
   },
 );
 IconButtonWithRef.displayName = "IconButtonWithRef";
