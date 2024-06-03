@@ -42,6 +42,13 @@ const config: ForgeConfig = {
     new MakerPKG({
       identity: process.env.INSTALLER_ID as string,
     }),
+    {
+      name: "@electron-forge/maker-dmg",
+      config: {
+        identity: process.env.INSTALLER_ID as string,
+        format: "ULFO",
+      },
+    },
   ],
   publishers: [
     {
