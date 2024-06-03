@@ -14,7 +14,6 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "@fontsource/source-code-pro/400.css";
 import "@fontsource/source-code-pro/700.css";
-import ErrorBoundary from "./components/error-boundry/error-boundry";
 
 const App = lazy(() => import("./pages/app"));
 // Lazy Load Pages

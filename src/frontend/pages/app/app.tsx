@@ -91,9 +91,7 @@ const App: React.FC = () => {
 
   return (
     <Stack spacing={2} alignItems="center">
-      <ErrorBoundary>
-        <Header />
-      </ErrorBoundary>
+      <Header />
       <main style={{ width: "100%" }}>
         <Container maxWidth="lg" sx={{ marginBlock: 8 }}>
           <Stack justifyContent="center">

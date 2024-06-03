@@ -1,13 +1,20 @@
+import React, { useCallback, useState } from "react";
 import { useQuery } from "react-query";
-import React, { useCallback } from "react";
 import { V1NamespaceList } from "@kubernetes/client-node";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../../app-context";
 import { SettingsSelect } from "../settings-select";
+import Notification from "../error-boundry/notification";
 
 export const NamespaceSelect = () => {
   const { state, dispatch } = useAppContext();
   const navigate = useNavigate();
+
+  const [notification, setNotification] = useState({
+    isOpen: false,
+    message: "",
+    severity: "error" as "error" | "info" | "success" | "warning",
+  });
 
   const dataFetcher = useCallback(async () => {
     if (!state.activeContext) return [];
@@ -28,7 +35,16 @@ export const NamespaceSelect = () => {
     queryKey: ["namespaces", { contextName: state.activeContext?.name }],
     queryFn: dataFetcher,
     staleTime: Infinity,
-    useErrorBoundary: true,
+    retry(failureCount) {
+      return failureCount < 3;
+    },
+    onError: (error: Error) => {
+      setNotification({
+        isOpen: true,
+        message: error.message,
+        severity: "error",
+      });
+    },
   });
 
   const handleChange = (nextNamespace: string) => {
@@ -36,13 +52,25 @@ export const NamespaceSelect = () => {
     navigate("/");
   };
 
+  const handleNotificationClose = () => {
+    setNotification((prev) => ({ ...prev, isOpen: false }));
+  };
+
   return (
-    <SettingsSelect
-      name="Namespace"
-      value={state.activeNamespace}
-      isLoading={isLoading}
-      onChange={handleChange}
-      options={namespaces || []}
-    />
+    <>
+      <SettingsSelect
+        name="Namespace"
+        value={state.activeNamespace}
+        isLoading={isLoading}
+        onChange={handleChange}
+        options={namespaces || []}
+      />
+      <Notification
+        isOpen={notification.isOpen}
+        handleClose={handleNotificationClose}
+        message={notification.message}
+        severity={notification.severity}
+      />
+    </>
   );
 };
