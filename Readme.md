@@ -21,6 +21,19 @@ K8S Navigator is an Electron desktop application built with TypeScript and React
 
 ## Installation
 
+You can install K8S Navigator:
+
+- by downloading the [latest release](https://github.com/islam3zzat/k8s-navigator/releases), or
+- on macOS with Homebrew Cask:
+
+```sh
+brew tap islam3zzat/k8s-navigator
+
+brew install --cask k8s-navigator
+```
+
+## Development
+
 1. **Prerequisites:**
    - Node.js and npm (or yarn) installed on your system.
    - A Kubernetes cluster to connect to (minikube, Docker Desktop, or a cloud provider's cluster).
