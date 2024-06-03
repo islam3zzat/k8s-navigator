@@ -61,9 +61,6 @@ brew install --cask k8s-navigator
 
 4. **Run the App:**
 
-   ```bash
-   npm start
-   ```
 
    or
 
