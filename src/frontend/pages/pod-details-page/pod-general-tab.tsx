@@ -303,16 +303,19 @@ const PodGeneralTab: React.FC<TabComponentProps<V1Pod>> = ({
                   <Typography width={60} variant="body1">
                     Name
                   </Typography>
-                  <Typography>{container.name}</Typography>
                   <Button
                     variant="outlined"
                     startIcon={<ArticleIcon aria-label="View logs" />}
                     onClick={() =>
                       navigate(`/pods/${podName}/logs/${container.name}`)
                     }
+                    sx={{
+                      minWidth: 120,
+                    }}
                   >
                     Logs
                   </Button>
+                  <Typography>{container.name}</Typography>
                 </Stack>
                 <Stack direction="row" spacing={2}>
                   <SettingsEthernetIcon
@@ -334,6 +337,46 @@ const PodGeneralTab: React.FC<TabComponentProps<V1Pod>> = ({
                         alignItems="center"
                         justifyContent="space-between"
                       >
+                        <Stack
+                          direction="row"
+                          spacing={0.5}
+                          alignItems="center"
+                        >
+                          <Button
+                            disabled={
+                              !!podOpenPorts[port.containerPort] ||
+                              port.protocol !== "TCP"
+                            }
+                            variant="outlined"
+                            startIcon={<SendIcon aria-label="Forward port" />}
+                            onClick={() =>
+                              handleOpenPortForwardDialog(
+                                port.containerPort.toString(),
+                              )
+                            }
+                            sx={{
+                              minWidth: 120,
+                            }}
+                          >
+                            Forward
+                          </Button>
+                          {podOpenPorts[port.containerPort] && (
+                            <Button
+                              variant="outlined"
+                              startIcon={
+                                <DeleteIcon aria-label="Close forwarded port" />
+                              }
+                              onClick={() =>
+                                handleClosePortForward(
+                                  podOpenPorts[port.containerPort],
+                                )
+                              }
+                            >
+                              {"~> "}
+                              {podOpenPorts[port.containerPort].userPort}
+                            </Button>
+                          )}
+                        </Stack>
                         <Stack direction="row" spacing={1} alignItems="center">
                           <RouterIcon
                             fontSize="small"
@@ -343,36 +386,6 @@ const PodGeneralTab: React.FC<TabComponentProps<V1Pod>> = ({
                           <CastConnectedIcon fontSize="small" />
                           <Typography>{port.protocol}</Typography>
                         </Stack>
-
-                        <Button
-                          disabled={!!podOpenPorts[port.containerPort]}
-                          variant="outlined"
-                          startIcon={<SendIcon aria-label="Forward port" />}
-                          onClick={() =>
-                            handleOpenPortForwardDialog(
-                              port.containerPort.toString(),
-                            )
-                          }
-                        >
-                          Forward
-                        </Button>
-                        {podOpenPorts[port.containerPort] && (
-                          <Button
-                            variant="outlined"
-                            startIcon={
-                              <DeleteIcon aria-label="Close forwarded port" />
-                            }
-                            onClick={() =>
-                              handleClosePortForward(
-                                podOpenPorts[port.containerPort],
-                              )
-                            }
-                          >
-                            {port.containerPort}
-                            {" ~> "}
-                            {podOpenPorts[port.containerPort].userPort}
-                          </Button>
-                        )}
                       </Stack>
                     ))}
                   </Stack>
@@ -432,10 +445,13 @@ const PodGeneralTab: React.FC<TabComponentProps<V1Pod>> = ({
             You are about to forward a container port to a local port on your
             system. Please review the details below:
           </Typography>
-          <Stack direction="row" spacing={2} alignItems="center">
-            <Typography variant="body1">
-              Container Port: {remotePort}
-            </Typography>
+          <Stack
+            direction="row"
+            spacing={2}
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Typography variant="body1">Container Port:</Typography>
             <TextField
               type="number"
               color={isPortForwardingError ? "error" : undefined}
@@ -446,7 +462,12 @@ const PodGeneralTab: React.FC<TabComponentProps<V1Pod>> = ({
               }
             />
           </Stack>
-          <Stack direction="row" spacing={2} alignItems="center">
+          <Stack
+            direction="row"
+            spacing={2}
+            alignItems="center"
+            justifyContent="space-between"
+          >
             <Typography variant="body1">Local Port:</Typography>
             <TextField
               type="number"

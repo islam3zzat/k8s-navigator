@@ -227,11 +227,10 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         portForwards: state.portForwards.filter(
           (pf) =>
-            (pf.name !== action.portForward.name &&
-              pf.namespace !== action.portForward.namespace &&
-              pf.targetPort !== action.portForward.targetPort &&
-              pf.userPort !== action.portForward.userPort) ||
-            action.portForward.targetPort,
+            pf.name !== action.portForward.name &&
+            pf.namespace !== action.portForward.namespace &&
+            pf.targetPort !== action.portForward.targetPort &&
+            pf.userPort !== action.portForward.userPort,
         ),
       };
     case "REMOVE_ALL_PORT_FORWARDS":

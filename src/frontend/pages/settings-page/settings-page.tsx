@@ -1,5 +1,10 @@
+import * as React from "react";
+import { Link as RouterLink } from "react-router-dom";
+import Link from "@mui/material/Link";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
+import SettingsEthernetIcon from "@mui/icons-material/SettingsEthernet";
 import { Helmet } from "react-helmet-async";
-import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
@@ -8,7 +13,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
-import { State, useAppContext } from "../../app-context";
+import { PortForward, State, useAppContext } from "../../app-context";
 
 const SettingsPage = () => {
   const { state, dispatch } = useAppContext();
@@ -32,12 +37,36 @@ const SettingsPage = () => {
     });
     localStorage.setItem("watchIntervalSeconds", watchInterval.toString());
   };
+
+  const handleClosePortForward = React.useCallback(
+    (portForward: PortForward) => {
+      window.k8sNavigator
+        .closePortForward(
+          state.activeNamespace,
+          portForward.name,
+          portForward.targetPort,
+          portForward.userPort,
+        )
+        .then(() => {
+          dispatch({ type: "REMOVE_PORT_FORWARD", portForward });
+        });
+    },
+
+    [state.activeNamespace, dispatch],
+  );
+
+  const handleCloseAllPortForwards = React.useCallback(() => {
+    window.k8sNavigator.closeAllPortForwards().then(() => {
+      dispatch({ type: "REMOVE_ALL_PORT_FORWARDS" });
+    });
+  }, [dispatch]);
+
   return (
     <>
       <Helmet>
         <title>Settings</title>
       </Helmet>
-      <Box p={2}>
+      <Box p={2} minWidth={400}>
         <Stack spacing={4}>
           <Typography variant="h5" gutterBottom>
             Settings
@@ -74,6 +103,38 @@ const SettingsPage = () => {
               />
             </FormControl>
           </Stack>
+
+          {state.portForwards.length > 0 && (
+            <Stack spacing={2}>
+              <Typography variant="h6">Running Port Forwards</Typography>
+              {state.portForwards.map((pf) => (
+                <Stack key={pf.name + pf.userPort} spacing={1}>
+                  <Stack direction="row" spacing={2} alignItems="center">
+                    <SettingsEthernetIcon fontSize="small" />
+                    <Link
+                      component={RouterLink}
+                      flex={1}
+                      to={`/pods/${pf.name}`}
+                      color="inherit"
+                      underline="hover"
+                    >
+                      <Typography variant="body1">{pf.name}</Typography>
+                    </Link>
+                  </Stack>
+                  <Button
+                    variant="outlined"
+                    startIcon={<DeleteIcon />}
+                    onClick={() => handleClosePortForward(pf)}
+                  >
+                    {`${pf.targetPort} ~> ${pf.userPort}`}
+                  </Button>
+                </Stack>
+              ))}
+              <Button variant="outlined" onClick={handleCloseAllPortForwards}>
+                Stop all
+              </Button>
+            </Stack>
+          )}
         </Stack>
       </Box>
     </>
