@@ -22,8 +22,13 @@ export interface IPortForward {
   userPort: number;
 }
 
-let portForwards: Array<IPortForward & { server: net.Server }> = [];
+type RunningPortForward = IPortForward & {
+  server: net.Server;
+  sockets: Set<net.Socket>;
+};
+
 export class PortForwardManager {
+  private portForwards: Array<RunningPortForward> = [];
   constructor(private kubeConfig: k8s.KubeConfig) {}
 
   public portForward = ({
@@ -34,7 +39,7 @@ export class PortForwardManager {
   }: NamespacedName & { targetPort: number; userPort: number }) => {
     return new Promise<void>((resolve, reject) => {
       // const instance = KubeClient.getInstance();
-      const match = portForwards.find(
+      const match = this.portForwards.find(
         (server) =>
           server.namespace === namespace &&
           server.name === name &&
@@ -59,19 +64,29 @@ export class PortForwardManager {
           socket,
         );
       });
+      const sockets = new Set<net.Socket>();
+      const portForward: RunningPortForward = {
+        namespace,
+        name,
+        targetPort: targetPort,
+        userPort,
+        server,
+        sockets: sockets,
+      };
+
+      server.on("connection", (socket) => {
+        sockets.add(socket);
+        server.once("close", () => {
+          sockets.delete(socket);
+        });
+      });
 
       server.once("error", (err) => {
         reject(err);
       });
 
       server.once("listening", () => {
-        portForwards.push({
-          namespace,
-          name,
-          targetPort: targetPort,
-          userPort,
-          server,
-        });
+        this.portForwards.push(portForward);
         resolve();
       });
 
@@ -79,7 +94,7 @@ export class PortForwardManager {
     });
   };
 
-  public closePortForward = ({
+  public closePortForward = async ({
     namespace,
     name,
     targetPort,
@@ -94,45 +109,54 @@ export class PortForwardManager {
     if (index === -1) {
       throw new Error("Port-forward does not exist for this pod");
     }
+    const portForward = this.portForwards[index];
+
+    await this.drainPortForward(portForward);
+
+    this.portForwards.splice(index, 1);
+  };
+
+  public listPortForwards = () => {
+    return this.portForwards.map(
+      ({ namespace, name, userPort, targetPort }) => ({
+        namespace,
+        name,
+        userPort,
+        targetPort,
+      }),
+    );
+  };
+
+  public closeAllPortForwards = async () => {
+    await Promise.all(
+      this.portForwards.map((portForward) =>
+        this.drainPortForward(portForward),
+      ),
+    );
+
+    this.portForwards = [];
+  };
+
+  drainPortForward = (portForward: RunningPortForward) => {
+    if (!portForward?.server) return Promise.resolve();
 
     return new Promise<void>((resolve, reject) => {
-      const portForward = portForwards[index];
+      const sockets = portForward.sockets;
+
+      for (const socket of sockets) {
+        socket.destroy();
+        sockets.delete(socket);
+      }
+
       portForward.server.once("close", () => {
-        portForwards.splice(index, 1);
         resolve();
       });
       portForward.server.once("error", (err) => {
         reject(err);
       });
+
       portForward.server.close();
     });
-  };
-
-  public listPortForwards = () => {
-    return portForwards.map(({ namespace, name, userPort, targetPort }) => ({
-      namespace,
-      name,
-      userPort,
-      targetPort,
-    }));
-  };
-
-  public closeAllPortForwards = async () => {
-    await Promise.all(
-      portForwards.map(
-        ({ server }) =>
-          new Promise<void>((resolve, reject) => {
-            server.once("close", () => {
-              resolve();
-            });
-            server.once("error", (err) => {
-              reject(err);
-            });
-            server.close();
-          }),
-      ),
-    );
-    portForwards = [];
   };
 
   private isPortForwardExists = (
@@ -140,7 +164,7 @@ export class PortForwardManager {
     name: string,
     port: number,
   ): boolean => {
-    return portForwards.some(
+    return this.portForwards.some(
       (server) =>
         server.namespace === namespace &&
         server.name === name &&
@@ -154,51 +178,12 @@ export class PortForwardManager {
     port: number,
     userPort: number,
   ): number => {
-    return portForwards.findIndex(
+    return this.portForwards.findIndex(
       (server) =>
         server.namespace === namespace &&
         server.name === name &&
         server.targetPort === port &&
         server.userPort === userPort,
     );
-  };
-
-  private createPortForwardServer = (
-    namespace: string,
-    name: string,
-    port: number,
-    userPort: number,
-    portForwardHandler: IPortForwardHandler,
-    reject: (reason?: unknown) => void,
-    resolve: (value?: void | PromiseLike<void>) => void,
-  ): net.Server => {
-    const server = net.createServer((socket) => {
-      portForwardHandler.portForward(
-        namespace,
-        name,
-        port,
-        userPort,
-        socket,
-        null,
-        socket,
-      );
-    });
-
-    server.once("error", (err) => {
-      reject(err);
-    });
-
-    server.once("listening", () => {
-      portForwards.push({
-        namespace,
-        name,
-        targetPort: port,
-        userPort,
-        server,
-      });
-      resolve();
-    });
-
-    return server;
   };
 }

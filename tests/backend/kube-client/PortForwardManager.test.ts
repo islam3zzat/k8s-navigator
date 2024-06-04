@@ -26,6 +26,11 @@ describe("PortForwardManager", () => {
             callback();
           }
         }),
+        on: jest.fn((event, callback) => {
+          if (event === "listening") {
+            callback();
+          }
+        }),
         listen: jest.fn(),
       };
       (net.createServer as jest.Mock).mockReturnValue(serverMock);
@@ -46,6 +51,11 @@ describe("PortForwardManager", () => {
     it("should throw an error if port-forward already exists", async () => {
       const serverMock = {
         once: jest.fn((event, callback) => {
+          if (event === "listening") {
+            callback();
+          }
+        }),
+        on: jest.fn((event, callback) => {
           if (event === "listening") {
             callback();
           }
@@ -80,6 +90,11 @@ describe("PortForwardManager", () => {
             callback();
           }
         }),
+        on: jest.fn((event, callback) => {
+          if (event === "listening") {
+            callback();
+          }
+        }),
         listen: jest.fn(),
         close: jest.fn(),
       };
@@ -103,14 +118,15 @@ describe("PortForwardManager", () => {
     });
 
     it("should throw an error if the port-forward does not exist", () => {
-      expect(() => {
-        portForwardManager.closePortForward({
-          namespace: "default",
-          name: "nonexistent-pod",
-          targetPort: 8080,
-          userPort: 3000,
-        });
-      }).toThrow("Port-forward does not exist for this pod");
+      const promise = portForwardManager.closePortForward({
+        namespace: "default",
+        name: "nonexistent-pod",
+        targetPort: 8080,
+        userPort: 3000,
+      });
+      expect(promise).rejects.toThrow(
+        "Port-forward does not exist for this pod",
+      );
     });
   });
 
@@ -118,6 +134,11 @@ describe("PortForwardManager", () => {
     it("should return the list of current port-forwards", async () => {
       const serverMock = {
         once: jest.fn((event, callback) => {
+          if (event === "listening") {
+            callback();
+          }
+        }),
+        on: jest.fn((event, callback) => {
           if (event === "listening") {
             callback();
           }
@@ -149,6 +170,14 @@ describe("PortForwardManager", () => {
     it("should close all port-forwards", async () => {
       const serverMock = {
         once: jest.fn((event, callback) => {
+          if (event === "listening") {
+            callback();
+          }
+          if (event === "close") {
+            callback();
+          }
+        }),
+        on: jest.fn((event, callback) => {
           if (event === "listening") {
             callback();
           }
