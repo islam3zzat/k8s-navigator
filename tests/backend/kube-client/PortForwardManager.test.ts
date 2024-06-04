@@ -152,9 +152,12 @@ describe("PortForwardManager", () => {
           if (event === "listening") {
             callback();
           }
+          if (event === "close") {
+            callback();
+          }
         }),
         listen: jest.fn(),
-        close: jest.fn((callback) => callback()),
+        close: jest.fn(),
       };
       (net.createServer as jest.Mock).mockReturnValue(serverMock);
 

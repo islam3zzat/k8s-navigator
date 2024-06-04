@@ -102,7 +102,6 @@ export class PortForwardManager {
         resolve();
       });
       portForward.server.once("error", (err) => {
-        console.log(err);
         reject(err);
       });
       portForward.server.close();
@@ -125,13 +124,13 @@ export class PortForwardManager {
       this.portForwards.map(
         ({ server }) =>
           new Promise<void>((resolve, reject) => {
-            server.close((err) => {
-              if (err) {
-                reject(err);
-              } else {
-                resolve();
-              }
+            server.once("close", () => {
+              resolve();
             });
+            server.once("error", (err) => {
+              reject(err);
+            });
+            server.close();
           }),
       ),
     );
