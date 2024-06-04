@@ -225,12 +225,9 @@ const reducer = (state: State, action: Action): State => {
     case "REMOVE_PORT_FORWARD":
       return {
         ...state,
-        portForwards: state.portForwards.filter(
-          (pf) =>
-            pf.name !== action.portForward.name &&
-            pf.namespace !== action.portForward.namespace &&
-            pf.targetPort !== action.portForward.targetPort &&
-            pf.userPort !== action.portForward.userPort,
+        portForwards: filterOutPortForward(
+          state.portForwards,
+          action.portForward,
         ),
       };
     case "REMOVE_ALL_PORT_FORWARDS":
@@ -283,3 +280,22 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
     </AppContext.Provider>
   );
 };
+
+function filterOutPortForward(
+  portForwards: PortForward[],
+  portForward: PortForward,
+) {
+  const match = portForwards.findIndex(
+    (pf) =>
+      pf.name === portForward.name &&
+      pf.namespace === portForward.namespace &&
+      pf.targetPort === portForward.targetPort &&
+      pf.userPort === portForward.userPort,
+  );
+
+  if (match === -1) {
+    return portForwards;
+  }
+
+  return portForwards.filter((_, index) => index !== match);
+}
