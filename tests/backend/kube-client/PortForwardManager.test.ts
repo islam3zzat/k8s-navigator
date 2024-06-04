@@ -40,7 +40,7 @@ describe("PortForwardManager", () => {
       ).resolves.toBeUndefined();
 
       expect(net.createServer).toHaveBeenCalled();
-      expect(serverMock.listen).toHaveBeenCalledWith(3000, "127.0.0.1");
+      expect(serverMock.listen).toHaveBeenCalledWith(3000);
     });
 
     it("should throw an error if port-forward already exists", async () => {

@@ -93,7 +93,7 @@ const Item = ({ entity }: { entity: string }) => {
         "&:active": {
           color: theme.palette.action.hover + " !important",
         },
-        zIndex: 1,
+        zIndex: 1_000,
       }}
     >
       {entity}
