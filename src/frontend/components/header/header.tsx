@@ -14,7 +14,6 @@ import Button from "@mui/material/Button";
 import Badge from "@mui/material/Badge";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SettingsEthernetIcon from "@mui/icons-material/SettingsEthernet";
-import RouterIcon from "@mui/icons-material/Router";
 import Drawer from "@mui/material/Drawer";
 import { PortForward, useAppContext } from "../../app-context";
 import ConfirmationDialog from "../../components/confirmation-dialog";
@@ -39,8 +38,8 @@ const MotionIconButton = motion(IconButtonWithRef);
 MotionIconButton.displayName = "MotionIconButton";
 
 const settingsIconVarinats = {
-  hover: { rotate: 180, transition: { duration: 0.5 } },
-  focus: { rotate: 180, transition: { duration: 0.5 } },
+  hover: { rotate: 10, transition: { duration: 0.3 } },
+  focus: { rotate: 10, transition: { duration: 0.3 } },
   tap: { rotate: 0 }, // You might not need this if the animation automatically resets on mouse leave
 };
 
@@ -77,11 +76,11 @@ export const Header: React.FC = () => {
   const [isMouseOver, setIsMouseOver] = React.useState(false);
 
   const handleMouseEnter = React.useCallback(() => {
-    iconAnimation.start({ rotate: 360, transition: { duration: 1 } });
+    iconAnimation.start({ rotate: 15, transition: { duration: 0.3 } });
   }, [iconAnimation]);
 
   const handleMouseLeave = React.useCallback(() => {
-    iconAnimation.start({ rotate: 0, transition: { duration: 1 } });
+    iconAnimation.start({ rotate: 0, transition: { duration: 0.3 } });
   }, [iconAnimation]);
 
   React.useEffect(() => {
@@ -93,7 +92,6 @@ export const Header: React.FC = () => {
   }, [isMouseOver, handleMouseEnter, handleMouseLeave]);
 
   const [open, setOpen] = React.useState(false);
-  const handleOpen = React.useCallback(() => setOpen(true), []);
   const handleClose = React.useCallback(() => setOpen(false), []);
   const handleClosePortForward = React.useCallback(
     (portForward: PortForward) => {
@@ -153,15 +151,6 @@ export const Header: React.FC = () => {
               </Typography>
             </Stack>
           </Link>
-          {!!activePortForwards && (
-            <Badge badgeContent={activePortForwards} color="info">
-              <RouterIcon
-                sx={{ cursor: "pointer" }}
-                titleAccess={`${activePortForwards} running port forwards`}
-                onClick={handleOpen}
-              />
-            </Badge>
-          )}
 
           <Box
             sx={{
@@ -182,7 +171,9 @@ export const Header: React.FC = () => {
               color="default"
               aria-label="Settings"
             >
-              <SettingsIcon sx={{ fontSize: 24 }} />
+              <Badge badgeContent={activePortForwards} color="info">
+                <SettingsIcon sx={{ fontSize: 24 }} />
+              </Badge>
             </MotionIconButton>
           </Box>
         </Toolbar>

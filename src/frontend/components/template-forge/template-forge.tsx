@@ -1,10 +1,21 @@
-import { useCallback, useEffect, useState } from "react";
+import useTheme from "@mui/material/styles/useTheme";
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import CircularProgress from "@mui/material/CircularProgress";
+import styled from "@mui/material/styles/styled";
 import ListItemText from "@mui/material/ListItemText";
+import MenuItem from "@mui/material/MenuItem";
 import Paper from "@mui/material/Paper";
 import Snackbar from "@mui/material/Snackbar";
 import Stack from "@mui/material/Stack";
@@ -15,6 +26,8 @@ import CopyAllIcon from "@mui/icons-material/CopyAll";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Mustache from "mustache";
+import ReactTextareaAutocomplete from "@webscopeio/react-textarea-autocomplete";
+import { useForkRef, useIsFocusVisible } from "@mui/material";
 
 interface Template {
   name: string;
@@ -60,7 +73,38 @@ const deleteTemplate = (resourceName: string, index: number): void => {
 const applyTemplate = <T,>(templateString: string, data: T): string => {
   return Mustache.render(templateString, data);
 };
+const Item = ({ entity }: { entity: string }) => {
+  const theme = useTheme(); // Access theme variables
+  const { isFocusVisibleRef } = useIsFocusVisible();
+  const ref = useRef(null);
 
+  return (
+    <MenuItem
+      component="div"
+      ref={ref}
+      disableRipple
+      sx={{
+        backgroundColor: isFocusVisibleRef.current
+          ? theme.palette.action.selected
+          : theme.palette.background.default, // Highlight if active
+        "&:hover": {
+          backgroundColor: theme.palette.action.hover,
+        },
+        "&:active": {
+          color: theme.palette.action.hover + " !important",
+        },
+        zIndex: 1,
+      }}
+    >
+      {entity}
+    </MenuItem>
+  );
+};
+Item.displayName = "Item";
+const TextAreaComponent = forwardRef((props, ref) => {
+  return <TextField {...props} inputRef={ref} />;
+});
+TextAreaComponent.displayName = "TextAreaComponent";
 const TemplateForge = <T,>({
   resourceName,
   resourceValue,
@@ -78,6 +122,24 @@ const TemplateForge = <T,>({
     setTemplates(getTemplates(resourceName));
     setOutput("");
   }, [resourceName, resourceValue]);
+
+  const objectValuePathes = useMemo(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const getPathSuggestions = (obj: any, currentPath = ""): string[] => {
+      if (typeof obj !== "object" || obj === null) {
+        return [currentPath]; // Base case: reached a leaf value
+      }
+
+      const paths: string[] = [];
+      for (const key in obj) {
+        const newPath = currentPath ? `${currentPath}.${key}` : key;
+        paths.push(...getPathSuggestions(obj[key], newPath)); // Recurse
+      }
+      return paths;
+    };
+
+    return getPathSuggestions(resourceValue);
+  }, [resourceValue]);
 
   const handleGenerate = useCallback(() => {
     try {
@@ -145,7 +207,7 @@ const TemplateForge = <T,>({
             {templates.map((template, index) => {
               const interpolatedValue = applyTemplate(
                 template.template,
-                resourceValue as Record<string, any>,
+                resourceValue as Record<string, unknown>,
               );
               return (
                 <ListItem key={index}>
@@ -193,8 +255,10 @@ const TemplateForge = <T,>({
           fullWidth
           margin="normal"
         />
-        <TextField
+        <ReactTextareaAutocomplete
           aria-label="Template body"
+          // @ts-expect-error - The component is not typed correctly
+          textAreaComponent={TextAreaComponent}
           value={templateString}
           onChange={(e) => setTemplateString(e.target.value)}
           fullWidth
@@ -203,7 +267,31 @@ const TemplateForge = <T,>({
           rows={4}
           placeholder="kubectl get {{kind}} {{metadata.name}}"
           helperText="Use {{path}} to reference values from the resource. e.g {{metadata.name}}"
+          {...{
+            className:
+              "MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline",
+            loadingComponent: CircularProgress,
+            minChar: 0,
+            trigger: {
+              "{{": {
+                component: Item,
+                dataProvider: (input: string) => {
+                  if (input === "{") {
+                    return objectValuePathes;
+                  }
+                  const userquery = input.replace("{", "");
+                  return input
+                    ? objectValuePathes.filter((item) =>
+                        item.includes(userquery),
+                      )
+                    : objectValuePathes;
+                },
+                output: (item, trigger) => `{{${item}}}`,
+              },
+            },
+          }}
         />
+
         <Button variant="contained" color="primary" onClick={handleGenerate}>
           {editIndex !== null ? "Save Changes" : "Generate Command"}
         </Button>

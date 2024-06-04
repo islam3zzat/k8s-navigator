@@ -207,7 +207,7 @@ export const ResourceDetailsPage = <T,>({
           />
         </Stack>
 
-        {!isLoading && (
+        {!isLoading && resource && (
           <>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
               <Tabs

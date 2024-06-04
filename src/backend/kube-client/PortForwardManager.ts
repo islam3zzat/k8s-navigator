@@ -75,7 +75,7 @@ export class PortForwardManager {
         resolve();
       });
 
-      server.listen(userPort, "127.0.0.1");
+      server.listen(userPort);
     });
   };
 
