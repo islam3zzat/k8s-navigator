@@ -97,14 +97,15 @@ export class PortForwardManager {
 
     return new Promise<void>((resolve, reject) => {
       const portForward = this.portForwards[index];
-      portForward.server.close((err) => {
-        if (err) {
-          reject(err);
-        } else {
-          this.portForwards.splice(index, 1);
-          resolve();
-        }
+      portForward.server.once("close", () => {
+        this.portForwards.splice(index, 1);
+        resolve();
       });
+      portForward.server.once("error", (err) => {
+        console.log(err);
+        reject(err);
+      });
+      portForward.server.close();
     });
   };
 

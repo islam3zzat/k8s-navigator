@@ -13,7 +13,7 @@ type Props = {
 export const ResourceIcon: FC<Props> = ({ isPrimary, resourceName, size }) => {
   const theme = useTheme();
 
-  const LazyIcon = lazy(() => iconLoader[resourceName]());
+  const LazyIcon = iconLoader[resourceName];
 
   if (!theme) return null;
   const iconWidth = theme.spacing(size || 2);
