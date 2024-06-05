@@ -71,10 +71,9 @@ const AuthenticationPage: React.FC = () => {
       <Stack spacing={2}>
         <Typography variant="h4">Authentication Command Runner</Typography>
         <Typography variant="caption" mt={2}>
-          This page allows you to save and run authentication commands. <br />
-          You can enter a name and a shell command for authentication, save it,
-          and then run the command by clicking the corresponding button. The
-          output of the command will be displayed below.
+          {
+            "The app uses you're current context, you can authenticate yourself outside the app then refresh, or you can define you're authentication commands here."
+          }
         </Typography>
         <Stack spacing={2}>
           <Typography variant="h6">Stored Auth Commands</Typography>
