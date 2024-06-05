@@ -7,7 +7,7 @@ module.exports = {
         "~/(.*)": "<rootDir>/src/$1",
       },
       testEnvironment: "node",
-      testMatch: ["<rootDir>/src/backend/tests/**/*.test.ts"],
+      testMatch: ["<rootDir>/tests/backend/**/*.test.ts"],
     },
     {
       displayName: "frontend",
