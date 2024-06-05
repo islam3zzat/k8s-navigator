@@ -21,6 +21,7 @@ const Notification = ({
     open={isOpen}
     autoHideDuration={autoHideDuration || defaultAutoHideDuration}
     onClose={handleClose}
+    role="alert"
   >
     <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
       {message}
