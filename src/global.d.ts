@@ -20,19 +20,6 @@ interface K8sNavigator {
     replicas: number,
   ) => Promise<V1Deployment>;
 
-  updateEnviormentVariables: (
-    namespace: string,
-    name: string,
-    containerName: string,
-    env: Record<string, string>,
-  ) => Promise<V1Deployment>;
-
-  updateDeployment: (
-    namespace: string,
-    name: string,
-    deployment: V1Deployment,
-  ) => Promise<V1Deployment>;
-
   // Endpoints
   listEndpoints: (
     namespace: string,

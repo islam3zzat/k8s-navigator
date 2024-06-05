@@ -70,20 +70,6 @@ export const ipcControllers: Record<string, Listiner> = {
     replicas: number,
   ) => deployment.rescaleDeployment({ namespace, name, replicas }),
 
-  [IpcActions.updateEnviormentVariables]: (
-    e,
-    namespace: string,
-    name: string,
-    containerName: string,
-    env: Record<string, string>,
-  ) =>
-    deployment.updateEnviormentVariables({
-      namespace,
-      name,
-      containerName,
-      env,
-    }),
-
   [IpcActions.listReplicaSets]: (e, namespace: string) =>
     replicaSet.listReplicaSets(namespace),
 

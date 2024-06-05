@@ -45,50 +45,6 @@ export class Deployment {
     return response.body;
   };
 
-  updateEnviormentVariables = async ({
-    namespace,
-    name,
-    containerName,
-    env,
-  }: NamespacedName & {
-    containerName: string;
-    env: Record<string, string>;
-  }) => {
-    const deployment = await this.getDeployment({ namespace, name });
-
-    if (!deployment?.spec) {
-      throw new Error("Deployment spec not found");
-    }
-    const container = deployment.spec.template.spec.containers.find(
-      (container) => container.name === containerName,
-    );
-
-    if (!container) {
-      throw new Error("Container not found");
-    }
-
-    deployment.spec.template.spec.containers.forEach((container) => {
-      if (container.name !== containerName) {
-        return;
-      }
-
-      container.env = Object.entries(env).map(([name, value]) => ({
-        name,
-        value,
-      }));
-    });
-
-    const appsV1Api = this.apiClientFactory.getApiClient(ApiVersion.AppsV1);
-
-    const response = await appsV1Api.replaceNamespacedDeployment(
-      name,
-      namespace,
-      deployment,
-    );
-
-    return response.body;
-  };
-
   listEvents = async ({ namespace, name }: NamespacedName) => {
     const events = new Event(this.apiClientFactory);
     return events.listEvents({ namespace, name });

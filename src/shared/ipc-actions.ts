@@ -8,7 +8,6 @@ export const IpcActions = {
   listDeployments: "listDeployments",
   getDeployment: "getDeployment",
   rescaleDeployment: "rescaleDeployment",
-  updateEnviormentVariables: "updateEnviormentVariables",
   listEvents: "listEvents",
   listDeploymentPods: "listDeploymentPods",
   deletePod: "deletePod",
