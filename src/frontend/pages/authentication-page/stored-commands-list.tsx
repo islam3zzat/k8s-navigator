@@ -4,6 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Typography from "@mui/material/Typography";
 
 interface StoredCommandListProps {
   storedData: { name: string; command: string }[];
@@ -16,6 +17,9 @@ const StoredCommandList: React.FC<StoredCommandListProps> = ({
   onCommandClick,
   onDelete,
 }) => {
+  if (storedData.length === 0) {
+    return <Typography>No stored commands have been created.</Typography>;
+  }
   return (
     <Grid container spacing={2}>
       {storedData.map((data, index) => (

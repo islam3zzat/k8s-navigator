@@ -1,12 +1,6 @@
-import * as React from "react";
+import React from "react";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
 import StoredCommandList from "./stored-commands-list";
 import CommandOutput from "./command-output";
@@ -28,15 +22,15 @@ const AuthenticationPage: React.FC = () => {
     }
 
     window.commandRunner.onCommandOutput((data: string) => {
-      setOutput((prev) => prev + data);
+      setOutput((prev: string) => prev + data);
     });
 
     window.commandRunner.onCommandError((error: string) => {
-      setOutput((prev) => prev + `${error}`);
+      setOutput((prev: string) => prev + `${error}`);
     });
 
     window.commandRunner.onCommandEnd(() => {
-      setOutput((prev) => prev + "\nCommand execution ended.\n");
+      setOutput((prev: string) => prev + "\nCommand execution ended.\n");
     });
 
     return () => {
@@ -65,7 +59,9 @@ const AuthenticationPage: React.FC = () => {
   };
 
   const handleDelete = (index: number) => {
-    const updatedData = storedData.filter((_, i) => i !== index);
+    const updatedData = storedData.filter(
+      (_: unknown, i: number) => i !== index,
+    );
     localStorage.setItem("authenticationData", JSON.stringify(updatedData));
     setStoredData(updatedData);
   };
@@ -80,26 +76,30 @@ const AuthenticationPage: React.FC = () => {
           and then run the command by clicking the corresponding button. The
           output of the command will be displayed below.
         </Typography>
-        <Box mt={4}>
+        <Stack spacing={2}>
           <Typography variant="h6">Stored Auth Commands</Typography>
           <StoredCommandList
             storedData={storedData}
             onCommandClick={handleCommandClick}
             onDelete={handleDelete}
           />
-        </Box>
-        <Box mt={4}>
-          <CommandOutput output={output} outputRef={outputRef} />
-        </Box>
-        <Box mt={4}>
+
+          {storedData.length > 0 ? (
+            <CommandOutput output={output} outputRef={outputRef} />
+          ) : null}
+
           <AddCommandForm
             name={name}
             command={command}
-            onNameChange={(e) => setName(e.target.value)}
-            onCommandChange={(e) => setCommand(e.target.value)}
+            onNameChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setName(e.target.value)
+            }
+            onCommandChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setCommand(e.target.value)
+            }
             onSave={handleSave}
           />
-        </Box>
+        </Stack>
       </Stack>
     </Box>
   );
