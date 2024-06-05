@@ -38,8 +38,8 @@ describe("ContextSelect", () => {
       state: { activeContext: { name: "default" } },
       dispatch: mockDispatch,
     });
-    // @ts-expect-error mock for testing
     window.k8sNavigator = {
+      // @ts-expect-error mock for testing
       listContexts: mockListContexts,
       switchContext: jest.fn().mockResolvedValue({
         name: "default",
@@ -63,7 +63,7 @@ describe("ContextSelect", () => {
 
   test("renders ContextSelect with data", async () => {
     (useQuery as jest.Mock).mockReturnValue({
-      data: ["context1", "context2"],
+      data: ["context1", "context2", "default"],
       isLoading: false,
     });
 
@@ -87,7 +87,7 @@ describe("ContextSelect", () => {
 
   test("handles context change", async () => {
     (useQuery as jest.Mock).mockReturnValue({
-      data: ["context1", "context2"],
+      data: ["context1", "context2", "default"],
       isLoading: false,
     });
 
