@@ -4,7 +4,7 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import FindInPageIcon from "@mui/icons-material/FindInPage";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ClearIcon from "@mui/icons-material/Clear";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./styles.css";
 import { useAppContext } from "../../app-context";
 
@@ -33,7 +33,7 @@ export const FindInPage: React.FC = () => {
     window.electron.findPrevious(searchText);
   };
   const visibilityClass = state.isFindInPageOpen ? "visible" : "hidden";
-  const searchRef = React.useRef<HTMLInputElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "f" && (e.metaKey || e.ctrlKey)) {

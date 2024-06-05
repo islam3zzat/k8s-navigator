@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -7,15 +7,15 @@ import CommandOutput from "./command-output";
 import AddCommandForm from "./add-command-form";
 
 const AuthenticationPage: React.FC = () => {
-  const [name, setName] = React.useState<string>("");
-  const [command, setCommand] = React.useState<string>("");
-  const [storedData, setStoredData] = React.useState<
+  const [name, setName] = useState<string>("");
+  const [command, setCommand] = useState<string>("");
+  const [storedData, setStoredData] = useState<
     { name: string; command: string }[]
   >([]);
-  const [output, setOutput] = React.useState<string>("");
-  const outputRef = React.useRef<HTMLDivElement>(null);
+  const [output, setOutput] = useState<string>("");
+  const outputRef = useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const data = localStorage.getItem("authenticationData");
     if (data) {
       setStoredData(JSON.parse(data));
@@ -38,7 +38,7 @@ const AuthenticationPage: React.FC = () => {
     };
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (outputRef.current) {
       outputRef.current.scrollTop = outputRef.current.scrollHeight;
     }

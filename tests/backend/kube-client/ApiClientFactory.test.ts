@@ -3,7 +3,7 @@ import {
   ApiClientFactory,
   ApiVersion,
   IApiClientFactory,
-} from "../../../src/backend/kube-client/ApiClientFactory";
+} from "~/backend/kube-client/ApiClientFactory";
 
 const mockMakeApiClient = jest.fn();
 

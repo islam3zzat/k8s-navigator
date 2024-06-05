@@ -3,6 +3,9 @@ module.exports = {
   projects: [
     {
       displayName: "backend",
+      moduleNameMapper: {
+        "~/(.*)": "<rootDir>/src/$1",
+      },
       testEnvironment: "node",
       testMatch: ["<rootDir>/tests/backend/**/*.test.ts"],
     },

@@ -4,7 +4,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import HistoryIcon from "@mui/icons-material/History";
-import cronstrue from "cronstrue";
+import { toString } from "cronstrue";
 import { V1CronJob } from "@kubernetes/client-node";
 import { JobsList } from "../../components";
 import { useAppContext } from "../../app-context";
@@ -26,7 +26,7 @@ const CronJobGeneralTab = ({ resource: cronJob }: { resource: V1CronJob }) => {
           </Typography>
           <Typography>
             {cronJob?.spec?.schedule
-              ? cronstrue.toString(cronJob?.spec?.schedule)
+              ? toString(cronJob?.spec?.schedule)
               : "None"}
           </Typography>
         </Stack>

@@ -13,7 +13,6 @@ import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import CircularProgress from "@mui/material/CircularProgress";
-import styled from "@mui/material/styles/styled";
 import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
 import Paper from "@mui/material/Paper";
@@ -25,7 +24,7 @@ import Typography from "@mui/material/Typography";
 import CopyAllIcon from "@mui/icons-material/CopyAll";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Mustache from "mustache";
+import { render as renderTemplate } from "mustache";
 import ReactTextareaAutocomplete from "@webscopeio/react-textarea-autocomplete";
 import { useForkRef, useIsFocusVisible } from "@mui/material";
 
@@ -71,7 +70,7 @@ const deleteTemplate = (resourceName: string, index: number): void => {
 };
 
 const applyTemplate = <T,>(templateString: string, data: T): string => {
-  return Mustache.render(templateString, data);
+  return renderTemplate(templateString, data);
 };
 const Item = ({ entity }: { entity: string }) => {
   const theme = useTheme(); // Access theme variables

@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment, { duration as momentDuration } from "moment";
 import { V1Deployment } from "@kubernetes/client-node";
 import Typography from "@mui/material/Typography";
 import { Column } from "../data-table";
@@ -78,7 +78,7 @@ export const columns: Column<V1Deployment>[] = [
     getData: (d: V1Deployment) => {
       const created = moment(d.metadata.creationTimestamp || "");
       const now = moment();
-      const duration = moment.duration(now.diff(created));
+      const duration = momentDuration(now.diff(created));
       const days = duration.asDays();
       const hours = duration.asHours();
       const minutes = duration.asMinutes();

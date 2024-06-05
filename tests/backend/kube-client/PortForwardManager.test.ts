@@ -1,6 +1,6 @@
 import * as k8s from "@kubernetes/client-node";
 import * as net from "net";
-import { PortForwardManager } from "../../../src/backend/kube-client";
+import { PortForwardManager } from "~/backend/kube-client";
 
 jest.mock("@kubernetes/client-node");
 jest.mock("net");

@@ -156,7 +156,7 @@ export const ResourceDetailsPage = <T,>({
     routeOptions.iconName,
   ]);
 
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);

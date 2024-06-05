@@ -1,5 +1,5 @@
 import { V1Pod } from "@kubernetes/client-node";
-import moment from "moment";
+import moment, { duration as momentDuration } from "moment";
 import { Typography } from "@mui/material";
 import { Column } from "../data-table";
 
@@ -100,7 +100,7 @@ export const columns: Column<V1Pod>[] = [
     getData: (p: V1Pod) => {
       const created = moment(p.metadata.creationTimestamp || "");
       const now = moment();
-      const duration = moment.duration(now.diff(created));
+      const duration = momentDuration(now.diff(created));
       const days = duration.asDays();
       const hours = duration.asHours();
       const minutes = duration.asMinutes();

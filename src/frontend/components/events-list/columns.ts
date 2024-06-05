@@ -1,5 +1,5 @@
 import { CoreV1Event } from "@kubernetes/client-node";
-import moment from "moment";
+import moment, { duration as momentDuration } from "moment";
 import { Column } from "../data-table";
 
 export const columns: Column<CoreV1Event>[] = [

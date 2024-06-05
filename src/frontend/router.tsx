@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { HelmetProvider } from "react-helmet-async";
 import CssBaseline from "@mui/material/CssBaseline";
 import React, { lazy, Suspense } from "react";
-import ReactDOM from "react-dom/client";
+import { createRoot } from "react-dom/client";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import { AppProvider } from "./app-context";
 import { AppTheme } from "./theme";
@@ -165,9 +165,7 @@ const SettingsPage = lazy(
     ),
 );
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement,
-);
+const root = createRoot(document.getElementById("root") as HTMLElement);
 
 const queryClient = new QueryClient();
 

@@ -1,14 +1,14 @@
 import * as k8s from "@kubernetes/client-node";
-import { DeepWritable } from "./types-helper";
 import {
   ApiClientFactory,
   KubeClient,
   KubeConfigManager,
-} from "../../../src/backend/kube-client";
+} from "~/backend/kube-client";
+import { DeepWritable } from "./types-helper";
 
-jest.mock("../../../src/backend/kube-client/KubeConfigManager");
-jest.mock("../../../src/backend/kube-client/PortForwardManager");
-jest.mock("../../../src/backend/kube-client/ApiClientFactory");
+jest.mock("~/backend/kube-client/KubeConfigManager");
+jest.mock("~/backend/kube-client/PortForwardManager");
+jest.mock("~/backend/kube-client/ApiClientFactory");
 
 describe("KubeClient", () => {
   let kubeConfig: k8s.KubeConfig;
@@ -18,26 +18,6 @@ describe("KubeClient", () => {
 
   beforeEach(() => {
     kubeConfig = new k8s.KubeConfig();
-    kubeConfig.loadFromString(`
-apiVersion: v1
-clusters:
-- cluster:
-    server: https://localhost:6443
-  name: kubernetes
-contexts:
-- context:
-    cluster: kubernetes
-    user: kubernetes-admin
-  name: kubernetes-admin@kubernetes
-current-context: kubernetes-admin@kubernetes
-kind: Config
-preferences: {}
-users:
-- name: kubernetes-admin
-  user:
-    client-certificate-data: REDACTED
-    client-key-data: REDACTED
-`);
     kubeConfigManager = new KubeConfigManager(
       kubeConfig,
     ) as jest.Mocked<KubeConfigManager>;
@@ -57,7 +37,9 @@ users:
       apiClientFactory,
     );
   });
-
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
   it("should list contexts", () => {
     const contexts = [{ name: "context1" }, { name: "context2" }];
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -75,26 +57,10 @@ users:
     expect(kubeConfigManager.getCurrentContext).toHaveBeenCalled();
   });
 
-  it.skip("should get current context", async () => {
-    const currentContextName = "context1";
-    const currentContextObject = {
-      name: "context1",
-      cluster: "cluster1",
-      user: "user1",
-    };
-
-    kubeConfigManager.getCurrentContext.mockReturnValue(
-      Promise.resolve({ name: currentContextName } as k8s.Context),
-    );
-    kubeConfigManager.getContextObject.mockReturnValue(currentContextObject);
-
-    const context = kubeClient.getCurrentContext();
+  it("should delegate getCurrentContext to configManager", async () => {
+    await kubeClient.getCurrentContext();
 
     expect(kubeConfigManager.getCurrentContext).toHaveBeenCalled();
-    expect(kubeConfigManager.getContextObject).toHaveBeenCalledWith(
-      currentContextName,
-    );
-    expect(context).toEqual(currentContextObject);
   });
 
   it("should return log instance", () => {

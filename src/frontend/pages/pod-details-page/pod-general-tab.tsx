@@ -149,15 +149,13 @@ const PodGeneralTab: React.FC<TabComponentProps<V1Pod>> = ({
     navigate(-1);
   }, [navigate, podName, state.activeNamespace]);
 
-  const [isPortForwardDialogOpen, setIsPortForwardDialogOpen] =
-    React.useState(false);
-  const [selectedPort, setSelectedPort] = React.useState("");
-  const [userPort, setUserPort] = React.useState("");
-  const [containerPort, setContainerPort] = React.useState("");
+  const [isPortForwardDialogOpen, setIsPortForwardDialogOpen] = useState(false);
+  const [selectedPort, setSelectedPort] = useState("");
+  const [userPort, setUserPort] = useState("");
+  const [containerPort, setContainerPort] = useState("");
   const remotePort = containerPort || selectedPort;
   const hostPort = userPort || selectedPort;
-  const [isPortForwardingError, setIsPortForwardingError] =
-    React.useState(false);
+  const [isPortForwardingError, setIsPortForwardingError] = useState(false);
 
   const handleOpenPortForwardDialog = (containerPort: string) => {
     setSelectedPort(containerPort);

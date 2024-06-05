@@ -14,7 +14,8 @@
     "resolveJsonModule": true,
     "types": ["jest", "node"],
     "paths": {
-      "*": ["node_modules/*"]
+      "*": ["node_modules/*"],
+      "~/*": ["src/*"]
     }
   },
   "include": ["src/**/*", "tests/**/*"],

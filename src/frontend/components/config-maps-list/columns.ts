@@ -1,5 +1,5 @@
 import { V1ConfigMap } from "@kubernetes/client-node";
-import moment from "moment";
+import moment, { duration as momentDuration } from "moment";
 import { Column } from "../data-table";
 
 export const columns: Column<V1ConfigMap>[] = [
@@ -27,7 +27,7 @@ export const columns: Column<V1ConfigMap>[] = [
     getData: (p) => {
       const created = moment(p.metadata.creationTimestamp || "");
       const now = moment();
-      const duration = moment.duration(now.diff(created));
+      const duration = momentDuration(now.diff(created));
       const days = duration.asDays();
       const hours = duration.asHours();
       const minutes = duration.asMinutes();

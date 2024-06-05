@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import React from "react";
+import React, { forwardRef } from "react";
 import Button from "@mui/material/Button";
 import type { ButtonOwnProps } from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 
-const Transition = React.forwardRef(function Transition(
+const Transition = forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement;
   },

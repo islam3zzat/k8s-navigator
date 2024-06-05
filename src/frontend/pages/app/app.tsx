@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from "react";
+import React, { memo, Suspense, useEffect } from "react";
 import { Outlet, Link as RouterLink } from "react-router-dom";
 import Stack from "@mui/material/Stack";
 import Container from "@mui/material/Container";
@@ -42,7 +42,7 @@ const getBradCrumbIcon = (name: string, isPrimary: boolean) => {
 
 type BreadCrumbIconProps = { iconName: string; isPrimary?: boolean };
 
-const BreadCrumbIcon = React.memo(
+const BreadCrumbIcon = memo(
   ({ iconName, isPrimary }: BreadCrumbIconProps) => {
     const icon = getBradCrumbIcon(iconName, isPrimary);
     if (!icon) {

@@ -3,7 +3,13 @@ import { Theme } from "@mui/material/styles";
 import TableSortLabel, {
   tableSortLabelClasses,
 } from "@mui/material/TableSortLabel";
-import React, { forwardRef, useCallback, useRef, useState } from "react";
+import React, {
+  forwardRef,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import Table from "@mui/material/Table";
 import Box from "@mui/material/Box";
 import TableBody from "@mui/material/TableBody";
@@ -121,8 +127,8 @@ export const DataTable = <T,>({
   const [orderBy, setOrderBy] = useState<string>("Name");
   const tableRef = useRef<HTMLTableElement>(null);
 
-  const [filter, setFilter] = React.useState<string>("");
-  const filteredData = React.useMemo(() => {
+  const [filter, setFilter] = useState<string>("");
+  const filteredData = useMemo(() => {
     const items = data || [];
     if (!filter) return items;
 
@@ -136,7 +142,7 @@ export const DataTable = <T,>({
     });
   }, [data, filter, columns]);
 
-  const resources = React.useMemo(() => {
+  const resources = useMemo(() => {
     const column = columns.find((c) => c.name === orderBy);
     if (!column) {
       return filteredData;

@@ -1,5 +1,12 @@
 import { Context as K8sContext } from "@kubernetes/client-node";
-import React from "react";
+import {
+  createContext,
+  Dispatch,
+  FC,
+  ReactNode,
+  useContext,
+  useReducer,
+} from "react";
 
 export type PortForward = {
   namespace: string;
@@ -270,9 +277,9 @@ const reducer = (state: State, action: Action): State => {
   }
 };
 
-const AppContext = React.createContext<{
+const AppContext = createContext<{
   state: State;
-  dispatch: React.Dispatch<Action>;
+  dispatch: Dispatch<Action>;
 }>({
   state: initialState,
   dispatch: () => {
@@ -280,12 +287,10 @@ const AppContext = React.createContext<{
   },
 });
 
-export const useAppContext = () => React.useContext(AppContext);
+export const useAppContext = () => useContext(AppContext);
 
-export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  const [state, dispatch] = React.useReducer(reducer, initialState);
+export const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>

@@ -1,5 +1,5 @@
 import * as k8s from "@kubernetes/client-node";
-import { KubeConfigManager } from "../../../src/backend/kube-client";
+import { KubeConfigManager } from "~/backend/kube-client";
 
 jest.mock("@kubernetes/client-node");
 

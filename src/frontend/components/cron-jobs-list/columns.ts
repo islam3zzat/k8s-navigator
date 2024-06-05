@@ -1,12 +1,12 @@
 import { V1CronJob } from "@kubernetes/client-node";
-import moment from "moment";
-import cronstrue from "cronstrue";
+import moment, { duration as momentDuration } from "moment";
+import { toString } from "cronstrue";
 import { Column } from "../data-table";
 
 const fromatSchedule = (schedule: string) => {
   if (!schedule) return "N/A";
 
-  return cronstrue.toString(schedule);
+  return toString(schedule);
 };
 export const columns: Column<V1CronJob>[] = [
   {
@@ -55,7 +55,7 @@ export const columns: Column<V1CronJob>[] = [
     getData: (p) => {
       const created = moment(p.metadata.creationTimestamp || "");
       const now = moment();
-      const duration = moment.duration(now.diff(created));
+      const duration = momentDuration(now.diff(created));
       const days = duration.asDays();
       const hours = duration.asHours();
       const minutes = duration.asMinutes();
