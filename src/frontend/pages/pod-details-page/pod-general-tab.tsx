@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import { V1Pod } from "@kubernetes/client-node";
 import React, { useCallback, useState } from "react";
 import InfoIcon from "@mui/icons-material/Info";
+import Tooltip from "@mui/material/Tooltip";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
@@ -241,6 +242,15 @@ const PodGeneralTab: React.FC<TabComponentProps<V1Pod>> = ({
     ? "Terminating"
     : pod?.status?.phase || "Unknown";
 
+  const isKillButtonDisabled = isTerminating || state.isReadOnly;
+  let killButtonTooltip = "";
+  if (state.isReadOnly) {
+    killButtonTooltip = "In Read-Only mode. You can toggle this in settings.";
+  }
+  if (isTerminating) {
+    killButtonTooltip = "Pod is terminating";
+  }
+
   return (
     <>
       <Stack spacing={4}>
@@ -259,14 +269,19 @@ const PodGeneralTab: React.FC<TabComponentProps<V1Pod>> = ({
               >
                 {podStatus}
               </Typography>
-              <Button
-                variant="outlined"
-                color="error"
-                startIcon={<DangerousIcon />}
-                onClick={() => setRequestDeletePod(true)}
-              >
-                Kill Pod
-              </Button>
+              <Tooltip title={killButtonTooltip}>
+                <span>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    startIcon={<DangerousIcon />}
+                    onClick={() => setRequestDeletePod(true)}
+                    disabled={isKillButtonDisabled}
+                  >
+                    Kill Pod
+                  </Button>
+                </span>
+              </Tooltip>
             </Stack>
           </Stack>
         </Stack>

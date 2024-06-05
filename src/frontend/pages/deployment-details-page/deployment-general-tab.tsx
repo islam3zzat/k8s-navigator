@@ -2,6 +2,7 @@ import { Link as RouterLink, useParams } from "react-router-dom";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
 import SettingsIcon from "@mui/icons-material/Settings";
 import FilterNoneIcon from "@mui/icons-material/FilterNone";
 import FlagIcon from "@mui/icons-material/Flag";
@@ -42,6 +43,12 @@ const DeploymentGeneralTab = ({
 }) => {
   const { deploymentName } = useParams<{ deploymentName: string }>();
   const { state } = useAppContext();
+  const isRescaleButtonDisabled = state.isReadOnly;
+  let rescaleButtonTooltip = "";
+  if (state.isReadOnly) {
+    rescaleButtonTooltip =
+      "In Read-Only mode. You can toggle this in settings.";
+  }
 
   const namespace = state.activeNamespace;
   const [rescalDialogOpen, setRescaleDialogOpen] = useState(false);
@@ -125,12 +132,18 @@ const DeploymentGeneralTab = ({
                 {deployment?.status?.updatedReplicas || 0} updated
               </Typography>
             </Stack>
-            <Button
-              variant="contained"
-              onClick={() => setRescaleDialogOpen(true)}
-            >
-              Rescale
-            </Button>
+            <Tooltip title={rescaleButtonTooltip}>
+              <span>
+                <Button
+                  variant="contained"
+                  onClick={() => setRescaleDialogOpen(true)}
+                  disabled={isRescaleButtonDisabled}
+                  aria-disabled={isRescaleButtonDisabled}
+                >
+                  Rescale
+                </Button>
+              </span>
+            </Tooltip>
           </Stack>
         </Stack>
         <Stack spacing={2}>

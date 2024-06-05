@@ -33,6 +33,7 @@ export type State = {
   deployment: string;
   pod: string;
   isFindInPageOpen?: boolean;
+  isReadOnly: boolean;
 };
 
 let storedTheme: Theme = "purple-night";
@@ -57,11 +58,17 @@ const initialState: State = {
   activeNamespace: "",
   deployment: "",
   pod: "",
+  isReadOnly: true,
 };
 
 type SetWatchIntervalAction = {
   type: "SET_WATCH_INTERVAL";
   watchIntervalsSeconds: number;
+};
+
+type SetReadOnlyAction = {
+  type: "SET_READ_ONLY";
+  isReadOnly: boolean;
 };
 
 type SetThemeAction = {
@@ -154,10 +161,16 @@ type Action =
   | HideFindInPageAction
   | SetThemeAction
   | ResetThemeAction
-  | SetWatchIntervalAction;
+  | SetWatchIntervalAction
+  | SetReadOnlyAction;
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
+    case "SET_READ_ONLY":
+      return {
+        ...state,
+        isReadOnly: action.isReadOnly,
+      };
     case "SET_WATCH_INTERVAL":
       return {
         ...state,

@@ -36,3 +36,18 @@ contextBridge.exposeInMainWorld("electron", {
   findNext: (text: string) => ipcRenderer.send("find-next", text),
   findPrevious: (text: string) => ipcRenderer.send("find-previous", text),
 });
+
+contextBridge.exposeInMainWorld("commandRunner", {
+  runCommand: (command: string) => ipcRenderer.send("run-command", command),
+  onCommandOutput: (callback: (data: string) => void) =>
+    ipcRenderer.on("command-output", (event, data) => callback(data)),
+  onCommandEnd: (callback: () => void) =>
+    ipcRenderer.on("command-end", () => callback()),
+  onCommandError: (callback: (data: string) => void) =>
+    ipcRenderer.on("command-error", (event, error) => callback(error)),
+  removeAllListeners: () => {
+    ipcRenderer.removeAllListeners("command-output");
+    ipcRenderer.removeAllListeners("command-end");
+    ipcRenderer.removeAllListeners("command-error");
+  },
+});

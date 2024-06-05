@@ -1,4 +1,7 @@
 import * as React from "react";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 import { Link as RouterLink } from "react-router-dom";
 import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
@@ -17,6 +20,11 @@ import { PortForward, State, useAppContext } from "../../app-context";
 
 const SettingsPage = () => {
   const { state, dispatch } = useAppContext();
+
+  const handleReadOnlyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const readOnly = event.target.checked;
+    dispatch({ type: "SET_READ_ONLY", isReadOnly: readOnly });
+  };
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedTheme = event.target.value as State["theme"];
@@ -73,6 +81,14 @@ const SettingsPage = () => {
           </Typography>
 
           <Stack spacing={2}>
+            <FormGroup>
+              <FormControlLabel
+                control={<Checkbox defaultChecked />}
+                checked={state.isReadOnly}
+                onChange={handleReadOnlyChange}
+                label="Read Only Mode"
+              />
+            </FormGroup>
             <FormControl variant="outlined" margin="normal" fullWidth>
               <InputLabel htmlFor="theme-select">Theme</InputLabel>
               <Select

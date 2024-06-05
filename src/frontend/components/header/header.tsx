@@ -1,4 +1,5 @@
 import { motion, useAnimationControls } from "framer-motion";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import ExploreIcon from "@mui/icons-material/Explore";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -10,13 +11,9 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Link as RouterLink } from "react-router-dom";
 import Link from "@mui/material/Link";
-import Button from "@mui/material/Button";
 import Badge from "@mui/material/Badge";
-import DeleteIcon from "@mui/icons-material/Delete";
-import SettingsEthernetIcon from "@mui/icons-material/SettingsEthernet";
 import Drawer from "@mui/material/Drawer";
-import { PortForward, useAppContext } from "../../app-context";
-import ConfirmationDialog from "../../components/confirmation-dialog";
+import { useAppContext } from "../../app-context";
 import { ContextSelect, NamespaceSelect } from "../../components";
 
 const SettingsPage = React.lazy(
@@ -24,6 +21,14 @@ const SettingsPage = React.lazy(
     import(
       /* webpackChunkName: "settings" */
       "../../pages/settings-page"
+    ),
+);
+
+const AuthenticationPage = React.lazy(
+  () =>
+    import(
+      /* webpackChunkName: "authentication" */
+      "../../pages/authentication-page"
     ),
 );
 
@@ -45,9 +50,10 @@ const settingsIconVarinats = {
 
 export const Header: React.FC = () => {
   const { state, dispatch } = useAppContext();
-  const [isDrawerVisible, setIsDrawerVisible] = React.useState(false);
+  const [isSettingsVisible, setIsSettingsVisible] = React.useState(false);
+  const [isAuthDrawerVisible, setAuthDrawerVisible] = React.useState(false);
 
-  const toggleDrawer = React.useCallback(
+  const toggleSettings = React.useCallback(
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
         event.type === "keydown" &&
@@ -57,7 +63,21 @@ export const Header: React.FC = () => {
         return;
       }
 
-      setIsDrawerVisible(open);
+      setIsSettingsVisible(open);
+    },
+    [],
+  );
+  const toggleAuthDrawer = React.useCallback(
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
+
+      setAuthDrawerVisible(open);
     },
     [],
   );
@@ -90,38 +110,6 @@ export const Header: React.FC = () => {
       handleMouseLeave();
     }
   }, [isMouseOver, handleMouseEnter, handleMouseLeave]);
-
-  const [open, setOpen] = React.useState(false);
-  const handleClose = React.useCallback(() => setOpen(false), []);
-  const handleClosePortForward = React.useCallback(
-    (portForward: PortForward) => {
-      window.k8sNavigator
-        .closePortForward(
-          state.activeNamespace,
-          portForward.name,
-          portForward.targetPort,
-          portForward.userPort,
-        )
-        .then(() => {
-          dispatch({ type: "REMOVE_PORT_FORWARD", portForward });
-        });
-    },
-
-    [state.activeNamespace, dispatch],
-  );
-
-  const handleCloseAllPortForwards = React.useCallback(() => {
-    window.k8sNavigator.closeAllPortForwards().then(() => {
-      dispatch({ type: "REMOVE_ALL_PORT_FORWARDS" });
-    });
-  }, [dispatch]);
-
-  React.useEffect(() => {
-    // Close modal when all port forwards are stopped
-    if (open && activePortForwards === 0) {
-      handleClose();
-    }
-  }, [open, activePortForwards, handleClose]);
 
   return (
     <>
@@ -167,7 +155,7 @@ export const Header: React.FC = () => {
               whileTap="tap"
               variants={settingsIconVarinats}
               role="link"
-              onClick={() => setIsDrawerVisible(true)}
+              onClick={() => setIsSettingsVisible(true)}
               color="default"
               aria-label="Settings"
             >
@@ -175,6 +163,16 @@ export const Header: React.FC = () => {
                 <SettingsIcon sx={{ fontSize: 24 }} />
               </Badge>
             </MotionIconButton>
+            <IconButton
+              role="link"
+              onClick={() => setAuthDrawerVisible(true)}
+              color="default"
+              aria-label="Authentications"
+            >
+              <Badge badgeContent={activePortForwards} color="info">
+                <AccountCircleIcon sx={{ fontSize: 24 }} />
+              </Badge>
+            </IconButton>
           </Box>
         </Toolbar>
       </AppBar>
@@ -182,45 +180,21 @@ export const Header: React.FC = () => {
       <React.Suspense fallback={null}>
         <Drawer
           anchor={"right"}
-          open={isDrawerVisible}
-          onClose={toggleDrawer(false)}
+          open={isSettingsVisible}
+          onClose={toggleSettings(false)}
         >
           <SettingsPage />
         </Drawer>
       </React.Suspense>
-      <ConfirmationDialog
-        isOpen={open}
-        onClose={handleClose}
-        primaryButtonText="Stop all"
-        onConfirm={handleCloseAllPortForwards}
-        title="Running Port Forwards"
-      >
-        <Stack spacing={2}>
-          {state.portForwards.map((pf) => (
-            <Stack key={pf.name + pf.userPort} spacing={1}>
-              <Stack direction="row" spacing={2} alignItems="center">
-                <SettingsEthernetIcon fontSize="small" />
-                <Link
-                  component={RouterLink}
-                  flex={1}
-                  to={`/pods/${pf.name}`}
-                  color="inherit"
-                  underline="hover"
-                >
-                  <Typography variant="body1">{pf.name}</Typography>
-                </Link>
-              </Stack>
-              <Button
-                variant="outlined"
-                startIcon={<DeleteIcon />}
-                onClick={() => handleClosePortForward(pf)}
-              >
-                {`${pf.targetPort} ~> ${pf.userPort}`}
-              </Button>
-            </Stack>
-          ))}
-        </Stack>
-      </ConfirmationDialog>
+      <React.Suspense fallback={null}>
+        <Drawer
+          anchor={"right"}
+          open={isAuthDrawerVisible}
+          onClose={toggleAuthDrawer(false)}
+        >
+          <AuthenticationPage />
+        </Drawer>
+      </React.Suspense>
     </>
   );
 };

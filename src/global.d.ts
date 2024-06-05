@@ -160,16 +160,26 @@ interface electron {
   findPrevious: (text: string) => void;
 }
 
+interface commandRunner {
+  runCommand: (command: string) => void;
+  onCommandOutput: (callback: (data: string) => void) => void;
+  onCommandEnd: (callback: () => void) => void;
+  onCommandError: (callback: (error: string) => void) => void;
+  removeAllListeners: () => void;
+}
+
 declare global {
   interface Window {
     k8sNavigator: K8sNavigator;
     electron: electron;
     logs: logs;
+    commandRunner: commandRunner;
   }
 
   interface globalThis {
     k8sNavigator: K8sNavigator;
     electron: electron;
     logs: logs;
+    commandRunner: commandRunner;
   }
 }
