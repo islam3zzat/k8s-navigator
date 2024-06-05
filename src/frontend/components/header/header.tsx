@@ -168,10 +168,9 @@ export const Header: React.FC = () => {
               onClick={() => setAuthDrawerVisible(true)}
               color="default"
               aria-label="Authentications"
+              sx={{ color: "inherit" }}
             >
-              <Badge badgeContent={activePortForwards} color="info">
-                <AccountCircleIcon sx={{ fontSize: 24 }} />
-              </Badge>
+              <AccountCircleIcon sx={{ fontSize: 24 }} />
             </IconButton>
           </Box>
         </Toolbar>
