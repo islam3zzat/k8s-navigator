@@ -45,11 +45,6 @@ export class Deployment {
     return response.body;
   };
 
-  listEvents = async ({ namespace, name }: NamespacedName) => {
-    const events = new Event(this.apiClientFactory);
-    return events.listEvents({ namespace, name });
-  };
-
   listDeploymentPods = async ({ namespace, name }: NamespacedName) => {
     const deployment = await this.getDeployment({ namespace, name });
 
