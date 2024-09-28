@@ -65,7 +65,7 @@ const initialState: State = {
   activeNamespace: "",
   deployment: "",
   pod: "",
-  isReadOnly: true,
+  isReadOnly: false,
 };
 
 type SetWatchIntervalAction = {
