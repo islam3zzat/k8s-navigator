@@ -38,8 +38,8 @@ describe("ContextSelect", () => {
       state: { activeContext: { name: "default" } },
       dispatch: mockDispatch,
     });
+    // @ts-expect-error mock for testing
     window.k8sNavigator = {
-      // @ts-expect-error mock for testing
       listContexts: mockListContexts,
       switchContext: jest.fn().mockResolvedValue({
         name: "default",
