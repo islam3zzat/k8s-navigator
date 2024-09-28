@@ -191,8 +191,8 @@ describe("Deployment", () => {
       const mockPods = { items: ["pod1", "pod2"] };
       appsV1Api.readNamespacedDeployment.mockResolvedValue({
         body: mockDeployment,
-      });
-      coreV1Api.listNamespacedPod.mockResolvedValue({ body: mockPods });
+      } as any);
+      coreV1Api.listNamespacedPod.mockResolvedValue({ body: mockPods } as any);
 
       const result = await deployment.listDeploymentPods(namespacedName);
 
